@@ -58,8 +58,8 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
       });
       setLoading(false);
       const data = await res.json();
-      setProducts(data);
-      console.log(data);
+      setProducts(data.data);
+      console.log(data.data);
     } catch (error) {
       console.log(error);
     }

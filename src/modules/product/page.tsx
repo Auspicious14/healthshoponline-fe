@@ -11,15 +11,14 @@ export const ProductPage = () => {
   return (
     <div>
       {loading && <div>loading...</div>}
-      {!loading && products?.length > 0 && (
-        <div>
-          {products.map((p, i) => (
-            <div key={i} className={"font-bold"}>
-              {p.name}
-            </div>
-          ))}
-        </div>
-      )}
+
+      <div>
+        {products.map((p, i) => (
+          <div key={i} className={"font-bold bg-red-400"}>
+            {p.name}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
