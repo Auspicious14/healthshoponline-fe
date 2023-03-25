@@ -1,4 +1,6 @@
+import { Space, Button } from "antd";
 import { Form, Formik, FormikProps } from "formik";
+import { useRouter } from "next/router";
 import React from "react";
 import * as Yup from "yup";
 import { ApTextInput } from "../../../components";
@@ -13,9 +15,13 @@ const FormSchema = Yup.object().shape({
 });
 
 export const SignUpPage = () => {
-  const { handleSignUp } = useSignUpState();
+  const { handleSignUp, loading } = useSignUpState();
+  const router = useRouter();
   const handleSubmit = async (values: ISignUp) => {
-    await handleSignUp(values);
+    const res = handleSignUp(values);
+    res.then(() => {
+      router.push("/auth/login");
+    });
   };
   return (
     <div>
@@ -66,6 +72,11 @@ export const SignUpPage = () => {
             >
               sign up
             </button>
+            <Space direction="vertical">
+              <Button disabled={loading} type={"primary"} loading={loading}>
+                Sign In
+              </Button>
+            </Space>
           </Form>
         )}
       </Formik>
