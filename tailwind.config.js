@@ -2,7 +2,12 @@
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        "hero-pattern": "url('/img/hero-pattern.svg')",
+        "footer-texture": "url('/public/images/subtract.png')",
+      },
+    },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/aspect-ratio")],
 };
