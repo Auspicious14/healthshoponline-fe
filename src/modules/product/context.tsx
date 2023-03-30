@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { apiReqHandler } from "../../components";
 import { IProduct } from "./model";
 
 interface IProductState {
@@ -53,13 +54,14 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
   const getProducts = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:2000/products", {
+      const res = await apiReqHandler({
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/products`,
         method: "GET",
       });
       setLoading(false);
-      const data = await res.json();
-      setProducts(data.data);
-      console.log(data.data);
+      const { data } = await res.res?.data;
+      setProducts(data);
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
