@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import { IProduct } from "../model";
 
@@ -9,7 +10,7 @@ export const ProductListItem: React.FC<IProps> = ({ product }) => {
     <div>
       <div className="bg-white">
         <div className="mx-auto max-w-2xl py-16 sm:px-6 sm:py-12 lg:max-w-7xl">
-          <div className="">
+          <Link href={`/product/${product?._id}`} className="">
             <div className="group relative">
               <div className="min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-52">
                 {product?.images?.map((p, i) => (
@@ -27,7 +28,7 @@ export const ProductListItem: React.FC<IProps> = ({ product }) => {
                 </p>
               </div>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </div>

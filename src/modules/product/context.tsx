@@ -128,7 +128,7 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
       setLoading(false);
       const data = await res.json();
       setProducts(
-        data.filter((del: IProduct, i: number) => del.id !== productId)
+        data.filter((del: IProduct, i: number) => del._id !== productId)
       );
       console.log(data);
     } catch (error) {

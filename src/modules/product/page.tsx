@@ -96,7 +96,7 @@ export const ProductPage = () => {
             {products?.length > 0 ? (
               <div className="grid grid-cols-2 gap-2 my-2 border-gray-200 border rounded-lg">
                 {products?.map((p) => (
-                  <ProductListItem product={p} key={p?.id} />
+                  <ProductListItem product={p} key={p?._id} />
                 ))}
               </div>
             ) : (
