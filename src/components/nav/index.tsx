@@ -73,19 +73,19 @@ export const Headernav = () => {
                     placeholder="input search text"
                     onSearch={() => {}}
                     enterButton
-                    className="w-72 "
+                    className="w-72 bg-blue-600 border rounded-md"
                   />
                 </div>
               </div>
               <div className=" lg:flex lg:flex-1 lg:items-center lg:justify-center lg:space-x-6">
                 <Link
-                  href="#"
+                  href="/"
                   className="text-sm font-medium text-gray-700 hover:text-gray-800"
                 >
                   Home
                 </Link>
                 <Link
-                  href="#"
+                  href="/product"
                   className="text-sm font-medium text-gray-700 hover:text-gray-800"
                 >
                   Collections
