@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Headernav } from "../../components";
+import { ApBackgroundImage, ApImage, Headernav } from "../../components";
 import { Input, Menu, MenuProps } from "antd";
 import { Typography } from "antd";
 
 import { useProductState } from "./context";
 import { ProductListItem } from "./components/item";
+import backgroundImage from "../../../public/images/subtract.png";
 
 const { Text } = Typography;
 const { Search } = Input;
@@ -57,13 +58,6 @@ export const ProductPage = () => {
     ]),
   ];
 
-  const [openKeys, setOpenKeys] = useState(["sub1"]);
-  const rootSubmenuKeys: any = [];
-  const onOpenChange: MenuProps["onOpenChange"] = (keys: any) => {
-    const latestOpenKey = keys.find((key: any) => openKeys.indexOf(key) === -1);
-    setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
-  };
-
   return (
     <div>
       <Headernav />
@@ -81,10 +75,11 @@ export const ProductPage = () => {
         <div className="flex w-full">
           <div className="w-[30%]">
             <Menu
-              mode="inline"
-              openKeys={openKeys}
-              onOpenChange={onOpenChange}
+              onClick={onClick}
               style={{ width: 256 }}
+              defaultSelectedKeys={["1"]}
+              defaultOpenKeys={["sub1"]}
+              mode="inline"
               items={items}
             />
           </div>
@@ -103,11 +98,26 @@ export const ProductPage = () => {
             )}
           </div>
         </div>
-        <div
-          style={{ backgroundImage: "url(/public/images/subtract.png)" }}
-          className="bg-[image:var('/public/images/subtract.png')] w-full h-96"
-        ></div>
       </div>
+      {/* <ApImage
+        src={backgroundImage}
+        alt={"healthshop"}
+        width={1500}
+        height={500}
+        className={"my-4"}
+      /> */}
+      <ApBackgroundImage>
+        <div className="w-[40%]  text-white border border-none rounded-lg  p-12  bg-blue-600">
+          <h1 className="m-auto text-4xl">
+            Try Viagra V100 today and experience the power of a stronger and
+            longer-lasting erection.
+          </h1>
+          <p className="my-2">
+            Order now and receive discreet packaging and fast delivery right to
+            your doorstep.
+          </p>
+        </div>
+      </ApBackgroundImage>
     </div>
   );
 };
