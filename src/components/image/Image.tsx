@@ -19,9 +19,12 @@ export const ApImage: React.FC<IProps> = (props: IProps) => {
 
 interface IImageProps {
   children?: React.ReactNode;
+  className?: string;
 }
-export const ApBackgroundImage: React.FC<IImageProps> = ({ children }) => {
-  console.log(backgroundImage.src);
+export const ApBackgroundImage: React.FC<IImageProps> = ({
+  children,
+  className,
+}) => {
   return (
     <>
       <div
@@ -31,11 +34,12 @@ export const ApBackgroundImage: React.FC<IImageProps> = ({ children }) => {
           backgroundSize: "cover",
           width: "100%",
           height: "30rem",
-          margin: "auto",
+          margin: "0%",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
         }}
+        className={className}
       >
         {children}
       </div>
