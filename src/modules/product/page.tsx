@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { ApBackgroundImage, ApImage, Headernav } from "../../components";
-import { Input, Menu, MenuProps } from "antd";
+import {
+  ApBackgroundImage,
+  ApImage,
+  Footer,
+  Headernav,
+} from "../../components";
+import { Button, Input, Menu, MenuProps } from "antd";
 import { Typography } from "antd";
 
 import { useProductState } from "./context";
@@ -65,10 +70,11 @@ export const ProductPage = () => {
         {loading && <div>loading...</div>}
         <div className="my-4">
           <Search
-            placeholder="input search text"
+            placeholder="search product"
             allowClear
             enterButton="Search"
             size="large"
+            className="bg-blue-600 rounded-md"
             onSearch={() => {}}
           />
         </div>
@@ -99,15 +105,8 @@ export const ProductPage = () => {
           </div>
         </div>
       </div>
-      {/* <ApImage
-        src={backgroundImage}
-        alt={"healthshop"}
-        width={1500}
-        height={500}
-        className={"my-4"}
-      /> */}
       <ApBackgroundImage>
-        <div className="w-[40%]  text-white border border-none rounded-lg  p-12  bg-blue-600">
+        <div className="w-[50%]  text-white text-center border border-none rounded-lg  p-12  bg-[#2158E8]">
           <h1 className="m-auto text-4xl">
             Try Viagra V100 today and experience the power of a stronger and
             longer-lasting erection.
@@ -116,8 +115,16 @@ export const ProductPage = () => {
             Order now and receive discreet packaging and fast delivery right to
             your doorstep.
           </p>
+          <Button
+            type="primary"
+            size={"large"}
+            className="border-white border my-2"
+          >
+            Shop Now
+          </Button>
         </div>
       </ApBackgroundImage>
+      <Footer />
     </div>
   );
 };
