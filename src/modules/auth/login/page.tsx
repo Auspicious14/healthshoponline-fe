@@ -13,10 +13,10 @@ const FormSchema = Yup.object().shape({
 });
 
 export const SignInPage = () => {
-  const { handleSignUp, loading } = useSignInState();
+  const { handleSignIn, loading } = useSignInState();
   const router = useRouter();
   const handleSubmit = async (values: ISignIn) => {
-    const res = handleSignUp(values);
+    const res = handleSignIn(values);
     res.then((res) => {
       router.push("/");
     });
