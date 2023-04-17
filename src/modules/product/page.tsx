@@ -46,7 +46,7 @@ export const ProductPage = () => {
 
   const items: MenuProps["items"] = [
     getItem("BRAND", "sub1", [
-      getItem("Option 5", "5"),
+      getItem("Option 5", "112"),
       getItem("Option 6", "6"),
     ]),
 
@@ -91,7 +91,7 @@ export const ProductPage = () => {
           </div>
           <div className="w-[80%]">
             <div className="flex justify-between my-4">
-              <Text code>{`Ant Design: ${54}`}</Text>
+              <Text code>{`Product: ${products.length}`}</Text>
             </div>
             {products?.length > 0 ? (
               <div className="grid grid-cols-2 gap-2 my-2 border-gray-200 border rounded-lg">
