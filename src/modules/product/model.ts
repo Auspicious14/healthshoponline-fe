@@ -7,7 +7,7 @@ export interface IProduct {
   size: string;
   categories: [string];
   color: string;
-  quantity: string;
+  quantity: number;
 }
 
 export interface IProductImage {
