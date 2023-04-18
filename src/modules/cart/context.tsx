@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { ICart } from "./model";
+import { apiReqHandler } from "../../components";
+import { toast } from "react-toastify";
 
 interface ICartState {
   loading: boolean;
   cart: ICart;
-  addToCart: (payload: ICart) => Promise<void>;
+  addToCart: (payload: any) => Promise<void>;
   updateCartItem: (payload: ICart, cartId: string) => Promise<void>;
   deleteCartItem: (cartId: string) => Promise<void>;
   getCart: (userId: string) => Promise<void>;
@@ -59,22 +61,23 @@ export const CartContextProvider: React.FC<IProps> = ({ children }) => {
     }
   };
 
-  const addToCart = async (payload: ICart) => {
+  const addToCart = async (payload: any) => {
     setLoading(true);
     console.log(JSON.stringify(payload));
     try {
-      const res = await fetch(`http://localhost:2000/cart`, {
+      const res = await apiReqHandler({
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/cart`,
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        payload: JSON.stringify(payload),
       });
 
       setLoading(false);
-      const data = await res.json();
+      const data = await res.res?.data;
       setcart(data);
-      console.log(data);
-    } catch (error) {
-      console.log(error);
+      toast.success("Product is added to cart");
+      return data;
+    } catch (error: any) {
+      toast.error(error);
     }
   };
 
