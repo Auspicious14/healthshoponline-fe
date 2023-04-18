@@ -7,6 +7,7 @@ import {
 } from "../../modules/product/context";
 import { ProductDetailPage } from "../../modules/product/detail";
 import { IProduct } from "../../modules/product/model";
+import { CartContextProvider } from "../../modules/cart/context";
 
 interface IProps {
   product: IProduct;
@@ -14,9 +15,11 @@ interface IProps {
 const ProductDetail: React.FC<IProps> = ({ product }) => {
   return (
     <div>
-      <ProductContextProvider>
-        <ProductDetailPage product={product} />
-      </ProductContextProvider>
+      <CartContextProvider>
+        <ProductContextProvider>
+          <ProductDetailPage product={product} />
+        </ProductContextProvider>
+      </CartContextProvider>
     </div>
   );
 };

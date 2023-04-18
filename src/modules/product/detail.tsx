@@ -1,17 +1,39 @@
-import React, { useEffect } from "react";
-import { ApTextInput, Headernav } from "../../components";
+import React, { useEffect, useRef, useState } from "react";
+import { ApPlusMinusInput, ApTextInput, Headernav } from "../../components";
 import { useProductState } from "./context";
 import { IProduct } from "./model";
-import { Form, Formik } from "formik";
-import { Button, Card, Grid } from "antd";
-import ButtonGroup from "antd/es/button/button-group";
+import { Form, Formik, FormikProps, useField } from "formik";
+import { Button, Card, Grid, Space } from "antd";
+import { getCookie } from "../../helper";
+import { useCartState } from "../cart/context";
+import { useRouter } from "next/router";
 
 interface IProps {
   product: IProduct;
 }
 
 export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
+  const { addToCart, loading } = useCartState();
   console.log(product);
+  const formRef = useRef<FormikProps<any>>();
+  const [qty, setQty] = useState<any>(1);
+  const router = useRouter();
+  // const [field, meta, { setValue }] = useField(qty);
+
+  useEffect(() => {
+    setQty(qty);
+  }, [qty]);
+  console.log(qty);
+  const handleAddToCart = async (values: any) => {
+    const userId = getCookie("user_id");
+    console.log(values.quantity, userId);
+    const res: any = await addToCart({
+      product: { quantity: values.quantity, productId: product._id },
+      userId,
+    });
+    console.log(res);
+    if (res) router.push("/cart");
+  };
   return (
     <div>
       <Headernav />
@@ -61,56 +83,85 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
             <div className="mt-4 lg:row-span-3 lg:mt-0">
               {/* Reviews */}
 
-              <Formik initialValues={{}} onSubmit={() => {}}>
-                <Form className="mt-10">
-                  {/* Quantity */}
-                  <ButtonGroup className="flex items-center">
-                    <Button
-                      type="text"
-                      className="  text-blue-600 text-base font-medium "
-                    >
-                      -
-                    </Button>
-                    <ApTextInput name="quantity" type="text" />
-                    <Button
-                      type="text"
-                      className=" text-blue-600 text-base font-medium "
-                    >
-                      +
-                    </Button>
-                  </ButtonGroup>
-
-                  {/* Sizes */}
-                  <div className="mt-10">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-sm font-medium text-gray-900">
-                        Size
-                      </h3>
-                      <a
-                        href="#"
-                        className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+              <Formik
+                innerRef={formRef as any}
+                initialValues={{ quantity: qty }}
+                onSubmit={handleAddToCart}
+              >
+                {({ values, setFieldValue }) => (
+                  <Form className="mt-10">
+                    {/* Quantity */}
+                    {/* <Space className="flex items-center">
+                      <Button
+                        htmlType="button"
+                        className="  text-blue-600 text-base font-medium "
+                        onClick={() => {
+                          if (qty > 0) {
+                            setQty(qty - 1);
+                            console.log(qty, "minus value");
+                          }
+                        }}
+                        // value={qty}
                       >
-                        Size guide
-                      </a>
-                    </div>
-                  </div>
+                        -
+                      </Button>
+                      <ApTextInput name="quantity" type="button" />
+                      <Button
+                        htmlType="button"
+                        // value={qty}
+                        // htmlType="button"
+                        className=" text-blue-600 text-base font-medium "
+                        onClick={() => {
+                          if (qty) {
+                            setQty(qty + 1);
+                          }
+                          console.log(qty, "plus value");
+                        }}
+                        disabled={qty === product?.quantity ? true : false}
+                      >
+                        +
+                      </Button>
+                    </Space> */}
+                    <ApPlusMinusInput
+                      name="quantity"
+                      label="Quantity"
+                      onChange={(val: any) => setQty(val)}
+                      disable={qty === product?.quantity ? true : false}
+                    />
 
-                  <div className="flex w-full gap-4">
-                    <Button
-                      htmlType="submit"
-                      type="text"
-                      className="mt-10 flex w-full p-6 items-center justify-center rounded-md border border-transparent bg-gray-200  text-base font-medium text-black "
-                    >
-                      Add to cart
-                    </Button>
-                    <Button
-                      type="primary"
-                      className="mt-10 flex w-full p-6 items-center justify-center rounded-md border border-transparent bg-blue-600 text-base font-medium text-white "
-                    >
-                      Buy Now
-                    </Button>
-                  </div>
-                </Form>
+                    {/* Sizes */}
+                    <div className="mt-10">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-sm font-medium text-gray-900">
+                          Size
+                        </h3>
+                        <a
+                          href="#"
+                          className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                        >
+                          Size guide
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="flex w-full gap-4">
+                      <Button
+                        htmlType="submit"
+                        type="text"
+                        loading={loading}
+                        className="mt-10 flex w-full p-6 items-center justify-center rounded-md border border-transparent bg-gray-200  text-base font-medium text-black "
+                      >
+                        Add to cart
+                      </Button>
+                      <Button
+                        type="primary"
+                        className="mt-10 flex w-full p-6 items-center justify-center rounded-md border border-transparent bg-blue-600 text-base font-medium text-white "
+                      >
+                        Buy Now
+                      </Button>
+                    </div>
+                  </Form>
+                )}
               </Formik>
             </div>
           </div>
