@@ -38,6 +38,16 @@ export async function getServerSideProps({
   });
   const product = data?.res?.data?.data;
   if (!product) return new Error("Unauthorised");
+
+  if (!req?.cookies.user_id) {
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permenant: false,
+      },
+    };
+  }
+
   return {
     props: { product },
   };

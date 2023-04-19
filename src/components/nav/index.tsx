@@ -107,7 +107,10 @@ export const Headernav = () => {
               <div className="ml-auto flex items-center">
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <Link href="#" className="group -m-2 flex items-center p-2">
+                  <Link
+                    href="/cart"
+                    className="group -m-2 flex items-center p-2"
+                  >
                     <span>Cart</span>
                     <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
                       {carts?.length}
