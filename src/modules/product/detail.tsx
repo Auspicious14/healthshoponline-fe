@@ -28,7 +28,10 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
     const userId = getCookie("user_id");
     console.log(values.quantity, userId);
     const res: any = await addToCart({
-      product: { quantity: values.quantity, productId: product._id },
+      product: {
+        quantity: values.quantity,
+        id: product._id,
+      },
       userId,
     });
     console.log(res);
@@ -67,7 +70,7 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
 
           {/* Product info */}
           <div className="w-[50%]">
-            <h1 className="pb-4 text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+            <h1 className="pb-4 capitalize text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
               {product.name}
             </h1>
             <p className="pb-4 text-lg font-bold tracking-tight text-blue-600">
