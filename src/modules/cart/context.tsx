@@ -97,7 +97,7 @@ export const CartContextProvider: React.FC<IProps> = ({ children }) => {
       setLoading(false);
       const data = await res.res?.data;
       if (data) {
-        setCarts(data.data);
+        setCarts(carts?.filter((c, i) => c._id !== cartId));
         console.log(data.data);
         toast.success(data.data.message);
       }
