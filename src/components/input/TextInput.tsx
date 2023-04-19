@@ -31,10 +31,10 @@ export const ApTextInput: React.FC<IProps> = ({
 
   return (
     <div
-      style={{ marginBottom: 10, display: "flex", flexDirection: "column" }}
-      className={containerClass}
+      // style={{ marginBottom: 10, display: "flex", flexDirection: "column" }}
+      className={`mb-[10] flex ${containerClass}`}
     >
-      <label>{label}</label>
+      {label && <label>{label}</label>}
       {type == "textarea" ? (
         <textarea
           className={`w-full p-4 mb-2 bg-stone-50 border ${className}`}
