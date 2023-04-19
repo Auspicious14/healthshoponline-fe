@@ -1,9 +1,8 @@
 import React, { Fragment, useState } from "react";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
-
 import { Input } from "antd";
-// import Search from "antd/es/input/Search";
 import Link from "next/link";
+import { useCartState } from "../../modules/cart/context";
 
 const { Search } = Input;
 function classNames(...classes: any) {
@@ -11,6 +10,7 @@ function classNames(...classes: any) {
 }
 export const Headernav = () => {
   const [open, setOpen] = useState(false);
+  const { carts } = useCartState();
   return (
     <div className="bg-white">
       {/* Mobile menu */}
@@ -110,7 +110,7 @@ export const Headernav = () => {
                   <Link href="#" className="group -m-2 flex items-center p-2">
                     <span>Cart</span>
                     <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                      0
+                      {carts?.length}
                     </span>
                   </Link>
                 </div>
