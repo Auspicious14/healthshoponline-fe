@@ -6,8 +6,9 @@ import { toast } from "react-toastify";
 interface ICartState {
   loading: boolean;
   cart: ICart;
+  carts: ICart[];
   addToCart: (payload: any) => Promise<void>;
-  updateCartItem: (payload: ICart, cartId: string) => Promise<void>;
+  updateCartItem: (payload: any, cartId: string) => Promise<void>;
   deleteCartItem: (cartId: string) => Promise<void>;
   getCart: (userId: string) => Promise<void>;
 }
@@ -15,6 +16,7 @@ interface ICartState {
 const CartContext = React.createContext<ICartState>({
   loading: false,
   cart: {} as any,
+  carts: [],
   getCart(payload) {
     return null as any;
   },
@@ -43,19 +45,22 @@ interface IProps {
 }
 export const CartContextProvider: React.FC<IProps> = ({ children }) => {
   const [cart, setcart] = useState<ICart>() as any;
+  const [carts, setCarts] = useState<ICart[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const getCart = async (userId: string) => {
+  const getCart = async (id: string) => {
     setLoading(true);
-    console.log(JSON.stringify(userId));
+    // console.log(JSON.stringify(userId));
     try {
-      const res = await fetch(`http://localhost:2000/cart/:${userId}`, {
+      const res = await apiReqHandler({
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/cart/${id}`,
         method: "GET",
       });
       setLoading(false);
-      const data = await res.json();
-      setcart(data);
-      console.log(data);
+      const data = await res.res?.data;
+      setCarts(data.data);
+      console.log(data.data);
+      return data;
     } catch (error) {
       console.log(error);
     }
@@ -84,31 +89,35 @@ export const CartContextProvider: React.FC<IProps> = ({ children }) => {
   const deleteCartItem = async (cartId: string) => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:2000/cart/${cartId}`, {
+      const res = await apiReqHandler({
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/cart/${cartId}`,
         method: "DELETE",
       });
 
       setLoading(false);
-      const data = await res.json();
-      setcart(data);
-      console.log(data);
+      const data = await res.res?.data;
+      if (data) {
+        setCarts(data.data);
+        console.log(data.data);
+        toast.success(data.data.message);
+      }
+      return data;
     } catch (error) {
       console.log(error);
     }
   };
-  const updateCartItem = async (payload: ICart, cartId: string) => {
+  const updateCartItem = async (payload: any, cartId: string) => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:2000/cart/${cartId}`, {
+      const res = await apiReqHandler({
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/cart/${cartId}`,
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        payload: JSON.stringify(payload),
       });
 
       setLoading(false);
-      const data = await res.json();
-      setcart(data);
-      console.log(data);
+      const data = await res?.res?.data;
+      setcart(data.data);
     } catch (error) {
       console.log(error);
     }
@@ -119,6 +128,7 @@ export const CartContextProvider: React.FC<IProps> = ({ children }) => {
       value={{
         loading,
         cart,
+        carts,
         getCart,
         addToCart,
         updateCartItem,
