@@ -16,6 +16,8 @@ export const CartPage = () => {
   const subTotal = carts
     ?.map((c) => c?.product?.product?.price)
     ?.reduce((a, b) => a + b, 0);
+  const total = carts?.map((c) => c.product.product.price * c.product.quantity);
+  const overallTotal = total.map((t) => t).reduce((a, b) => a + b, 0);
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     console.log("selectedRowKeys changed: ", newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
@@ -120,7 +122,7 @@ export const CartPage = () => {
             <div className="w-full pb-8 border-b ">
               <div className="flex justify-between items-center pb-4">
                 <Text className="text-gray-400">Subtotal</Text>
-                <Text className="font-semibold">{subTotal}</Text>
+                <Text className="font-semibold">{overallTotal}</Text>
               </div>
               <div className="flex justify-between items-center ">
                 <Text className="text-gray-400">Free Delivery</Text>
@@ -130,7 +132,7 @@ export const CartPage = () => {
             <div>
               <div className="flex justify-between items-center py-4">
                 <Text className="text-gray-300">Total</Text>
-                <Text className="font-semibold">{subTotal}</Text>
+                <Text className="font-semibold">{overallTotal}</Text>
               </div>
               <Button className="w-full" type="primary" href={"/checkout"}>
                 Proceed to Checkout
