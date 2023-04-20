@@ -1,11 +1,11 @@
-import { IProduct } from "../product/model";
+import { ICart } from "../cart/model";
 
 export interface IOrder {
   id: string;
   userId: string;
-  products: IProduct[];
+  cart: ICart;
   amount: string;
-  address: string;
+  address: IAddress;
   status: IOrderStatus;
 }
 
@@ -14,4 +14,13 @@ export enum IOrderStatus {
   confirmed = "confirmed",
   packed = "packed",
   shipped = "shipped",
+}
+
+export interface IAddress {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  postalCode: string;
+  city: string;
+  address: string;
 }

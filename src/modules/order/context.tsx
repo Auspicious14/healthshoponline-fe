@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { IOrder } from "./model";
+import { apiReqHandler } from "../../components";
+import { toast } from "react-toastify";
 
 interface IOrderState {
   loading: boolean;
   order: IOrder;
   orders: IOrder[];
-  createOrder: (payload: IOrder) => Promise<void>;
+  createOrder: (payload: any) => Promise<void>;
   updateOrderItem: (payload: IOrder, orderId: string) => Promise<void>;
   deleteOrderItem: (orderId: string) => Promise<void>;
   getAllOrders: (userId: string) => Promise<void>;
@@ -61,21 +63,26 @@ export const OrderContextProvider: React.FC<IProps> = ({ children }) => {
     }
   };
 
-  const createOrder = async (payload: IOrder) => {
+  const createOrder = async (payload: any) => {
     setLoading(true);
     console.log(JSON.stringify(payload));
     try {
-      const res = await fetch(`http://localhost:2000/order}`, {
+      const res = await apiReqHandler({
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/order`,
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        payload: JSON.stringify(payload),
       });
       setLoading(false);
-      const data = await res.json();
-      setOrders([...data, orders]);
-      console.log(data);
-    } catch (error) {
+      const data = await res.res?.data;
+      if (data) {
+        toast.success("Order successfully placed.");
+        setOrders(data.data);
+        console.log(data.data);
+      }
+      return data;
+    } catch (error: any) {
       console.log(error);
+      toast.error(error);
     }
   };
 
