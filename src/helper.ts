@@ -34,5 +34,11 @@ export function getCookie(name: string) {
   return null;
 }
 
+export const helper = {
+  toCurrency: (val: number, currency = "$") => {
+    if (!val) return `${currency} 0.0`;
+    return currency + val?.toFixed(2)?.replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+  },
+};
 // setCookie("user_email","bobthegreat@gmail.com",30); //set "user_email" cookie, expires in 30 days
 // const userID=getCookie("uuid");//"jbjkbkbjh
