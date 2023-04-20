@@ -48,7 +48,7 @@ export const SignInPage = () => {
           {(props: FormikProps<any>) => (
             <Form className=" Form card px-4 ">
               <ApTextInput
-                className="relative flex-col block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                className="relative bg-stone-50 flex-col block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                 label="Email"
                 name="email"
                 type="email"
@@ -57,7 +57,7 @@ export const SignInPage = () => {
               />
 
               <ApTextInput
-                className="relative block flex-col w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                className="relative bg-stone-50 block flex-col w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                 label="Password"
                 name="password"
                 type="password"
@@ -74,7 +74,6 @@ export const SignInPage = () => {
                 size="large"
                 htmlType="submit"
                 loading={loading}
-                containerClass="flex-col"
                 className="group relative flex w-full justify-center rounded-md bg-[#2158E8] px-3 py-2 my-4 text-sm font-semibold text-white hover:bg-blue-500"
               >
                 Sign in

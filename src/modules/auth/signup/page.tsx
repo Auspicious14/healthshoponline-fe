@@ -43,7 +43,7 @@ export const SignUpPage = () => {
           {(props: FormikProps<any>) => (
             <Form className=" Form card px-4 ">
               <ApTextInput
-                className="relative flex-col block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                className="relative bg-stone-50 flex-col block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                 label="First Name"
                 name="firstName"
                 type="text"
@@ -51,7 +51,7 @@ export const SignUpPage = () => {
                 containerClass="flex-col"
               />
               <ApTextInput
-                className="relative flex-col block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                className="relative bg-stone-50 flex-col block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 label="Last Name"
                 name="lastName"
                 type="text"
@@ -59,7 +59,7 @@ export const SignUpPage = () => {
                 containerClass="flex-col"
               />
               <ApTextInput
-                className="relative flex-col block w-full rounded-md border-0 py-1.5 px-2 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 outline-blue-500 sm:text-sm sm:leading-6"
+                className="relative bg-stone-50 flex-col block w-full rounded-md border-0 py-1.5 px-2 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 outline-blue-500 sm:text-sm sm:leading-6"
                 label="Email"
                 name="email"
                 type="email"
@@ -68,7 +68,7 @@ export const SignUpPage = () => {
               />
 
               <ApTextInput
-                className="relative flex-col block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500  ring-1 ring-inset ring-gray-200 sm:text-sm sm:leading-6"
+                className="relative bg-stone-50 flex-col block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500  ring-1 ring-inset ring-gray-200 sm:text-sm sm:leading-6"
                 label="Password"
                 name="password"
                 type="password"
