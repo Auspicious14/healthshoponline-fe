@@ -50,21 +50,21 @@ export const ResetPasswordPage = () => {
           {(props: FormikProps<any>) => (
             <Form className=" Form card px-4 ">
               <ApTextInput
-                className="relative block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                className="relative bg-stone-50 block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                 label="email"
                 name="email"
                 type="text"
                 placeHolder="enter your email"
               />
               <ApTextInput
-                className="relative block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                className="relative bg-stone-50 block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                 label="New password"
                 name="newPassword"
                 type="password"
                 placeHolder="*******"
               />
               <ApTextInput
-                className="relative block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                className="relative bg-stone-50 block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                 label="confirm new password"
                 name="confirmNewPassword"
                 type="password"

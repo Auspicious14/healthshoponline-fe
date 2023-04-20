@@ -5,7 +5,7 @@ import { ColumnsType } from "antd/es/table";
 import { DeleteFilled } from "@ant-design/icons";
 import { ICart } from "./model";
 import { useCartState } from "./context";
-import { getCookie } from "../../helper";
+import { getCookie, helper } from "../../helper";
 import { Form, Formik } from "formik";
 const { Text } = Typography;
 
@@ -14,9 +14,11 @@ export const CartPage = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [qty, setQty] = useState<number>(1);
   const subTotal = carts
-    ?.map((c) => c?.product?.product?.price)
+    ?.map((c) => parseFloat(c?.product?.product?.price))
     ?.reduce((a, b) => a + b, 0);
-  const total = carts?.map((c) => c.product.product.price * c.product.quantity);
+  const total = carts?.map(
+    (c) => parseFloat(c?.product?.product?.price) * c.product.quantity
+  );
   const overallTotal = total.map((t) => t).reduce((a, b) => a + b, 0);
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     console.log("selectedRowKeys changed: ", newSelectedRowKeys);
@@ -89,7 +91,7 @@ export const CartPage = () => {
       key: "Total",
       render: (_, { _id, product }) => (
         <Text className="font-semibold">
-          {product.product.price * product.quantity}
+          {parseFloat(product?.product?.price) * product.quantity}
         </Text>
       ),
     },
@@ -122,17 +124,21 @@ export const CartPage = () => {
             <div className="w-full pb-8 border-b ">
               <div className="flex justify-between items-center pb-4">
                 <Text className="text-gray-400">Subtotal</Text>
-                <Text className="font-semibold">{overallTotal}</Text>
+                <Text className="font-semibold">
+                  {helper.toCurrency(overallTotal)}
+                </Text>
               </div>
               <div className="flex justify-between items-center ">
                 <Text className="text-gray-400">Free Delivery</Text>
-                <Text className="font-semibold">0.00</Text>
+                <Text className="font-semibold">{helper.toCurrency(0)}</Text>
               </div>
             </div>
             <div>
               <div className="flex justify-between items-center py-4">
                 <Text className="text-gray-300">Total</Text>
-                <Text className="font-semibold">{overallTotal}</Text>
+                <Text className="font-semibold">
+                  {helper.toCurrency(overallTotal)}
+                </Text>
               </div>
               <Button className="w-full" type="primary" href={"/checkout"}>
                 Proceed to Checkout
