@@ -11,7 +11,7 @@ const { Text } = Typography;
 
 export const CheckoutPage = () => {
   const { orders, createOrder, loading } = useOrderState();
-  const { carts, getCart } = useCartState();
+  const { carts, getCart, emptyCart } = useCartState();
   const router = useRouter();
 
   const subTotal = carts
@@ -34,7 +34,10 @@ export const CheckoutPage = () => {
     const id = getCookie("user_id");
     const res: any = await createOrder({ id, amount, ...otherValues });
     console.log(res);
-    if (res) router.push("/payment");
+    if (res) {
+      emptyCart(id);
+      router.push("/payment");
+    }
   };
 
   return (
@@ -73,7 +76,7 @@ export const CheckoutPage = () => {
                       className="relative bg-stone-50 flex-col block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                       label="Phone Number"
                       name={"address.phoneNumber"}
-                      type="number"
+                      type="tel"
                       placeHolder="+234"
                       containerClass="flex-col"
                     />

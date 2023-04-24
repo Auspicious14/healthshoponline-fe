@@ -11,6 +11,7 @@ interface ICartState {
   updateCartItem: (payload: any, cartId: string) => Promise<void>;
   deleteCartItem: (cartId: string) => Promise<void>;
   getCart: (userId: string) => Promise<void>;
+  emptyCart: (userId: string) => Promise<void>;
 }
 
 const CartContext = React.createContext<ICartState>({
@@ -27,6 +28,9 @@ const CartContext = React.createContext<ICartState>({
     return null as any;
   },
   deleteCartItem(cartId) {
+    return null as any;
+  },
+  emptyCart(userId) {
     return null as any;
   },
 });
@@ -117,12 +121,36 @@ export const CartContextProvider: React.FC<IProps> = ({ children }) => {
 
       setLoading(false);
       const data = await res?.res?.data;
-      setcart(data.data);
+      if (data) {
+        setCarts(carts?.map((c) => (c._id == data?._id ? data : c)));
+        console.log(data);
+      }
+      return data;
     } catch (error) {
       console.log(error);
     }
   };
 
+  const emptyCart = async (userId: string) => {
+    setLoading(true);
+    try {
+      const res = await apiReqHandler({
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/cart/${userId}`,
+        method: "GET",
+        // payload: JSON.stringify(payload),
+      });
+
+      setLoading(false);
+      const data = await res?.res?.data;
+      if (data) {
+        // setCarts(carts?.map((c) => (c._id == data?._id ? data : c)));
+        console.log(data);
+      }
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <CartContext.Provider
       value={{
@@ -133,6 +161,7 @@ export const CartContextProvider: React.FC<IProps> = ({ children }) => {
         addToCart,
         updateCartItem,
         deleteCartItem,
+        emptyCart,
       }}
     >
       {children}

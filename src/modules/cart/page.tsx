@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { ApPlusMinusInput, Headernav } from "../../components";
-import { Button, Card, Space, Table, Typography } from "antd";
+import { ApImage, ApPlusMinusInput, Headernav } from "../../components";
+import { Button, Card, Popconfirm, Space, Table, Typography } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { DeleteFilled } from "@ant-design/icons";
 import { ICart } from "./model";
 import { useCartState } from "./context";
 import { getCookie, helper } from "../../helper";
 import { Form, Formik } from "formik";
+import { toast } from "react-toastify";
 const { Text } = Typography;
 
 export const CartPage = () => {
@@ -38,7 +39,11 @@ export const CartPage = () => {
       title: "Image",
       key: "image",
       render: (_, { product }) => (
-        <img className="w-12 h-12" src={product?.product?.images[0]?.uri} />
+        <img
+          className="w-12 h-12"
+          src={product?.product?.images[0]?.uri}
+          alt={product?.product?.images[0]?.uri}
+        />
       ),
     },
 
@@ -70,13 +75,16 @@ export const CartPage = () => {
                   name="quantity"
                   btnClassName=" h-7 font-bold text-base"
                   inputClassName=" h-8 py-2 px-10 bg-white font-extrabold"
-                  onChange={(val) => {
+                  onChange={async (val) => {
                     setQty(val);
-                    if (val !== product?.quantity)
-                      updateCartItem(
+                    if (val !== product?.quantity) {
+                      const res: any = await updateCartItem(
                         { product: { ...product, quantity: val } },
                         _id
                       );
+                      console.log(res);
+                      if (res) toast.success("Quantity updated");
+                    }
                   }}
                   disable={qty == product?.product?.quantity ? true : false}
                 />
@@ -100,9 +108,15 @@ export const CartPage = () => {
       title: "",
       key: "action",
       render: (_, { _id }) => (
-        <Space size="middle">
-          <DeleteFilled onClick={() => deleteCartItem(_id)} />
-        </Space>
+        <Popconfirm
+          title="Sure to delete?"
+          onConfirm={() => deleteCartItem(_id)}
+          okButtonProps={{
+            style: { background: "rgb(37 99 235)" },
+          }}
+        >
+          <DeleteFilled />
+        </Popconfirm>
       ),
     },
   ];

@@ -26,9 +26,9 @@ export const ApPlusMinusInput: React.FC<IProps> = (props) => {
         {label}
       </label>
 
-      <div className="flex ">
+      <div className="flex items-center">
         <Button
-          className="text-blue-600 border-none text-lg font-medium "
+          className="text-blue-600  border-none text-lg font-medium "
           htmlType="button"
           onClick={() => {
             if (field.value && field.value > 1) {
@@ -39,11 +39,10 @@ export const ApPlusMinusInput: React.FC<IProps> = (props) => {
           -
         </Button>
         <ApTextInput
-          className={`w-8 h-8 mx-2 rounded-full bg-blue-600 text-white`}
+          className={`w-10 h-10 mx-2 mt-2.5 rounded-full bg-blue-600 text-white`}
           name="quantity"
           type="button"
-
-          // containerClass="flex-col"
+          containerClass="flex items-center"
         />
         <Button
           className="text-blue-600 border-none text-lg font-medium "
