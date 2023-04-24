@@ -7,7 +7,7 @@ import { ApBackgroundImage, ApTextInput } from "../../../components";
 import { useSignInState } from "./context";
 import { ISignIn } from "./model";
 import { Button } from "antd";
-import Vector from "../../../../public/images/unsplash_MU70DTGr7d0.png";
+import Vector from "../../../../public/images/Section3.png";
 import { toast } from "react-toastify";
 
 const FormSchema = Yup.object().shape({
@@ -21,8 +21,7 @@ export const SignInPage = () => {
   const handleSubmit = async (values: ISignIn) => {
     const res = handleSignIn(values);
     res.then((rs: any) => {
-      if (!rs) return toast.error("Error");
-      router.push("/");
+      if (rs.user) router.push("/");
     });
   };
 
@@ -48,21 +47,21 @@ export const SignInPage = () => {
           {(props: FormikProps<any>) => (
             <Form className=" Form card px-4 ">
               <ApTextInput
-                className="relative bg-stone-50 flex-col block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                className="relative block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                 label="Email"
                 name="email"
                 type="email"
-                placeHolder="Username"
-                containerClass="flex-col"
+                placeHolder="johndoe@gmail.com"
+                containerClass="flex flex-col"
               />
 
               <ApTextInput
-                className="relative bg-stone-50 block flex-col w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                className="relative block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                 label="Password"
                 name="password"
                 type="password"
-                containerClass="flex-col"
                 placeHolder="*******"
+                containerClass="flex flex-col"
               />
               <div className="flex justify-end text-sm">
                 <Button type="link" href={"/auth/forgetpassword"}>
@@ -79,7 +78,7 @@ export const SignInPage = () => {
                 Sign in
               </Button>
               <div className="flex justify-center items-center">
-                <span>Don't have an account?</span>
+                <span>{"Don't have an account?"}</span>
                 <Button type="link" href={"/auth/signup"}>
                   Sign up
                 </Button>
@@ -91,10 +90,7 @@ export const SignInPage = () => {
       <ApBackgroundImage
         src={Vector.src}
         className={"text-white text-5xl text-justify px-8"}
-      >
-        “We’ve been using Untitled to kick start every new project and can’t
-        imagine working without it.”
-      </ApBackgroundImage>
+      ></ApBackgroundImage>
     </div>
   );
 };

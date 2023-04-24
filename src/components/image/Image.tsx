@@ -1,4 +1,4 @@
-import Image, { ImageProps } from "next/image";
+import Image, { ImageProps, StaticImageData } from "next/image";
 import React from "react";
 import backgroundImage from "../../../public/images/subtract.png";
 interface IProps extends ImageProps {}
@@ -20,20 +20,22 @@ export const ApImage: React.FC<IProps> = (props: IProps) => {
 interface IImageProps {
   children?: React.ReactNode;
   className?: string;
+  src: string | StaticImageData;
 }
 export const ApBackgroundImage: React.FC<IImageProps> = ({
   children,
   className,
+  src,
 }) => {
   return (
     <>
       <div
         style={{
-          backgroundImage: `url(${backgroundImage.src})`,
+          backgroundImage: `url(${src})`,
           backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          width: "100%",
-          height: "30rem",
+          backgroundSize: " cover",
+          width: "50%",
+          height: "40.8rem",
           margin: "0%",
           display: "flex",
           justifyContent: "center",

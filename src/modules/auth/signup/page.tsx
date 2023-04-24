@@ -4,14 +4,14 @@ import React from "react";
 import * as Yup from "yup";
 import { ApBackgroundImage, ApTextInput } from "../../../components";
 import { useSignUpState } from "./context";
-import Section from "../../../../public/images/Section.png";
+import Section from "../../../../public/images/Sections.png";
 import { Button } from "antd";
 
 const FormSchema = Yup.object().shape({
-  firstName: Yup.string().required("Name is required"),
-  lastName: Yup.string().required("Name is required"),
-  email: Yup.string().required("email is required").email(),
-  password: Yup.string().required("password is required").min(6),
+  firstName: Yup.string().required("First Name is required"),
+  lastName: Yup.string().required("LastName is required"),
+  email: Yup.string().required("Email is required").email(),
+  password: Yup.string().required("Password is required").min(6),
 });
 
 export const SignUpPage = () => {
@@ -19,15 +19,14 @@ export const SignUpPage = () => {
   const router = useRouter();
   const handleSubmit = async (values: any) => {
     const res = handleSignUp(values);
-    res.then((res) => {
-      console.log(res);
-      router.push("/auth/login");
+    res.then((rs: any) => {
+      if (rs.user) router.push("/auth/login");
     });
   };
   return (
-    <div className="flex justify-between">
+    <div className=" flex justify-between">
       <div className="ml-32 mt-12 w-1/4">
-        <h2 className="my-6  text-center text-3xl font-bold tracking-tight text-gray-900">
+        <h2 className="my-6 mx-4 text-3xl font-bold tracking-tight text-gray-900">
           Sign up
         </h2>
         <Formik
@@ -43,37 +42,37 @@ export const SignUpPage = () => {
           {(props: FormikProps<any>) => (
             <Form className=" Form card px-4 ">
               <ApTextInput
-                className="relative bg-stone-50 flex-col block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                className="relative block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                 label="First Name"
                 name="firstName"
                 type="text"
                 placeHolder="First Name"
-                containerClass="flex-col"
+                containerClass="flex flex-col"
               />
               <ApTextInput
-                className="relative bg-stone-50 flex-col block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                className="relative block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 label="Last Name"
                 name="lastName"
                 type="text"
                 placeHolder="Last Name"
-                containerClass="flex-col"
+                containerClass="flex flex-col"
               />
               <ApTextInput
-                className="relative bg-stone-50 flex-col block w-full rounded-md border-0 py-1.5 px-2 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 outline-blue-500 sm:text-sm sm:leading-6"
+                className="relative block w-full rounded-md border-0 py-1.5 px-2 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 outline-blue-500 sm:text-sm sm:leading-6"
                 label="Email"
                 name="email"
                 type="email"
-                placeHolder="Username"
-                containerClass="flex-col"
+                placeHolder="johndoe@gmail.com"
+                containerClass="flex flex-col"
               />
 
               <ApTextInput
-                className="relative bg-stone-50 flex-col block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500  ring-1 ring-inset ring-gray-200 sm:text-sm sm:leading-6"
+                className="relative block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500  ring-1 ring-inset ring-gray-200 sm:text-sm sm:leading-6"
                 label="Password"
                 name="password"
                 type="password"
                 placeHolder="*******"
-                containerClass="flex-col"
+                containerClass="flex flex-col"
               />
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
@@ -113,31 +112,6 @@ export const SignUpPage = () => {
         </Formik>
       </div>
       <ApBackgroundImage src={Section.src} />
-      {/* <div className="bg-gray-700  text-left text-gray-100 w-1/2 h-screen">
-        <ApImage
-          src={Star}
-          width={100}
-          height={100}
-          alt={"star"}
-          className="mt-24 mx-12"
-        />
-        <div className="mx-24 mt-12">
-          <span className="text-6xl ">
-            Start turning your ideas into reality
-          </span>
-          <p className="text-[#EAECF0]  mt-12 text-justify">
-            Create a free account and get full access to all features for
-            30-days. No credit card needed. Get started in 2 minutes.
-          </p>
-        </div>
-        <ApImage
-          src={Vector}
-          width={300}
-          height={300}
-          alt={"star"}
-          className="relative right-48"
-        />
-      </div> */}
     </div>
   );
 };
