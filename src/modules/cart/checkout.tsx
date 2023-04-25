@@ -35,7 +35,8 @@ export const CheckoutPage = () => {
     const res: any = await createOrder({ id, amount, ...otherValues });
     console.log(res);
     if (res) {
-      emptyCart(id);
+      const response = await emptyCart(id);
+      console.log(response, "emptycart");
       router.push("/payment");
     }
   };

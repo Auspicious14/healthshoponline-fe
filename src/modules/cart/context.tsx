@@ -131,12 +131,12 @@ export const CartContextProvider: React.FC<IProps> = ({ children }) => {
     }
   };
 
-  const emptyCart = async (userId: string) => {
+  const emptyCart = async (id: string) => {
     setLoading(true);
     try {
       const res = await apiReqHandler({
-        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/cart/${userId}`,
-        method: "GET",
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/cart/delete/${id}`,
+        method: "DELETE",
         // payload: JSON.stringify(payload),
       });
 
