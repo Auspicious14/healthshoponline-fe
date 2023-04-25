@@ -7,9 +7,9 @@ import {
 } from "../../components";
 import { Button, Input, Menu, MenuProps } from "antd";
 import { Typography } from "antd";
-
 import { useProductState } from "./context";
 import { ProductListItem } from "./components/item";
+import Woman from "../../../public/images/Image.png";
 import backgroundImage from "../../../public/images/subtract.png";
 
 const { Text } = Typography;
@@ -105,8 +105,17 @@ export const ProductPage = () => {
           </div>
         </div>
       </div>
-      <ApBackgroundImage>
-        <div className="w-[50%]  text-white text-center border border-none rounded-lg  p-12  bg-[#2158E8]">
+      <ApBackgroundImage
+        src={Woman.src}
+        style={{
+          width: "100%",
+          height: "30rem",
+          marginBlock: "2rem",
+          // marginLeft: "8rem",
+          marginRight: "8rem",
+        }}
+      >
+        {/* <div className="w-[50%]  text-white text-center border border-none rounded-lg  p-12  bg-[#2158E8]">
           <h1 className="m-auto text-4xl">
             Try Viagra V100 today and experience the power of a stronger and
             longer-lasting erection.
@@ -122,7 +131,7 @@ export const ProductPage = () => {
           >
             Shop Now
           </Button>
-        </div>
+        </div> */}
       </ApBackgroundImage>
       <Footer />
     </div>

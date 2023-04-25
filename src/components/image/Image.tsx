@@ -21,11 +21,13 @@ interface IImageProps {
   children?: React.ReactNode;
   className?: string;
   src: string | StaticImageData;
+  style?: any;
 }
 export const ApBackgroundImage: React.FC<IImageProps> = ({
   children,
   className,
   src,
+  style,
 }) => {
   return (
     <>
@@ -40,7 +42,9 @@ export const ApBackgroundImage: React.FC<IImageProps> = ({
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          ...style,
         }}
+        // style={style}
         className={className}
       >
         {children}
