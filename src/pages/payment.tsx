@@ -1,12 +1,15 @@
 import React from "react";
 import { CartContextProvider } from "../modules/cart/context";
 import { PaymentPage } from "../modules/payment/page";
+import { PaymentContextProvider } from "../modules/payment/context";
 
 const Payment = () => {
   return (
-    <CartContextProvider>
-      <PaymentPage />
-    </CartContextProvider>
+    <PaymentContextProvider>
+      <CartContextProvider>
+        <PaymentPage />
+      </CartContextProvider>
+    </PaymentContextProvider>
   );
 };
 

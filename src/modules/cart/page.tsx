@@ -130,7 +130,7 @@ export const CartPage = () => {
           <Table
             rowSelection={rowSelection}
             columns={columns}
-            dataSource={carts.length === 0 ? carts : []}
+            dataSource={carts.length > 0 ? carts : []}
             rowKey={(c) => c?._id}
             className="w-[60%]"
           />

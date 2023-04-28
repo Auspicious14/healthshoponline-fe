@@ -9,28 +9,17 @@ import { useCartState } from "../cart/context";
 import Visa from "../../../public/images/Payment method icon.png";
 import VisaIcon from "../../../public/images/Payment methodicon-visa - Copy.png";
 import { CheckoutListItem } from "../cart/components/checkoutitems";
+import { usePaymentState } from "./context";
 const { Text } = Typography;
 
 export const PaymentPage = () => {
-  // const { orders, createOrder, loading } = useOrderState();
-  const { carts, getCart, emptyCart, loading } = useCartState();
-  const router = useRouter();
-
-  const subTotal = carts
-    ?.map((c: any) => parseFloat(c?.product?.product?.price))
-    ?.reduce((a: any, b: any) => a + b, 0);
-  const total = carts?.map(
-    (c) => parseFloat(c?.product?.product?.price) * c.product.quantity
-  );
-  const overallTotal = total.map((t) => t).reduce((a, b) => a + b, 0);
-
-  useEffect(() => {
-    const id = getCookie("user_id");
-    getCart(id);
-  }, []);
-
+  const { loading, payWithPayStack } = usePaymentState();
+  const [link, setLink] = useState<string>("");
   const handleSubmit = async (values: any) => {
     console.log(values);
+    const res: any = await payWithPayStack(values);
+    console.log(res.authorization_url, res);
+    setLink(res?.authorization_url);
     // let { amount, ...otherValues } = values;
     // amount = overallTotal;
     // const id = getCookie("user_id");
@@ -76,10 +65,10 @@ export const PaymentPage = () => {
             </div>
             <Formik
               initialValues={{
-                cardNumber: "",
-                cardName: "",
-                expireDate: "",
-                cvv: "",
+                email: "",
+                // cardName: "",
+                // expireDate: "",
+                // cvv: "",
                 amount: "",
               }}
               onSubmit={handleSubmit}
@@ -88,21 +77,21 @@ export const PaymentPage = () => {
                 <Form className=" Form card px-4 ">
                   <ApTextInput
                     className="relative bg-stone-50 flex-col block w-full rounded-md border-0 py-2 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
-                    label="Card Number"
-                    name={"cardNumber"}
-                    type="number"
-                    placeHolder="1029"
+                    label="Email"
+                    name={"email"}
+                    type="email"
+                    placeHolder="johndoe@gmail.com"
                     containerClass="flex-col"
                   />
                   <ApTextInput
                     className="relative bg-stone-50 flex-col block w-full rounded-md border-0 py-2 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
-                    label="Card Name"
-                    name={"cardName"}
-                    type="text"
-                    placeHolder="john doe"
+                    label="Amount"
+                    name={"amount"}
+                    type="number"
+                    placeHolder="1029"
                     containerClass="flex-col"
                   />
-                  <Space className="flex justify-between items-center gap-4 w-full">
+                  {/* <Space className="flex justify-between items-center gap-4 w-full">
                     <ApTextInput
                       className="relative bg-stone-50 flex-col block w-full rounded-md border-0 py-2 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                       label="Expire Date"
@@ -119,7 +108,7 @@ export const PaymentPage = () => {
                       placeHolder="200"
                       containerClass="flex-col"
                     />
-                  </Space>
+                  </Space> */}
                   <Button
                     type="primary"
                     size="large"
@@ -127,39 +116,16 @@ export const PaymentPage = () => {
                     loading={loading}
                     className="group relative flex w-full justify-center rounded-md bg-[#2158E8] px-3 py-2 my-4 text-sm font-semibold text-white hover:bg-blue-500"
                   >
-                    Place Order
+                    Pay now
                   </Button>
                 </Form>
               )}
             </Formik>
-          </Card>
-          <Card title={"ORDER SUMMARY"} type="inner" className="w-[40%]">
-            {carts?.map((c) => (
-              <CheckoutListItem cart={c} key={c?._id} />
-            ))}
-            <div className="w-full pb-8 border-b ">
-              <div className="flex justify-between items-center pb-4">
-                <Text className="text-gray-400">Subtotal</Text>
-                <Text className="font-semibold">
-                  {helper.toCurrency(overallTotal)}
-                </Text>
-              </div>
-              <div className="flex justify-between items-center ">
-                <Text className="text-gray-400">Free Delivery</Text>
-                <Text className="font-semibold">{helper.toCurrency(0)}</Text>
-              </div>
-            </div>
-            <div>
-              <div className="flex justify-between items-center py-4">
-                <Text className="text-gray-300">Total</Text>
-                <Text className="font-semibold">
-                  {helper.toCurrency(overallTotal)}
-                </Text>
-              </div>
-              {/* <Button className="w-full" type="primary" href={"/checkout"}>
-                Proceed to Checkout
-              </Button> */}
-            </div>
+            {link.length > 0 && (
+              <Button type="link" htmlType="button" href={link} target="_blank">
+                Verify Payment
+              </Button>
+            )}
           </Card>
         </div>
       </div>
