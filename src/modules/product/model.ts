@@ -16,3 +16,9 @@ export interface IProductImage {
   name?: string;
   type?: string;
 }
+
+export interface IProductFilter {
+  brand: string;
+  category: string;
+  color: string;
+}

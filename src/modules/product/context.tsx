@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { apiReqHandler } from "../../components";
-import { IProduct } from "./model";
+import { IProduct, IProductFilter } from "./model";
 
 interface IProductState {
   loading: boolean;
   product: IProduct;
   products: IProduct[];
-  getProducts: () => Promise<void>;
+  getProducts: (filter?: any) => Promise<void>;
   getOneProduct: (productId: string) => Promise<void>;
   createProduct: (payload: IProduct) => Promise<void>;
   updateProduct: (payload: IProduct, productId: string) => Promise<void>;
@@ -49,13 +49,21 @@ interface IProps {
 export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
   const [product, setProduct] = useState<IProduct>() as any;
   const [products, setProducts] = useState<IProduct[]>([]);
+  const [filter, setFilter] = useState<IProductFilter>();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const getProducts = async () => {
+  const getProducts = async (filter?: IProductFilter) => {
     setLoading(true);
+    let url = `${process.env.NEXT_PUBLIC_API_ROUTE}/products`;
+    if (filter?.brand) {
+      url = `${url}?brand=${filter?.brand}`;
+    } else if (filter?.color) {
+      url = `${url}?color=${filter?.color}`;
+    }
+    console.log(filter?.brand);
     try {
       const res = await apiReqHandler({
-        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/products`,
+        endPoint: url,
         method: "GET",
       });
       setLoading(false);
