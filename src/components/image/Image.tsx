@@ -20,7 +20,7 @@ export const ApImage: React.FC<IProps> = (props: IProps) => {
 interface IImageProps {
   children?: React.ReactNode;
   className?: string;
-  src: string | StaticImageData;
+  src?: string | StaticImageData;
   style?: any;
 }
 export const ApBackgroundImage: React.FC<IImageProps> = ({
