@@ -11,11 +11,14 @@ import { useProductState } from "./context";
 import { ProductListItem } from "./components/item";
 import Woman from "../../../public/images/Image.png";
 import backgroundImage from "../../../public/images/subtract.png";
+import { IProduct, IProductFilter } from "./model";
+import { CategoryListItem } from "./components/category";
 
 const { Text } = Typography;
 const { Search } = Input;
 export const ProductPage = () => {
   const { products, getProducts, loading } = useProductState();
+  const [filter, setFilter] = useState<IProductFilter>();
   const [collapsed, setCollapsed] = useState<boolean>(false);
   useEffect(() => {
     getProducts();
@@ -26,7 +29,11 @@ export const ProductPage = () => {
   };
 
   const onClick: MenuProps["onClick"] = (e: any) => {
-    console.log("click ", e);
+    const name =
+      e?.item?.props?.children[1]?.props?.props?.children[1].props?.children;
+    getProducts(e?.key);
+    console.log(name);
+    console.log(e);
   };
   type MenuItem = Required<MenuProps>["items"][number];
 
@@ -46,17 +53,17 @@ export const ProductPage = () => {
 
   const items: MenuProps["items"] = [
     getItem("BRAND", "sub1", [
-      getItem("Option 5", "112"),
-      getItem("Option 6", "6"),
+      getItem("Kedi", "Kedi"),
+      getItem("Tuyil", "Tuyil"),
     ]),
 
-    getItem("DOSAGE FORM", "sub2", [
-      getItem("Option 5", "5"),
-      getItem("Option 6", "6"),
+    getItem("Color", "sub2", [
+      getItem("White", "White"),
+      getItem("Red", "Red"),
     ]),
 
-    getItem("WEIGHT", "sub4", [
-      getItem("Option 9", "9"),
+    getItem("Price", "sub4", [
+      getItem(["100", "10000"], "34"),
       getItem("Option 10", "10"),
       getItem("Option 11", "11"),
       getItem("Option 12", "12"),
@@ -80,14 +87,15 @@ export const ProductPage = () => {
         </div>
         <div className="flex w-full">
           <div className="w-[30%]">
-            <Menu
+            {/* <Menu
               onClick={onClick}
               style={{ width: 256 }}
               defaultSelectedKeys={["1"]}
               defaultOpenKeys={["sub1"]}
               mode="inline"
               items={items}
-            />
+            /> */}
+            <CategoryListItem />
           </div>
           <div className="w-[80%]">
             <div className="flex justify-between my-4">
