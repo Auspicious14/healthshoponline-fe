@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { apiReqHandler } from "../../components";
-import { IProduct, IProductFilter } from "./model";
+import { IProduct, IProductFilter, IReview } from "./model";
+import { toast } from "react-toastify";
 
 interface IProductState {
   loading: boolean;
   product: IProduct;
   products: IProduct[];
+  reviews: IReview[];
   getProducts: (filter?: any) => Promise<void>;
+  getReviews: (productId: string) => Promise<void>;
   getOneProduct: (productId: string) => Promise<void>;
   createProduct: (payload: IProduct) => Promise<void>;
+  createReview: (payload: IReview) => Promise<void>;
   updateProduct: (payload: IProduct, productId: string) => Promise<void>;
   deleteProduct: (productId: string) => Promise<void>;
 }
@@ -17,10 +21,17 @@ const ProductContext = React.createContext<IProductState>({
   loading: false,
   product: {} as any,
   products: [],
+  reviews: [],
   getProducts() {
     return null as any;
   },
+  getReviews(productId) {
+    return {} as any;
+  },
   getOneProduct(productId) {
+    return null as any;
+  },
+  createReview(payload) {
     return null as any;
   },
   createProduct(payload) {
@@ -49,6 +60,7 @@ interface IProps {
 export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
   const [product, setProduct] = useState<IProduct>() as any;
   const [products, setProducts] = useState<IProduct[]>([]);
+  const [reviews, setReviews] = useState<IReview[]>([]);
   const [filter, setFilter] = useState<IProductFilter>();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -144,15 +156,58 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
     }
   };
 
+  const createReview = async (payload: IReview) => {
+    setLoading(true);
+    console.log(JSON.stringify(payload));
+    try {
+      const res = await apiReqHandler({
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/review`,
+        method: "POST",
+        payload: JSON.stringify(payload),
+      });
+      setLoading(false);
+      const data = await res.res?.data;
+      if (data.success === false) {
+        toast.error(data.message);
+      }
+      console.log(data);
+      setReviews([...reviews, data.data]);
+      toast.success(data.message);
+      return data.data;
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error);
+    }
+  };
+
+  const getReviews = async (productId: string) => {
+    setLoading(true);
+    let url = `${process.env.NEXT_PUBLIC_API_ROUTE}/review/${productId}`;
+    try {
+      const res = await apiReqHandler({
+        endPoint: url,
+        method: "GET",
+      });
+      setLoading(false);
+      const { data } = await res.res?.data;
+      setReviews(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <ProductContext.Provider
       value={{
         loading,
         products,
+        reviews,
         product,
         getProducts,
+        getReviews,
         getOneProduct,
         createProduct,
+        createReview,
         updateProduct,
         deleteProduct,
       }}

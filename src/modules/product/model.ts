@@ -22,3 +22,12 @@ export interface IProductFilter {
   category: string;
   color: string;
 }
+
+export interface IReview {
+  _id: string;
+  title: string;
+  description: string;
+  rating: string;
+  name: string;
+  createdAt: string;
+}

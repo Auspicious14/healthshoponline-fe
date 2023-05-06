@@ -1,20 +1,36 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ApPlusMinusInput, ApTextInput, Headernav } from "../../components";
+import {
+  ApModal,
+  ApPlusMinusInput,
+  ApTextInput,
+  Headernav,
+} from "../../components";
 import { useProductState } from "./context";
 import { IProduct } from "./model";
 import { Form, Formik, FormikProps, useField } from "formik";
-import { Button, Card, Grid, Space } from "antd";
+import { Button, Card, Grid, Space, Typography } from "antd";
 import { getCookie } from "../../helper";
 import { useCartState } from "../cart/context";
 import { useRouter } from "next/router";
+import { Review } from "./components/modal";
+import { ReviewListItem } from "./components/item";
 
+const { Text } = Typography;
 interface IProps {
   product: IProduct;
 }
 
 export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
   const { addToCart, loading } = useCartState();
+  const { reviews, getReviews } = useProductState();
   console.log(product);
+  const [modal, setModal] = useState<{
+    show: boolean;
+    data?: any;
+    type?: "Add Review" | "Update Review";
+  }>({
+    show: false,
+  });
   const formRef = useRef<FormikProps<any>>();
   const [qty, setQty] = useState<any>(1);
   const router = useRouter();
@@ -22,6 +38,8 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
 
   useEffect(() => {
     setQty(qty);
+    const userId = getCookie("user_id");
+    getReviews(product?._id);
   }, [qty]);
   console.log(qty);
   const handleAddToCart = async (values: any) => {
@@ -169,7 +187,28 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
             </div>
           </div>
         </div>
+        <div>
+          <Space className="my-4 flex justify-between">
+            <Text>Ratings and Review</Text>
+            <Button
+              type="text"
+              className="bg-gray-200 font-semibold"
+              onClick={() => setModal({ show: true })}
+            >
+              Write Review
+            </Button>
+          </Space>
+          <Space>
+            <Text className="text-4xl font-bold">Reviews</Text>
+          </Space>
+          {reviews &&
+            reviews?.map((r) => <ReviewListItem review={r} key={r?._id} />)}
+        </div>
       </div>
+
+      <ApModal show={modal?.show} onDimiss={() => setModal({ show: false })}>
+        <Review review={modal.data} productId={product} />
+      </ApModal>
     </div>
   );
 };
