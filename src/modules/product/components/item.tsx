@@ -1,7 +1,9 @@
 import Link from "next/link";
 import React from "react";
-import { IProduct } from "../model";
+import { IProduct, IReview } from "../model";
+import { Space, Typography } from "antd";
 
+const { Text } = Typography;
 interface IProps {
   product: IProduct;
 }
@@ -31,5 +33,26 @@ export const ProductListItem: React.FC<IProps> = ({ product }) => {
         </div>
       </div>
     </div>
+  );
+};
+
+interface IReviewProps {
+  review: IReview;
+}
+
+export const ReviewListItem: React.FC<IReviewProps> = ({ review }) => {
+  return (
+    <>
+      <div className="flex gap-72 my-6">
+        <Space>
+          <h1>{"Name"}</h1>
+        </Space>
+        <Space className="block">
+          <Text className="text-justify">{review?.rating}</Text>
+          <Text className="font-bold">{review?.title}</Text>
+          <Text className="text-justify">{review?.description}</Text>
+        </Space>
+      </div>
+    </>
   );
 };
