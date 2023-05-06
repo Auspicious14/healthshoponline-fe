@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
 import { apiReqHandler } from "../../components";
 import { getCookie } from "../../helper";
-import {
-  ProductContextProvider,
-  useProductState,
-} from "../../modules/product/context";
+import { ProductContextProvider } from "../../modules/product/context";
 import { ProductDetailPage } from "../../modules/product/detail";
 import { IProduct } from "../../modules/product/model";
 import { CartContextProvider } from "../../modules/cart/context";

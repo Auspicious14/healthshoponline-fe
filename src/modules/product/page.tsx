@@ -5,20 +5,19 @@ import {
   Footer,
   Headernav,
 } from "../../components";
-import { Button, Input, Menu, MenuProps } from "antd";
+import { Button, Input, Menu, MenuProps, Space } from "antd";
 import { Typography } from "antd";
 import { useProductState } from "./context";
 import { ProductListItem } from "./components/item";
 import Woman from "../../../public/images/Image.png";
-import backgroundImage from "../../../public/images/subtract.png";
-import { IProduct, IProductFilter } from "./model";
 import { CategoryListItem } from "./components/category";
 
 const { Text } = Typography;
 const { Search } = Input;
+
 export const ProductPage = () => {
   const { products, getProducts, loading } = useProductState();
-  const [filter, setFilter] = useState<IProductFilter>();
+
   const [collapsed, setCollapsed] = useState<boolean>(false);
   useEffect(() => {
     getProducts();
@@ -113,6 +112,7 @@ export const ProductPage = () => {
           </div>
         </div>
       </div>
+
       <ApBackgroundImage
         src={Woman.src}
         style={{
@@ -122,25 +122,7 @@ export const ProductPage = () => {
           // marginLeft: "8rem",
           marginRight: "8rem",
         }}
-      >
-        {/* <div className="w-[50%]  text-white text-center border border-none rounded-lg  p-12  bg-[#2158E8]">
-          <h1 className="m-auto text-4xl">
-            Try Viagra V100 today and experience the power of a stronger and
-            longer-lasting erection.
-          </h1>
-          <p className="my-2">
-            Order now and receive discreet packaging and fast delivery right to
-            your doorstep.
-          </p>
-          <Button
-            type="primary"
-            size={"large"}
-            className="border-white border my-2"
-          >
-            Shop Now
-          </Button>
-        </div> */}
-      </ApBackgroundImage>
+      ></ApBackgroundImage>
       <Footer />
     </div>
   );
