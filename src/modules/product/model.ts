@@ -27,7 +27,13 @@ export interface IReview {
   _id: string;
   title: string;
   description: string;
-  rating: string;
-  name: string;
+  rating: number;
+  user: IUser;
   createdAt: string;
+}
+
+export interface IUser {
+  firstName: string;
+  lastName: string;
+  email: string;
 }

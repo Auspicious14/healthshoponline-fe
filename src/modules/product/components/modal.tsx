@@ -1,7 +1,11 @@
 import { Button, Card } from "antd";
 import { Form, Formik } from "formik";
-import React, { useRef } from "react";
-import { ApPlusMinusInput, ApTextInput } from "../../../components";
+import React, { useRef, useState } from "react";
+import {
+  ApPlusMinusInput,
+  ApRatingStar,
+  ApTextInput,
+} from "../../../components";
 import product from "../../../pages/product";
 import { IProduct, IReview } from "../model";
 import { useProductState } from "../context";
@@ -14,14 +18,16 @@ interface IProps {
 export const Review: React.FC<IProps> = ({ productId, review }) => {
   const formRef = useRef();
   const { createReview } = useProductState();
+  const [rate, setRate] = useState(review?.rating);
 
   const handleSubmit = async (values: any) => {
     const userId = getCookie("user_id");
-    console.log(values);
+    console.log(values, rate);
     const res = await createReview({
       ...values,
       productId: productId?._id,
       userId,
+      rating: rate,
     });
     console.log(res);
   };
@@ -52,6 +58,10 @@ export const Review: React.FC<IProps> = ({ productId, review }) => {
                   placeHolder="Nike Air MAx"
                   label="Description"
                   className="relative h-48 w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                />
+                <ApRatingStar
+                  value={review?.rating}
+                  handleUpdateRating={(rate) => setRate(rate)}
                 />
               </Card>
             </div>

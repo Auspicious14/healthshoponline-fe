@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { IProduct, IReview } from "../model";
 import { Space, Typography } from "antd";
+import { ApRatingStar } from "../../../components";
 
 const { Text } = Typography;
 interface IProps {
@@ -45,10 +46,11 @@ export const ReviewListItem: React.FC<IReviewProps> = ({ review }) => {
     <>
       <div className="flex gap-72 my-6">
         <Space>
-          <h1>{"Name"}</h1>
+          <h1>{`${review?.user?.firstName} ${review?.user?.lastName}`}</h1>
         </Space>
         <Space className="block">
-          <Text className="text-justify">{review?.rating}</Text>
+          {/* <Text className="text-justify">{review?.rating}</Text> */}
+          <ApRatingStar value={review?.rating} />
           <Text className="font-bold">{review?.title}</Text>
           <Text className="text-justify">{review?.description}</Text>
         </Space>
