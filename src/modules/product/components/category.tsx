@@ -30,7 +30,7 @@ const filters = [
     id: "brand",
     name: "BRAND",
     options: [
-      { value: "kedi", label: "kedi", checked: false },
+      { value: "Kedi", label: "kedi", checked: false },
       { value: "tuyil", label: "Tuyil", checked: false },
       { value: "blue", label: "Blue", checked: true },
       { value: "brown", label: "Brown", checked: false },
@@ -283,11 +283,27 @@ export const CategoryListItem: React.FC<IProps> = ({ product }) => {
                                   defaultValue={option.value}
                                   type="radio"
                                   onClick={(e: any) => {
-                                    console.log(e.target.value, "clickeeddd");
-                                    getProducts({
-                                      ...filter,
-                                      color: e.target.value,
-                                    });
+                                    if (section?.name === "COLOR") {
+                                      getProducts({
+                                        ...filter,
+                                        color: e.target.value,
+                                      });
+                                    } else if (section.name === "BRAND") {
+                                      getProducts({
+                                        ...filter,
+                                        brand: e.target.value,
+                                      });
+                                    } else if (section.name === "CATEGORY") {
+                                      getProducts({
+                                        ...filter,
+                                        category: e.target.value,
+                                      });
+                                    } else {
+                                      getProducts({
+                                        ...filter,
+                                        size: e.target.value,
+                                      });
+                                    }
                                   }}
                                   defaultChecked={option.checked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"

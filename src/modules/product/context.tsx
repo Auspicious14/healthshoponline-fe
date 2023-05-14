@@ -14,6 +14,7 @@ interface IProductState {
   createProduct: (payload: IProduct) => Promise<void>;
   createReview: (payload: IReview) => Promise<void>;
   updateProduct: (payload: IProduct, productId: string) => Promise<void>;
+  updateReview: (payload: IReview, productId: string) => Promise<void>;
   deleteProduct: (productId: string) => Promise<void>;
 }
 
@@ -40,6 +41,10 @@ const ProductContext = React.createContext<IProductState>({
   updateProduct(payload, productId) {
     return null as any;
   },
+  updateReview(payload, productId) {
+    return null as any;
+  },
+
   deleteProduct(productId) {
     return null as any;
   },
@@ -196,6 +201,32 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
       console.log(error);
     }
   };
+
+  const updateReview = async (payload: IReview, productId: string) => {
+    setLoading(true);
+    console.log(JSON.stringify(payload));
+    try {
+      const res = await apiReqHandler({
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/review/${productId}`,
+        method: "POST",
+        payload: JSON.stringify(payload),
+      });
+      setLoading(false);
+      const data = await res.res?.data;
+      if (data.success === false) {
+        toast.error(data.message);
+      }
+      console.log(data);
+      setReviews(
+        reviews?.map((r) => (r?._id == data?.data?._id ? data.data : r))
+      );
+      toast.success(data.message);
+      return data.data;
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error);
+    }
+  };
   return (
     <ProductContext.Provider
       value={{
@@ -208,6 +239,7 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
         getOneProduct,
         createProduct,
         createReview,
+        updateReview,
         updateProduct,
         deleteProduct,
       }}

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
+  ApImage,
   ApModal,
   ApPlusMinusInput,
   ApTextInput,
@@ -75,11 +76,14 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
                   key={p._id}
                   className="w-[80%] bg-slate-300 rounded-md border"
                 >
-                  <img
+                  <ApImage
                     key={p._id}
                     src={p.uri}
                     alt={p.name}
+                    width={200}
+                    height={200}
                     className="h-full w-full object-cover object-center"
+                    unoptimized
                   />
                 </div>
               ))}
@@ -111,38 +115,6 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
               >
                 {({ values, setFieldValue }) => (
                   <Form className="mt-10">
-                    {/* Quantity */}
-                    {/* <Space className="flex items-center">
-                      <Button
-                        htmlType="button"
-                        className="  text-blue-600 text-base font-medium "
-                        onClick={() => {
-                          if (qty > 0) {
-                            setQty(qty - 1);
-                            console.log(qty, "minus value");
-                          }
-                        }}
-                        // value={qty}
-                      >
-                        -
-                      </Button>
-                      <ApTextInput name="quantity" type="button" />
-                      <Button
-                        htmlType="button"
-                        // value={qty}
-                        // htmlType="button"
-                        className=" text-blue-600 text-base font-medium "
-                        onClick={() => {
-                          if (qty) {
-                            setQty(qty + 1);
-                          }
-                          console.log(qty, "plus value");
-                        }}
-                        disabled={qty === product?.quantity ? true : false}
-                      >
-                        +
-                      </Button>
-                    </Space> */}
                     <ApPlusMinusInput
                       name="quantity"
                       label="Quantity"
@@ -152,16 +124,11 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
 
                     {/* Sizes */}
                     <div className="mt-10">
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
                         <h3 className="text-sm font-medium text-gray-900">
-                          Size
+                          Size:
                         </h3>
-                        <a
-                          href="#"
-                          className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                        >
-                          Size guide
-                        </a>
+                        <Text>{product?.size}</Text>
                       </div>
                     </div>
 

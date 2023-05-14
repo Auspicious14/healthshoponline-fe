@@ -13,8 +13,8 @@ export interface IProduct {
 export interface IProductImage {
   _id: string;
   uri: string;
-  name?: string;
-  type?: string;
+  name: string;
+  type: string;
 }
 
 export interface IProductFilter {
