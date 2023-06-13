@@ -5,7 +5,7 @@ import {
   Footer,
   Headernav,
 } from "../../components";
-import { Button, Input, Menu, MenuProps, Space } from "antd";
+import { Button, Input, Menu, MenuProps, Pagination, Space, Spin } from "antd";
 import { Typography } from "antd";
 import { useProductState } from "./context";
 import { ProductListItem } from "./components/item";
@@ -100,8 +100,11 @@ export const ProductPage = () => {
             <div className="flex justify-between my-4">
               <Text code>{`Product: ${products.length}`}</Text>
             </div>
-            {products?.length > 0 ? (
-              <div className="grid grid-cols-2 gap-2 my-2 border-gray-200 border rounded-lg">
+            {loading && (
+              <Spin size="large" className="flex justify-center items-center" />
+            )}
+            {!loading && products?.length > 0 ? (
+              <div className="grid grid-cols-2 gap-4 my-2 py-4 align-middle border-gray-200 border rounded-lg">
                 {products?.map((p) => (
                   <ProductListItem product={p} key={p?._id} />
                 ))}
@@ -109,6 +112,11 @@ export const ProductPage = () => {
             ) : (
               !loading && products?.length === 0 && <div>No products...</div>
             )}
+            <Pagination
+              className="text-center"
+              defaultCurrent={1}
+              total={products?.length}
+            />
           </div>
         </div>
       </div>

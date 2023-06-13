@@ -195,8 +195,9 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
       });
       setLoading(false);
       const { data } = await res.res?.data;
-      setReviews(data);
+      setReviews(data.review);
       console.log(data);
+      return data;
     } catch (error) {
       console.log(error);
     }

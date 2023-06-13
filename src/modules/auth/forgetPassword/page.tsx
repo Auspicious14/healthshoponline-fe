@@ -60,7 +60,7 @@ export const ForgetPasswordPage = () => {
                 Get OTP
               </Button>
               <div className="flex justify-center items-center">
-                <Button type="link" href={"/auth/signup"} icon={""}>
+                <Button type="link" href={"/auth/login"} icon={""}>
                   Back to log in
                 </Button>
               </div>

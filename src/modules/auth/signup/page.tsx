@@ -20,7 +20,7 @@ export const SignUpPage = () => {
   const handleSubmit = async (values: any) => {
     const res = handleSignUp(values);
     res.then((rs: any) => {
-      if (rs.user) router.push("/auth/login");
+      if (rs.user) router.push("/");
     });
   };
   return (

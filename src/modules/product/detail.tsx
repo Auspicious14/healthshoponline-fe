@@ -3,18 +3,18 @@ import {
   ApImage,
   ApModal,
   ApPlusMinusInput,
-  ApTextInput,
+  ApRatingStar,
   Headernav,
 } from "../../components";
 import { useProductState } from "./context";
 import { IProduct } from "./model";
-import { Form, Formik, FormikProps, useField } from "formik";
-import { Button, Card, Grid, Space, Typography } from "antd";
+import { Form, Formik, FormikProps } from "formik";
+import { Button, Space, Typography } from "antd";
 import { getCookie } from "../../helper";
 import { useCartState } from "../cart/context";
 import { useRouter } from "next/router";
 import { Review } from "./components/modal";
-import { ReviewListItem } from "./components/item";
+import { RateStreakListItem, ReviewListItem } from "./components/item";
 
 const { Text } = Typography;
 interface IProps {
@@ -34,18 +34,16 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
   });
   const formRef = useRef<FormikProps<any>>();
   const [qty, setQty] = useState<any>(1);
+  const [total, setTotal] = useState<number>(0);
   const router = useRouter();
-  // const [field, meta, { setValue }] = useField(qty);
 
   useEffect(() => {
     setQty(qty);
-    const userId = getCookie("user_id");
-    getReviews(product?._id);
+    getReviews(product?._id).then((rs: any) => setTotal(rs?.total));
   }, [qty]);
-  console.log(qty);
+
   const handleAddToCart = async (values: any) => {
     const userId = getCookie("user_id");
-    console.log(values.quantity, userId);
     const res: any = await addToCart({
       product: {
         quantity: values.quantity,
@@ -53,9 +51,9 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
       },
       userId,
     });
-    console.log(res);
     if (res) router.push("/cart");
   };
+  const value = Math.round(total);
   return (
     <div>
       <Headernav />
@@ -104,10 +102,8 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
               <p className="text-base text-gray-400">{product.description}</p>
             </div>
 
-            {/* Options */}
             <div className="mt-4 lg:row-span-3 lg:mt-0">
               {/* Reviews */}
-
               <Formik
                 innerRef={formRef as any}
                 initialValues={{ quantity: qty }}
@@ -156,7 +152,7 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
         </div>
         <div>
           <Space className="my-4 flex justify-between">
-            <Text>Ratings and Review</Text>
+            <Text className="text-3xl font-bold">Ratings and Review</Text>
             <Button
               type="text"
               className="bg-gray-200 font-semibold"
@@ -165,8 +161,30 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
               Write Review
             </Button>
           </Space>
-          <Space>
-            <Text className="text-4xl font-bold">Reviews</Text>
+          <div className="flex gap-24">
+            <Space className="block w-40 text-center">
+              <Text className="text-6xl font-bold my-4">
+                {total ? total.toFixed(1) : "0.0"}
+              </Text>
+              <div className="">
+                <ApRatingStar
+                  value={value}
+                  size={30}
+                  className="justify-center my-2"
+                />
+              </div>
+
+              <Text className="text-gray-300 my-3">{`${reviews?.length} Product Ratings`}</Text>
+            </Space>
+            <Space className="block">
+              {reviews?.map((r) => (
+                <RateStreakListItem review={r} key={r?._id} />
+              ))}
+            </Space>
+          </div>
+
+          <Space className="block mt-4">
+            <Text className="text-2xl font-bold">Reviews</Text>
           </Space>
           {reviews &&
             reviews?.map((r) => <ReviewListItem review={r} key={r?._id} />)}

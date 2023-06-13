@@ -43,7 +43,6 @@ export const ForgetPasswordContextProvider: React.FC<IProps> = ({
       setLoading(false);
       const data = await response.res?.data;
       console.log(data);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }

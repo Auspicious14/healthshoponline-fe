@@ -32,7 +32,7 @@ export const ApTextInput: React.FC<IProps> = ({
   return (
     <div
       // style={{ marginBottom: 10, display: "flex", flexDirection: "column" }}
-      className={`mb-[10] flex ${containerClass}`}
+      className={`mb-[10] flex flex-col ${containerClass}`}
     >
       {label && <label>{label}</label>}
       {type == "textarea" ? (

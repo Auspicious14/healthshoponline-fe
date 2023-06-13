@@ -7,11 +7,13 @@ interface IProps {
   value: number;
   handleUpdateRating?: (value: number) => void;
   size?: number;
+  className?: string;
 }
 export const ApRatingStar: React.FC<IProps> = ({
   value,
   handleUpdateRating,
   size = 20,
+  className,
 }) => {
   const [rate, setRate] = useState(value);
 
@@ -23,7 +25,7 @@ export const ApRatingStar: React.FC<IProps> = ({
   };
   return (
     <>
-      <div className="flex gap-2">
+      <div className={`flex gap-2 ${className}`}>
         <StarFilled
           className={rate >= 1 ? "text-orange-500" : "text-gray-200"}
           size={size}

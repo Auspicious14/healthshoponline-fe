@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ISignUp } from "./model";
 import { apiReqHandler } from "../../../components";
 import { toast } from "react-toastify";
+import { setCookie } from "../../../helper";
 
 interface ISignUpState {
   loading: boolean;
@@ -35,12 +36,13 @@ export const SignUpContextProvider: React.FC<IProps> = ({ children }) => {
     console.log(JSON.stringify(user));
     try {
       const res = await apiReqHandler({
-        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/auth/login`,
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/auth/signup`,
         method: "POST",
         payload: JSON.stringify(user),
       });
       setLoading(false);
       const data = await res.res?.data;
+      setCookie("user_id", data?.user?._id, 3);
       console.log(data);
       if (res?.res?.status === 200) {
         if (data.error) {

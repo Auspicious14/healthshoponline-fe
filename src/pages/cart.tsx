@@ -5,9 +5,9 @@ import { CartPage } from "../modules/cart/page";
 const Cart = () => {
   return (
     <div>
-      <CartContextProvider>
+      <>
         <CartPage />
-      </CartContextProvider>
+      </>
     </div>
   );
 };
