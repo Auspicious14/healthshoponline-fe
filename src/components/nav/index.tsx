@@ -77,7 +77,7 @@ export const Headernav = () => {
                   />
                 </div>
               </div>
-              <div className=" lg:flex lg:flex-1 lg:items-center lg:justify-center lg:space-x-6">
+              {/* <div className=" lg:flex lg:flex-1 lg:items-center lg:justify-center lg:space-x-6">
                 <Link
                   href="/"
                   className="text-sm font-medium text-gray-700 hover:text-gray-800"
@@ -102,7 +102,7 @@ export const Headernav = () => {
                 >
                   Contact us
                 </Link>
-              </div>
+              </div> */}
 
               <div className="ml-auto flex items-center">
                 {/* Cart */}
