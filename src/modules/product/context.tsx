@@ -209,7 +209,7 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
     try {
       const res = await apiReqHandler({
         endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/review/${productId}`,
-        method: "POST",
+        method: "PUT",
         payload: JSON.stringify(payload),
       });
       setLoading(false);

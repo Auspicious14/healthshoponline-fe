@@ -10,40 +10,63 @@ import {
   SubNav,
 } from "../../components";
 
+const categories = [
+  {
+    name: "Capsules",
+    key: "capsules",
+  },
+  {
+    name: "Capsules",
+    key: "capsules",
+  },
+  {
+    name: "Capsules",
+    key: "capsules",
+  },
+  {
+    name: "Capsules",
+    key: "capsules",
+  },
+];
 export const HomePage = () => {
   return (
     <>
       <Headernav />
       <SubNav />
-      <div className="flex justify-between gap-12 items-center mx-16 my-8">
-        <div className="w-[50%]  ">
-          <h1 className="text-5xl font-bold">
-            Quality Medicine and Healthcare at your Doorstep
-          </h1>
-          <p className="pt-3 font-normal">
-            Millions of men around the world face this challenge, but the good
-            news is that there's a solution that can help you overcome it.
-          </p>
-          <div className="flex w-[50%] my-4 gap-4 items-center">
-            <button className="border rounded-lg bg-primary w-full py-2 px-4 text-center text-white">
-              Explore Store
-            </button>
-            <button className="rounded-lg bg-offWhite w-full py-2 px-4 text-center text-primary">
-              Learn More
-            </button>
+      <div className="mx-16 my-8">
+        <div className="flex justify-between gap-12 items-center ">
+          <div className="w-[50%]  ">
+            <h1 className="text-5xl font-bold">
+              Quality Medicine and Healthcare at your Doorstep
+            </h1>
+            <p className="pt-3 font-normal">
+              Millions of men around the world face this challenge, but the good
+              news is that there's a solution that can help you overcome it.
+            </p>
+            <div className="flex w-[50%] my-4 gap-4 items-center">
+              <button className="border rounded-lg bg-primary w-full py-2 px-4 text-center text-white">
+                Explore Store
+              </button>
+              <button className="rounded-lg bg-offWhite w-full py-2 px-4 text-center text-primary">
+                Learn More
+              </button>
+            </div>
+          </div>
+          <div className="w-[50%] py-4">
+            <ApImage
+              // width={500}
+              className="flex-1 w-[400px] h-96 justify-end border object-cover rounded-lg"
+              // height={200}
+              src={HeroImage}
+              alt="hero-image"
+            />
           </div>
         </div>
-        <div className="w-[50%] py-4">
-          <ApImage
-            // width={500}
-            className="flex-1 w-[400px] h-96 justify-end border object-cover rounded-lg"
-            // height={200}
-            src={HeroImage}
-            alt="hero-image"
-          />
+        <div className="text-center">
+          <h1 className="font-bold">Shop Our Best-selling categories</h1>
         </div>
       </div>
-      <ApBackgroundImage>
+      {/* <ApBackgroundImage>
         <div className="w-[50%]  text-white text-center border border-none rounded-lg  p-12  bg-[#2158E8]">
           <h1 className="m-auto text-4xl">
             Try Viagra V100 today and experience the power of a stronger and
@@ -61,7 +84,7 @@ export const HomePage = () => {
             Shop Now
           </Button>
         </div>
-      </ApBackgroundImage>
+      </ApBackgroundImage> */}
       <Footer />
     </>
   );
