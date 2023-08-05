@@ -1,4 +1,4 @@
-import { Button, Typography } from "antd";
+import { Button, Space, Typography } from "antd";
 import Image from "next/image";
 import React from "react";
 import HeroImage from "../../../public/images/homme_page_image.png";
@@ -59,8 +59,8 @@ export const HomePage = () => {
       <Headernav />
       <SubNav />
       <div className="">
-        <div className="flex justify-between gap-12 px-16 py-8 items-center bg-gray-200">
-          <div className="w-[50%]  ">
+        <div className="flex justify-between gap-12 px-16 py-8 items-center bg-gray">
+          <div className="w-[50%] ">
             <Text className="text-5xl font-bold">
               Quality Medicine and Healthcare at your Doorstep
             </Text>
@@ -69,12 +69,12 @@ export const HomePage = () => {
               news is that there's a solution that can help you overcome it.
             </p>
             <div className="flex w-[50%] my-4 gap-4 items-center">
-              <Button className="border rounded-lg bg-primary w-full py-2 px-4 text-center text-white">
+              <Button className="rounded-lg text-white h-12 font-bold text-center px-4 bg-primary">
                 Explore Store
               </Button>
-              <button className="rounded-lg bg-offWhite w-full py-2 px-4 text-center text-primary">
+              <Button className="border-none font-bold rounded-lg bg-offWhite w-full px-4 h-12 text-center text-primary">
                 Learn More
-              </button>
+              </Button>
             </div>
           </div>
           <div className="w-[50%] py-4">
@@ -196,7 +196,10 @@ export const HomePage = () => {
               </div>
               <div className="flex justify-between items-center">
                 <div>
-                  <Text className="block text-2xl" rootClassName="text-primary">
+                  <Text
+                    className="block text-2xl font-bold"
+                    rootClassName="text-primary"
+                  >
                     4.9{" "}
                   </Text>
                   <Text className="block" rootClassName="text-gray">
@@ -204,7 +207,10 @@ export const HomePage = () => {
                   </Text>
                 </div>
                 <div>
-                  <Text className="block text-2xl" rootClassName="text-primary">
+                  <Text
+                    className="block text-2xl font-bold"
+                    rootClassName="text-primary"
+                  >
                     5M+{" "}
                   </Text>
                   <Text className="block" rootClassName="text-gray">
@@ -212,7 +218,10 @@ export const HomePage = () => {
                   </Text>
                 </div>
                 <div>
-                  <Text className="block text-2xl" rootClassName="text-primary">
+                  <Text
+                    className="block text-2xl font-bold"
+                    rootClassName="text-primary"
+                  >
                     50k{" "}
                   </Text>
                   <Text className="block" rootClassName="text-gray">
@@ -221,35 +230,33 @@ export const HomePage = () => {
                 </div>
               </div>
             </div>
-            <div className="w-[50%]">
+            <div className="w-[50%] flex justify-end">
               <ApImage
                 src={SectionImage}
                 alt="image"
-                className="w-full h-[400px]"
+                className="w-[400px] h-[400px] object-cover"
               />
             </div>
           </div>
         </div>
-      </div>
-      {/* <ApBackgroundImage>
-        <div className="w-[50%]  text-white text-center border border-none rounded-lg  p-12  bg-[#2158E8]">
-          <Text className="m-auto text-4xl">
-            Try Viagra V100 today and experience the power of a stronger and
-            longer-lasting erection.
-          </Text>
-          <p className="my-2">
-            Order now and receive discreet packaging and fast delivery right to
-            your doorstep.
-          </p>
-          <Button
-            type="primary"
-            size={"large"}
-            className="border-white border my-2"
-          >
-            Shop Now
-          </Button>
+        <div className="mt-12 px-16 py-8 bg-gray-100">
+          <Space className="block text-center">
+            <Text className="block font-bold text-3xl">
+              Trusted Medication, Delivered to your Door
+            </Text>
+            <Text className="block" color="text-gray">
+              Our online store offers fast and reliable shipping to your
+              doorstep, ensuring you receive the medication you need when you
+              need it.
+            </Text>
+          </Space>
+          <ApImage
+            src={SectionImage}
+            alt="image"
+            className="w-full h-[500px] m-auto mt-6 object-cover"
+          />
         </div>
-      </ApBackgroundImage> */}
+      </div>
       <Footer />
     </>
   );
