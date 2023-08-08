@@ -127,7 +127,7 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
                         <Text>{product?.size}</Text>
                       </div>
                     </div>
-
+ x 
                     <div className="flex w-full gap-4">
                       <Button
                         htmlType="submit"

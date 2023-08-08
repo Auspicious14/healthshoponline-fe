@@ -20,6 +20,7 @@ import {
   WalletTwoTone,
 } from "@ant-design/icons";
 import { ScaleIcon, UserIcon } from "@heroicons/react/24/outline";
+import { Category } from "./components/category";
 
 const { Text } = Typography;
 
@@ -97,7 +98,7 @@ export const HomePage = () => {
             medications in these categories
           </Text>
 
-          <div className="grid gap-4 grid-cols-4 align-middle">
+          {/* <div className="grid gap-4 grid-cols-4 align-middle">
             {categories?.map((c) => (
               <div>
                 <ApImage
@@ -110,7 +111,8 @@ export const HomePage = () => {
                 </Button>
               </div>
             ))}
-          </div>
+          </div> */}
+          <Category />
         </div>
 
         <div className="mt-12 px-16 py-8 bg-gray-100">
