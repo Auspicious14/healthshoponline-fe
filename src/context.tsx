@@ -6,6 +6,7 @@ import { SignInContextProvider } from "./modules/auth/login/context";
 import { ForgetPasswordContextProvider } from "./modules/auth/forgetPassword/context";
 import { ResetPasswordContextProvider } from "./modules/auth/resetPassword/context";
 import { SignUpContextProvider } from "./modules/auth/signup/context";
+import { CategoryContextProvider } from "./modules/category/context";
 
 export const combineContext = (...components: FC[]): FC<any> => {
   return components.reduce(
@@ -30,6 +31,7 @@ const providers = [
   ForgetPasswordContextProvider,
   ResetPasswordContextProvider,
   SignUpContextProvider,
+  CategoryContextProvider,
 ] as any;
 
 export const AppContextProvider = combineContext(...providers);
