@@ -21,6 +21,7 @@ export interface IProductFilter {
   brand: string;
   category: string;
   color: string;
+  newArrival: string;
 }
 
 export interface IReview {

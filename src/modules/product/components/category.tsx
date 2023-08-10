@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
@@ -10,22 +10,9 @@ import {
 } from "@heroicons/react/20/solid";
 import { IProduct, IProductFilter } from "../model";
 import { useProductState } from "../context";
+import { useCategorystate } from "../../category/context";
 
-const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Best Rating", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
-  { name: "Price: Low to High", href: "#", current: false },
-  { name: "Price: High to Low", href: "#", current: false },
-];
-const subCategories = [
-  { name: "Totes", href: "#" },
-  { name: "Backpacks", href: "#" },
-  { name: "Travel Bags", href: "#" },
-  { name: "Hip Bags", href: "#" },
-  { name: "Laptop Sleeves", href: "#" },
-];
-const filters = [
+let filters = [
   {
     id: "brand",
     name: "BRAND",
@@ -50,27 +37,24 @@ const filters = [
       { value: "purple", label: "Purple", checked: false },
     ],
   },
-  {
-    id: "category",
-    name: "CATEGORY",
-    options: [
-      { value: "new-arrivals", label: "New Arrivals", checked: false },
-      { value: "sale", label: "Sale", checked: false },
-      { value: "travel", label: "Travel", checked: true },
-      { value: "organization", label: "Organization", checked: false },
-      { value: "accessories", label: "Accessories", checked: false },
-    ],
-  },
+  // {
+  //   id: "category",
+  //   name: "CATEGORY",
+  //   options: [
+  //     { value: "newArrival", label: "New Arrivals", checked: false },
+  //     { value: "sale", label: "Sale", checked: false },
+  //     { value: "travel", label: "Travel", checked: true },
+  //     { value: "organization", label: "Organization", checked: false },
+  //     { value: "accessories", label: "Accessories", checked: false },
+  //   ],
+  // },
   {
     id: "size",
     name: "Size",
     options: [
-      { value: "2l", label: "2L", checked: false },
-      { value: "6l", label: "6L", checked: false },
-      { value: "12l", label: "12L", checked: false },
-      { value: "18l", label: "18L", checked: false },
-      { value: "20l", label: "20L", checked: false },
-      { value: "40l", label: "40L", checked: true },
+      { value: "xs", label: "Extra small", checked: false },
+      { value: "sm", label: "Small", checked: false },
+      { value: "lg", label: "Large", checked: false },
     ],
   },
 ];
@@ -85,6 +69,24 @@ export const CategoryListItem: React.FC<IProps> = ({ product }) => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const { products, getProducts, loading } = useProductState();
   const [filter, setFilter] = useState<IProductFilter>();
+  const { categories, getCategories } = useCategorystate();
+
+  const catFlt = {
+    id: "category",
+    name: "category",
+    options: categories?.map((c) => ({
+      label: c?.name,
+      value: c?.name,
+      checked: false,
+    })),
+  };
+  filters.push(catFlt);
+  console.log(catFlt, "cat filter");
+  console.log(filters, "filters");
+
+  useEffect(() => {
+    getCategories();
+  }, []);
   return (
     <div className="bg-white">
       <div>
@@ -135,18 +137,16 @@ export const CategoryListItem: React.FC<IProps> = ({ product }) => {
                   {/* Filters */}
                   <form className="mt-4 border-t border-gray-200">
                     <h3 className="sr-only">Categories</h3>
-                    {/* <ul
+                    <ul
                       role="list"
                       className="px-2 py-3 font-medium text-gray-900"
                     >
-                      {subCategories.map((category) => (
-                        <li key={category.name}>
-                          <a href={category.href} className="block px-2 py-3">
-                            {category.name}
-                          </a>
+                      {categories.map((category) => (
+                        <li key={category._id}>
+                          <h1 className="block px-2 py-3">{category.name}</h1>
                         </li>
                       ))}
-                    </ul> */}
+                    </ul>
 
                     {filters.map((section) => (
                       <Disclosure
@@ -230,17 +230,17 @@ export const CategoryListItem: React.FC<IProps> = ({ product }) => {
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               {/* Filters */}
               <form className="hidden lg:block">
-                {/* <h3 className="sr-only">Categories</h3>
+                <h3 className="sr-only">Categories</h3>
                 <ul
                   role="list"
                   className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900"
                 >
-                  {subCategories.map((category) => (
-                    <li key={category.name}>
-                      <a href={category.href}>{category.name}</a>
+                  {categories.map((category) => (
+                    <li key={category._id}>
+                      <h1>{category.name}</h1>
                     </li>
                   ))}
-                </ul> */}
+                </ul>
 
                 {filters.map((section) => (
                   <Disclosure

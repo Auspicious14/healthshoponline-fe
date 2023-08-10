@@ -21,6 +21,7 @@ import {
 } from "@ant-design/icons";
 import { ScaleIcon, UserIcon } from "@heroicons/react/24/outline";
 import { Category } from "./components/category";
+import { NewArrivals } from "./components/newArrivals";
 
 const { Text } = Typography;
 
@@ -88,6 +89,16 @@ export const HomePage = () => {
             />
           </div>
         </div>
+
+        <div className="text-center mt-12 px-16 py-8">
+          <Text className="font-bold text-3xl mb-6">
+            Get a taste of Our products as they come
+          </Text>
+          <Text className="block mb-12 text-gray-500">
+            Products are kept updated for you to have a good taste and view
+          </Text>
+          <NewArrivals />
+        </div>
         <div className="text-center mt-12 px-16 py-8">
           <Text className="font-bold text-3xl mb-6">
             Shop Our Best-Selling Categories
@@ -97,24 +108,8 @@ export const HomePage = () => {
             Over the months, people like you visit our platform to get quality
             medications in these categories
           </Text>
-
-          {/* <div className="grid gap-4 grid-cols-4 align-middle">
-            {categories?.map((c) => (
-              <div>
-                <ApImage
-                  src={Categories}
-                  className="flex-1 w-full h-40  justify-end border object-cover rounded-lg"
-                  alt="categories"
-                />
-                <Button className="bg-white border-none relative -top-20 font-bold px-12 text-black text-center ">
-                  {c?.name}
-                </Button>
-              </div>
-            ))}
-          </div> */}
           <Category />
         </div>
-
         <div className="mt-12 px-16 py-8 bg-gray-100">
           <div className="flex justify-center items-center">
             <div className="flex gap-4 items-center w-[25%] border-r-2">

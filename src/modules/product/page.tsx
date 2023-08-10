@@ -69,6 +69,7 @@ export const ProductPage = () => {
     ]),
   ];
 
+  console.log(products);
   return (
     <div>
       <Headernav />
