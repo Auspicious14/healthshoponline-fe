@@ -9,7 +9,7 @@ export const Category = () => {
   return (
     <div className="grid gap-4 grid-cols-4 align-middle">
       {categories?.map((c) => (
-        <div>
+        <div key={c?._id}>
           <ApImage
             src={Categories}
             className="flex-1 w-full h-40  justify-end border object-cover rounded-lg"

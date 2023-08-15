@@ -3,6 +3,7 @@ import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import { Input } from "antd";
 import Link from "next/link";
 import { useCartState } from "../../modules/cart/context";
+import { ApImage } from "../image";
 
 const { Search } = Input;
 function classNames(...classes: any) {
@@ -62,7 +63,7 @@ export const Headernav = () => {
               <div className="ml-4 flex gap-32 lg:ml-0">
                 <Link href="/">
                   <span className="sr-only">HEALTHSHOP</span>
-                  <img
+                  <ApImage
                     className="h-8 w-auto"
                     src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                     alt=""

@@ -13,7 +13,7 @@ export const NewArrivals = () => {
   return (
     <div className="grid gap-4 grid-cols-4">
       {newArrivals?.map((p: IProduct) => (
-        <div>
+        <div key={p?._id}>
           <Link href={`/product/${p?._id}`} className="">
             <div className="relative">
               <div className="min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-52">

@@ -67,8 +67,9 @@ export const HomePage = () => {
               Quality Medicine and Healthcare at your Doorstep
             </Text>
             <p className="pt-3 font-normal">
-              Millions of men around the world face this challenge, but the good
-              news is that there's a solution that can help you overcome it.
+              {
+                "Millions of men around the world face this challenge, but the good news is that there's a solution that can help you overcome it."
+              }
             </p>
             <div className="flex w-[50%] my-4 gap-4 items-center">
               <Button className="rounded-lg text-white h-12 font-bold text-center px-4 bg-primary">

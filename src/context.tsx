@@ -9,18 +9,29 @@ import { SignUpContextProvider } from "./modules/auth/signup/context";
 import { CategoryContextProvider } from "./modules/category/context";
 
 export const combineContext = (...components: FC[]): FC<any> => {
-  return components.reduce(
+  const CombinedComponent = components.reduce(
     (AccumulatedComponents: any, CurrentComponent: any) => {
-      return ({ children }: ComponentProps<FC<any>>): JSX.Element => {
+      const WrapperComponent: FC<any> = ({
+        children,
+      }: ComponentProps<FC<any>>): JSX.Element => {
         return (
           <AccumulatedComponents>
             <CurrentComponent>{children}</CurrentComponent>
           </AccumulatedComponents>
         );
       };
+
+      // Assign a displayName to the WrapperComponent
+      WrapperComponent.displayName = `Combined(${
+        CurrentComponent.displayName || CurrentComponent.name || "Unknown"
+      })`;
+
+      return WrapperComponent;
     },
-    ({ children }) => <>{children}</>
+    ({ children }: any) => <>{children}</>
   );
+
+  return CombinedComponent;
 };
 
 const providers = [

@@ -4,7 +4,7 @@ import backgroundImage from "../../../public/images/subtract.png";
 interface IProps extends ImageProps {}
 
 export const ApImage: React.FC<IProps> = (props: IProps) => {
-  return <Image width={200} height={200} {...props} />;
+  return <Image width={200} height={200} {...props} alt="" />;
 };
 
 interface IImageProps {

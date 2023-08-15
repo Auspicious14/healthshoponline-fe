@@ -39,7 +39,7 @@ export const CartPage = () => {
       title: "Image",
       key: "image",
       render: (_, { product }) => (
-        <img
+        <ApImage
           className="w-12 h-12"
           src={product?.product?.images[0]?.uri}
           alt={product?.product?.images[0]?.uri}
