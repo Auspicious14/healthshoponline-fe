@@ -27,35 +27,35 @@ export const ApRatingStar: React.FC<IProps> = ({
     <>
       <div className={`flex gap-2 ${className}`}>
         <StarFilled
-          className={rate >= 1 ? "text-orange-500" : "text-gray-200"}
+          className={rate >= 1 ? "text-orange-500" : "text-zinc-200"}
           size={size}
           onClick={() => {
             handleRating(1);
           }}
         />
         <StarFilled
-          className={rate >= 2 ? "text-orange-500" : "text-gray-200"}
+          className={rate >= 2 ? "text-orange-500" : "text-zinc-200 "}
           size={size}
           onClick={() => {
             handleRating(2);
           }}
         />
         <StarFilled
-          className={rate >= 3 ? "text-orange-500" : "text-gray-200"}
+          className={rate >= 3 ? "text-orange-500" : "text-zinc-200"}
           size={size}
           onClick={() => {
             handleRating(3);
           }}
         />
         <StarFilled
-          className={rate >= 4 ? "text-orange-500" : "text-gray-200"}
+          className={rate >= 4 ? "text-orange-500" : "text-zinc-200"}
           size={size}
           onClick={() => {
             handleRating(4);
           }}
         />
         <StarFilled
-          className={rate == 5 ? "text-orange-500" : "text-gray-200"}
+          className={rate == 5 ? "text-orange-500" : "text-zinc-200 "}
           size={size}
           onClick={() => {
             handleRating(5);

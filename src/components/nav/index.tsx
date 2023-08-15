@@ -60,7 +60,7 @@ export const Headernav = () => {
 
               {/* Logo */}
               <div className="ml-4 flex gap-32 lg:ml-0">
-                <Link href="#">
+                <Link href="/">
                   <span className="sr-only">HEALTHSHOP</span>
                   <img
                     className="h-8 w-auto"
