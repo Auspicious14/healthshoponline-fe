@@ -25,25 +25,14 @@ export const Review: React.FC<IProps> = ({ productId, review }) => {
     const userId = getCookie("user_id");
     console.log(values, rate);
     let res;
-    if (productId?._id) {
-      res = await updateReview(
-        {
-          ...values,
-          productId: productId?._id,
-          userId,
-          rating: rate,
-        },
-        productId._id
-      );
-    } else {
-      res = await createReview({
-        ...values,
-        productId: productId?._id,
-        userId,
-        rating: rate,
-      });
-      console.log(res);
-    }
+
+    res = await createReview({
+      ...values,
+      productId: productId?._id,
+      userId,
+      rating: rate,
+    });
+    console.log(res);
   };
   return (
     <Formik
@@ -65,6 +54,7 @@ export const Review: React.FC<IProps> = ({ productId, review }) => {
                     value={review?.rating}
                     size={40}
                     handleUpdateRating={(rate) => setRate(rate)}
+                    className="text-zinc-200"
                   />
                 </div>
                 <ApTextInput
@@ -88,6 +78,7 @@ export const Review: React.FC<IProps> = ({ productId, review }) => {
                 htmlType="submit"
                 type="primary"
                 className="m-3 bg-blue-600 text-white"
+                loading={loading}
               >
                 {review?._id ? "Save Changes" : "Write Review"}
               </Button>

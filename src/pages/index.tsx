@@ -47,14 +47,6 @@ export const getServerSideProps = async ({
   const newArrival = await response?.res?.data?.data;
   console.log(newArrival, "new arrival");
 
-  if (!req?.cookies.user_id) {
-    return {
-      redirect: {
-        destination: "/auth/login",
-        permenant: false,
-      },
-    };
-  }
   return {
     props: { data: { data, newArrival } },
   };
