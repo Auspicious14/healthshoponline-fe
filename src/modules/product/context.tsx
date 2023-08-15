@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 interface IProductState {
   loading: boolean;
+  totalRatings: number;
   product: IProduct;
   products: IProduct[];
   newArrivals: IProduct[];
@@ -18,6 +19,7 @@ interface IProductState {
 
 const ProductContext = React.createContext<IProductState>({
   loading: false,
+  totalRatings: 0,
   product: {} as any,
   products: [],
   newArrivals: [],
@@ -53,6 +55,7 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
   const [product, setProduct] = useState<IProduct>() as any;
   const [products, setProducts] = useState<IProduct[]>([]);
   const [reviews, setReviews] = useState<IReview[]>([]);
+  const [totalRatings, setTotalRatings] = useState<number>(0);
   const [newArrivals, setNewArrivals] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -116,6 +119,7 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
       setLoading(false);
       const { data } = await res.res?.data;
       setReviews(data.review);
+      setTotalRatings(data.total);
       console.log(data);
       return data;
     } catch (error) {
@@ -155,6 +159,7 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
         products,
         newArrivals,
         reviews,
+        totalRatings,
         product,
         setNewArrivals,
         getProducts,

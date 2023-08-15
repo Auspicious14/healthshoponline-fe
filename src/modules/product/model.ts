@@ -8,6 +8,7 @@ export interface IProduct {
   categories: [string];
   color: string;
   quantity: number;
+  rating: string | number;
 }
 
 export interface IProductImage {

@@ -70,8 +70,11 @@ export const ReviewListItem: React.FC<IReviewProps> = ({ review }) => {
     <>
       <div className="flex gap-72 my-6">
         {review?.user ? (
-          <Space>
+          <Space className="block">
             <h1>{`${review?.user?.firstName} ${review?.user?.lastName}`}</h1>
+            <p className="text-justify font-bold py-2">
+              {review?.createdAt.substring(0, 10)}
+            </p>
           </Space>
         ) : (
           <div></div>
@@ -81,9 +84,6 @@ export const ReviewListItem: React.FC<IReviewProps> = ({ review }) => {
 
           <Text className="font-bold">{review?.title}</Text>
           <p className="text-justify my-2">{review?.description}</p>
-          <p className="text-justify font-bold">
-            {review?.createdAt.substring(0, 10)}
-          </p>
         </Space>
       </div>
     </>

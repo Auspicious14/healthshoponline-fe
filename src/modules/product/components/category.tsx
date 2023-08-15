@@ -50,7 +50,7 @@ let filters = [
   // },
   {
     id: "size",
-    name: "Size",
+    name: "SIZE",
     options: [
       { value: "xs", label: "Extra small", checked: false },
       { value: "sm", label: "Small", checked: false },
@@ -71,22 +71,26 @@ export const CategoryListItem: React.FC<IProps> = ({ product }) => {
   const [filter, setFilter] = useState<IProductFilter>();
   const { categories, getCategories } = useCategorystate();
 
+  useEffect(() => {
+    getCategories();
+  }, []);
+
   const catFlt = {
     id: "category",
-    name: "category",
+    name: "CATEGORY",
     options: categories?.map((c) => ({
       label: c?.name,
       value: c?.name,
       checked: false,
     })),
   };
-  filters.push(catFlt);
+  // filters.push(catFlt);
+  if (filters.length === 3) {
+    filters?.push(catFlt);
+  }
   console.log(catFlt, "cat filter");
   console.log(filters, "filters");
 
-  useEffect(() => {
-    getCategories();
-  }, []);
   return (
     <div className="bg-white">
       <div>
@@ -140,13 +144,7 @@ export const CategoryListItem: React.FC<IProps> = ({ product }) => {
                     <ul
                       role="list"
                       className="px-2 py-3 font-medium text-gray-900"
-                    >
-                      {categories.map((category) => (
-                        <li key={category._id}>
-                          <h1 className="block px-2 py-3">{category.name}</h1>
-                        </li>
-                      ))}
-                    </ul>
+                    ></ul>
 
                     {filters.map((section) => (
                       <Disclosure
@@ -227,26 +225,16 @@ export const CategoryListItem: React.FC<IProps> = ({ product }) => {
               Products
             </h2>
 
-            <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
+            <div className="">
               {/* Filters */}
               <form className="hidden lg:block">
                 <h3 className="sr-only">Categories</h3>
-                <ul
-                  role="list"
-                  className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900"
-                >
-                  {categories.map((category) => (
-                    <li key={category._id}>
-                      <h1>{category.name}</h1>
-                    </li>
-                  ))}
-                </ul>
 
                 {filters.map((section) => (
                   <Disclosure
                     as="div"
                     key={section.id}
-                    className="border-b border-gray-200 py-6"
+                    className="border-b border-gray-200 py-6 w-full"
                   >
                     {({ open }) => (
                       <>
