@@ -5,6 +5,7 @@ interface IProps {
   label?: string;
   type: string;
   name: string;
+  plusMinusInput?: boolean;
   className?: string;
   placeHolder?: string;
   sideLabel?: string;
@@ -23,6 +24,7 @@ export const ApTextInput: React.FC<IProps> = ({
   placeHolder,
   containerClass,
   sideLabel,
+  plusMinusInput = false,
   ...props
 }) => {
   const [field, meta] = useField(name);
@@ -50,7 +52,11 @@ export const ApTextInput: React.FC<IProps> = ({
           {...field}
           {...props}
           name={name}
-          className={`w-full mb-2 border-none ${className}`}
+          className={
+            plusMinusInput === true
+              ? `mb-2 border-none ${className}`
+              : `w-full mb-2 border-none ${className}`
+          }
           placeholder={placeHolder}
         />
       )}
