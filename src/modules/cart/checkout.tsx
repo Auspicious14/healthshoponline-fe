@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { ApPlusMinusInput, ApTextInput, Headernav } from "../../components";
+import {
+  ApModal,
+  ApPlusMinusInput,
+  ApTextInput,
+  Headernav,
+} from "../../components";
 import { Button, Card, Space, Typography } from "antd";
 import { useCartState } from "./context";
 import { getCookie, helper } from "../../helper";
@@ -7,13 +12,13 @@ import { Form, Formik, FormikProps } from "formik";
 import { useOrderState } from "../order/context";
 import { CheckoutListItem } from "./components/checkoutitems";
 import { useRouter } from "next/router";
+import { PaymentPage } from "../payment/page";
 const { Text } = Typography;
 
 export const CheckoutPage = () => {
   const { orders, createOrder, loading } = useOrderState();
   const { carts, getCart, emptyCart } = useCartState();
   const router = useRouter();
-
   const subTotal = carts
     ?.map((c) => parseFloat(c?.product?.product?.price))
     ?.reduce((a, b) => a + b, 0);
@@ -21,6 +26,9 @@ export const CheckoutPage = () => {
     (c) => parseFloat(c?.product?.product?.price) * c.product.quantity
   );
   const overallTotal = total.map((t) => t).reduce((a, b) => a + b, 0);
+  const [modal, setModal] = useState<{ show: boolean; data?: any }>({
+    show: false,
+  });
 
   useEffect(() => {
     const id = getCookie("user_id");
@@ -28,16 +36,13 @@ export const CheckoutPage = () => {
   }, []);
 
   const handleSubmit = async (values: any) => {
-    console.log(values);
     let { amount, ...otherValues } = values;
     amount = overallTotal;
     const id = getCookie("user_id");
     const res: any = await createOrder({ id, amount, ...otherValues });
-    console.log(res);
     if (res) {
       const response = await emptyCart(id);
-      console.log(response, "emptycart");
-      router.push("/payment");
+      // router.push("/payment");
     }
   };
 
@@ -153,13 +158,13 @@ export const CheckoutPage = () => {
                   {helper.toCurrency(overallTotal)}
                 </Text>
               </div>
-              {/* <Button className="w-full" type="primary" href={"/checkout"}>
-                Proceed to Checkout
-              </Button> */}
             </div>
           </Card>
         </div>
       </div>
+      <ApModal show={modal.show} onDimiss={() => setModal({ show: false })}>
+        <PaymentPage />
+      </ApModal>
     </div>
   );
 };

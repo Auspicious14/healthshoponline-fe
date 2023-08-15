@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { ApPlusMinusInput, ApTextInput, Headernav } from "../../components";
+import {
+  ApImage,
+  ApPlusMinusInput,
+  ApTextInput,
+  Headernav,
+} from "../../components";
 import { Button, Card, Space, Typography } from "antd";
 import { getCookie, helper } from "../../helper";
 import { Form, Formik, FormikProps } from "formik";
@@ -20,23 +25,13 @@ export const PaymentPage = () => {
     const res: any = await payWithPayStack(values);
     console.log(res.authorization_url, res);
     setLink(res?.authorization_url);
-    // let { amount, ...otherValues } = values;
-    // amount = overallTotal;
-    // const id = getCookie("user_id");
-    // // const res: any = await createOrder({ id, amount, ...otherValues });
-    // console.log(res);
-    // if (res) {
-    //   const response = await emptyCart(id);
-    //   console.log(response, "emptycart");
-    //   router.push("/payment");
-    // }
   };
 
   return (
     <div>
-      <Headernav />
+      {/* <Headernav /> */}
       <div className="mx-20">
-        <div className="bg-gray-50 w-fit px-4 my-12 rounded-md flex gap-6">
+        {/* <div className="bg-gray-50 w-fit px-4 my-12 rounded-md flex gap-6">
           <div className="flex gap-4">
             <Text>Cart</Text>
             <Text>/</Text>
@@ -48,7 +43,7 @@ export const PaymentPage = () => {
           <div className="flex gap-4 bg-gray-300 text-blue-600 font-bold">
             <Text>Payment</Text>
           </div>
-        </div>
+        </div> */}
         <h1 className="text-3xl my-8 font-semibold">Payment</h1>
         <div className="flex justify-between w-full gap-4">
           <Card className="w-[60%]">
@@ -56,10 +51,10 @@ export const PaymentPage = () => {
               <Text className="font-bold">Credit Card</Text>
               <div className="flex items-center gap-6">
                 <div className="w-8 h-8 flex justify-center items-center object-contain">
-                  <img src={VisaIcon.src} alt="" />
+                  <ApImage src={VisaIcon.src} alt="" />
                 </div>
                 <div className="w-8 h-8 flex justify-center items-center object-contain">
-                  <img src={Visa.src} alt="" />
+                  <ApImage src={Visa.src} alt="" />
                 </div>
               </div>
             </div>
