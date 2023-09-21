@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import { apiReqHandler } from "../../components";
 import { getCookie } from "../../helper";
-import { ProductContextProvider } from "../../modules/product/context";
 import { ProductDetailPage } from "../../modules/product/detail";
 import { IProduct } from "../../modules/product/model";
-import { CartContextProvider } from "../../modules/cart/context";
 
 interface IProps {
   product: IProduct;
@@ -12,11 +10,7 @@ interface IProps {
 const ProductDetail: React.FC<IProps> = ({ product }) => {
   return (
     <div>
-      <CartContextProvider>
-        <ProductContextProvider>
-          <ProductDetailPage product={product} />
-        </ProductContextProvider>
-      </CartContextProvider>
+      <ProductDetailPage product={product} />
     </div>
   );
 };
@@ -36,14 +30,14 @@ export async function getServerSideProps({
   const product = data?.res?.data?.data;
   if (!product) return new Error("Unauthorised");
 
-  if (!req?.cookies.user_id) {
-    return {
-      redirect: {
-        destination: "/auth/login",
-        permenant: false,
-      },
-    };
-  }
+  // if (!req?.cookies.user_id) {
+  //   return {
+  //     redirect: {
+  //       destination: "/auth/login",
+  //       permenant: false,
+  //     },
+  //   };
+  // }
 
   return {
     props: { product },

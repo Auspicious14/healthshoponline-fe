@@ -1,7 +1,5 @@
 import React from "react";
 import { ApImage } from "../../../components";
-import { Button } from "antd";
-import Categories from "../../../../public/images/Frame 1000005044 (2).png";
 import Link from "next/link";
 import { helper } from "../../../helper";
 import { IProduct } from "../../product/model";
@@ -11,7 +9,7 @@ export const NewArrivals = () => {
   const { newArrivals } = useProductState();
 
   return (
-    <div className="grid gap-4 grid-cols-4">
+    <div className="grid gap-4 xl:lg:md:grid-cols-4 sm:grid-cols-3 grid-cols-2 align-middle">
       {newArrivals?.map((p: IProduct) => (
         <div key={p?._id}>
           <Link href={`/product/${p?._id}`} className="">

@@ -69,10 +69,8 @@ export const ProductPage = () => {
     ]),
   ];
 
-  console.log(products);
   return (
-    <div>
-      <Headernav />
+    <>
       <div className="mx-20">
         {loading && <div>loading...</div>}
         <div className="my-4">
@@ -133,6 +131,6 @@ export const ProductPage = () => {
         }}
       ></ApBackgroundImage>
       <Footer />
-    </div>
+    </>
   );
 };

@@ -123,7 +123,6 @@ export const CartPage = () => {
 
   return (
     <div>
-      <Headernav />
       <div className="mx-20">
         <h1 className="text-3xl my-8 font-semibold">Cart</h1>
         <div className="flex justify-between w-full gap-4">

@@ -1,12 +1,13 @@
 import React from "react";
 import { ProductContextProvider } from "../../modules/product/context";
 import { ProductPage } from "../../modules/product/page";
+import { MainLayout } from "../../modules/layout";
 
 const Product = () => {
   return (
-    <>
+    <MainLayout>
       <ProductPage />
-    </>
+    </MainLayout>
   );
 };
 

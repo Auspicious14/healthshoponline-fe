@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -16,6 +17,9 @@ module.exports = {
         primary: "#2158E8",
         offWhite: "#E9EFFF",
         gray: "#475467",
+      },
+      fontFamily: {
+        sans: ["Ubuntu, sans-serif"],
       },
     },
   },

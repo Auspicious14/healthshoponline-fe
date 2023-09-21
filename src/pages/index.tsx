@@ -4,6 +4,7 @@ import { apiReqHandler } from "../components";
 import { useEffect } from "react";
 import { useCategorystate } from "../modules/category/context";
 import { useProductState } from "../modules/product/context";
+import { MainLayout } from "../modules/layout";
 
 interface IProps {
   data: any;
@@ -19,9 +20,9 @@ export default function Home({ data }: IProps) {
     }
   }, [data]);
   return (
-    <>
+    <MainLayout home>
       <HomePage />
-    </>
+    </MainLayout>
   );
 }
 

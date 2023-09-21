@@ -7,7 +7,7 @@ import Categories from "../../../../public/images/Frame 1000005044 (2).png";
 export const Category = () => {
   const { categories } = useCategorystate();
   return (
-    <div className="grid gap-4 grid-cols-4 align-middle">
+    <div className="grid gap-4 xl:lg:md:grid-cols-4 sm:grid-cols-3 grid-cols-2 align-middle">
       {categories?.map((c) => (
         <div key={c?._id}>
           <ApImage
