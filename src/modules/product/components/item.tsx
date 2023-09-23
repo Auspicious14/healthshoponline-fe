@@ -6,6 +6,7 @@ import { ApImage, ApRatingStar } from "../../../components";
 import { getCookie, helper } from "../../../helper";
 import { StarFilled } from "@ant-design/icons";
 import { useCartState } from "../../cart/context";
+import { useRouter } from "next/router";
 
 const { Text } = Typography;
 interface IProps {
@@ -13,6 +14,7 @@ interface IProps {
 }
 export const ProductListItem: React.FC<IProps> = ({ product }) => {
   const { addToCart, loading } = useCartState();
+  const router = useRouter();
   const handleAddToCart = async (values: any) => {
     const userId = getCookie("user_id");
     const res: any = await addToCart({
@@ -22,12 +24,12 @@ export const ProductListItem: React.FC<IProps> = ({ product }) => {
       },
       userId,
     });
-    // if (res) router.push("/cart");
+    if (res) router.push("/cart");
   };
   return (
     <div className="bg-white w-auto shadow-md mx-8 rounded-md">
       <div>
-        <Link href={`/product/${product?._id}`} className="">
+        <Link href={`/products/${product?._id}`} className="">
           <div className="group relative">
             <div className="min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-52">
               <ApImage
@@ -39,15 +41,19 @@ export const ProductListItem: React.FC<IProps> = ({ product }) => {
               />
             </div>
             <div className="mt-4 mx-4">
-              <h3 className=" text-gray-700 font-bold">{product.name}</h3>
-              <h3 className="text-sm text-gray-700 my-2">
-                {product.description.substring(0, 15)}
+              <h3 className=" text-gray-700 font-bold">
+                {product?.name?.length > 15
+                  ? `${product?.name?.substring(0, 15)}...`
+                  : product?.name}
               </h3>
+
               <p className=" font-bold text-gray-900">
-                {helper.toCurrency(parseFloat(product.price))}
+                {helper.toCurrency(parseFloat(product?.price))}
               </p>
               <Button
                 size="large"
+                loading={loading}
+                disabled={loading}
                 onClick={handleAddToCart}
                 className="text-white font-bold w-full my-4 text-center bg-[#1D2939] rounded-md"
               >

@@ -45,7 +45,7 @@ export const Headernav = () => {
               Home
             </Link>
             <Link
-              href="/product"
+              href="/products"
               className="text-sm font-medium text-gray-700 hover:text-gray-800"
             >
               Collections

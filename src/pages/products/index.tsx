@@ -5,7 +5,7 @@ import { MainLayout } from "../../modules/layout";
 
 const Product = () => {
   return (
-    <MainLayout>
+    <MainLayout home>
       <ProductPage />
     </MainLayout>
   );

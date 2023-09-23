@@ -71,33 +71,23 @@ export const ProductPage = () => {
 
   return (
     <>
-      <div className="mx-20">
-        {loading && <div>loading...</div>}
-        <div className="my-4">
-          <Search
-            placeholder="search product"
-            allowClear
-            enterButton="Search"
-            size="large"
-            className="bg-blue-600 rounded-md"
-            onSearch={() => {}}
-          />
-        </div>
-        <div className="flex w-full">
-          <div className="w-[30%]">
-            {/* <Menu
-              onClick={onClick}
-              style={{ width: 256 }}
-              defaultSelectedKeys={["1"]}
-              defaultOpenKeys={["sub1"]}
-              mode="inline"
-              items={items}
-            /> */}
+      <div className="md:mx-20 px-4 pt-20 md:p-0 ">
+        <Search
+          placeholder="search product"
+          allowClear
+          enterButton="Search"
+          size="large"
+          className="bg-blue-600 rounded-md md:mt-8"
+          onSearch={() => {}}
+        />
+        <div className="md:flex w-full">
+          <div className="md:w-[30%] hidden md:block">
             <CategoryListItem />
           </div>
-          <div className="w-[80%]">
+          {loading && <div>loading...</div>}
+          <div className="md:w-[80%]">
             <div className="flex justify-between my-4">
-              <Text code>{`Product: ${products.length}`}</Text>
+              <Text code>{`Product: ${products?.length}`}</Text>
             </div>
             {loading && (
               <Spin size="large" className="flex justify-center items-center" />
@@ -114,22 +104,18 @@ export const ProductPage = () => {
             <Pagination
               className="text-center"
               defaultCurrent={1}
+              // showTotal={(t, r: [number, number]) => <div>{t}</div>}
               total={products?.length}
             />
           </div>
         </div>
       </div>
 
-      <ApBackgroundImage
+      <ApImage
         src={Woman.src}
-        style={{
-          width: "100%",
-          height: "30rem",
-          marginBlock: "2rem",
-          // marginLeft: "8rem",
-          marginRight: "8rem",
-        }}
-      ></ApBackgroundImage>
+        alt="image"
+        className="w-full md:h-[500px] m-auto mt-6 sm:object-cover object-contain"
+      />
       <Footer />
     </>
   );

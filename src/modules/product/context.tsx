@@ -68,6 +68,12 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
       url = `${url}?color=${filter?.color}`;
     } else if (filter?.newArrival) {
       url = `${url}?newArrival=${filter?.newArrival}`;
+    } else if (filter?.category) {
+      url = `${url}?category=${filter?.category}`;
+    } else if (filter?.size) {
+      url = `${url}?size=${filter?.size}`;
+    } else {
+      url = url;
     }
 
     try {
@@ -78,10 +84,8 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
       setLoading(false);
       const { data } = await res.res?.data;
       setProducts(data);
-      console.log(data);
     } catch (error: any) {
       toast.error(error);
-      console.log(error);
     }
   };
 

@@ -6,7 +6,7 @@ import {
   ApRatingStar,
   ApTextInput,
 } from "../../../components";
-import product from "../../../pages/product";
+import product from "../../../pages/products";
 import { IProduct, IReview } from "../model";
 import { useProductState } from "../context";
 import { getCookie } from "../../../helper";

@@ -9,12 +9,14 @@ export const Category = () => {
   return (
     <div className="grid gap-4 xl:lg:md:grid-cols-4 sm:grid-cols-3 grid-cols-2 align-middle">
       {categories?.map((c) => (
-        <div key={c?._id}>
-          <ApImage
-            src={Categories}
-            className="flex-1 w-full h-40  justify-end border object-cover rounded-lg"
-            alt="categories"
-          />
+        <div key={c?._id} className="w-full h-full">
+          {!!c?.images?.length && (
+            <ApImage
+              src={c?.images[0]?.uri}
+              className="border object-cover rounded-lg"
+              alt={c?.images[0]?.name}
+            />
+          )}
           <Button className="bg-white border-none relative -top-20 font-bold px-12 text-black text-center ">
             {c?.name}
           </Button>

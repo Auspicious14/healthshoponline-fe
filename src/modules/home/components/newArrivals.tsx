@@ -12,7 +12,7 @@ export const NewArrivals = () => {
     <div className="grid gap-4 xl:lg:md:grid-cols-4 sm:grid-cols-3 grid-cols-2 align-middle">
       {newArrivals?.map((p: IProduct) => (
         <div key={p?._id}>
-          <Link href={`/product/${p?._id}`} className="">
+          <Link href={`/products/${p?._id}`} className="">
             <div className="relative">
               <div className="min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-52">
                 <ApImage
@@ -20,7 +20,6 @@ export const NewArrivals = () => {
                   src={p?.images[0]?.uri}
                   alt={p?.images[0]?.name}
                   className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                  unoptimized
                 />
               </div>
               <div className="mt-4 mx-4">
