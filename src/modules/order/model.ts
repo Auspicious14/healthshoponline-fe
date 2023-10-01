@@ -4,7 +4,7 @@ export interface IOrder {
   id: string;
   userId: string;
   cart: ICart;
-  amount: string;
+  amount: number;
   address: IAddress;
   status: IOrderStatus;
 }

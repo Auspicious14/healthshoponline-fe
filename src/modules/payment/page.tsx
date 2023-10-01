@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   ApImage,
+  ApModal,
   ApPlusMinusInput,
   ApTextInput,
   Headernav,
@@ -20,11 +21,16 @@ const { Text } = Typography;
 export const PaymentPage = () => {
   const { loading, payWithPayStack } = usePaymentState();
   const [link, setLink] = useState<string>("");
+  const [modal, setModal] = useState<{ show: boolean; data?: any }>({
+    show: false,
+  });
+
   const handleSubmit = async (values: any) => {
-    console.log(values);
     const res: any = await payWithPayStack(values);
-    console.log(res.authorization_url, res);
-    setLink(res?.authorization_url);
+    if (res) {
+      setLink(res?.authorization_url);
+      setModal({ show: true });
+    }
   };
 
   return (
@@ -116,11 +122,22 @@ export const PaymentPage = () => {
                 </Form>
               )}
             </Formik>
-            {link.length > 0 && (
-              <Button type="link" htmlType="button" href={link} target="_blank">
-                Verify Payment
-              </Button>
-            )}
+            <ApModal
+              title="Verify Payment"
+              show={modal.show}
+              onDimiss={() => setModal({ show: false })}
+            >
+              {link.length > 0 && (
+                <Button
+                  type="link"
+                  htmlType="button"
+                  href={link}
+                  target="_blank"
+                >
+                  Verify Payment
+                </Button>
+              )}
+            </ApModal>
           </Card>
         </div>
       </div>

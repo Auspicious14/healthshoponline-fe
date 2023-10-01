@@ -35,7 +35,7 @@ export const CheckoutPage = () => {
     getCart(id);
   }, []);
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: any, actions: any) => {
     let { amount, ...otherValues } = values;
     amount = overallTotal;
     const id = getCookie("user_id");
@@ -43,16 +43,30 @@ export const CheckoutPage = () => {
     if (res) {
       const response = await emptyCart(id);
       // router.push("/payment");
+      actions.resetForm({
+        values: {
+          address: {
+            name: "",
+            address: "",
+            postalCode: "",
+            city: "",
+            email: "",
+            phoneNumber: "",
+          },
+          amount: "",
+        },
+      });
+      setModal({ show: true });
     }
   };
 
   return (
     <div>
       <Headernav />
-      <div className="mx-20">
+      <div className="lg:mx-20 mx-4">
         <h1 className="text-3xl my-8 font-semibold">Checkout</h1>
-        <div className="flex justify-between w-full gap-4">
-          <Card className="w-[60%]">
+        <div className="lg:flex lg:justify-between w-full gap-4">
+          <Card className="lg:w-[60%] w-full">
             <Formik
               initialValues={{
                 address: {
@@ -103,7 +117,7 @@ export const CheckoutPage = () => {
                     placeHolder="address"
                     containerClass="flex-col"
                   />
-                  <Space className="flex gap-4 items-center ">
+                  <Space className="flex justify-between w-full gap-4 items-center ">
                     <ApTextInput
                       className="relative bg-stone-50 flex-col block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                       label="City"
@@ -135,7 +149,7 @@ export const CheckoutPage = () => {
               )}
             </Formik>
           </Card>
-          <Card title={"ORDER SUMMARY"} type="inner" className="w-[40%]">
+          <Card title={"ORDER SUMMARY"} type="inner" className="lg:w-[40%]">
             {carts?.map((c) => (
               <CheckoutListItem cart={c} key={c?._id} />
             ))}
@@ -147,7 +161,7 @@ export const CheckoutPage = () => {
                 </Text>
               </div>
               <div className="flex justify-between items-center ">
-                <Text className="text-gray-400">Free Delivery</Text>
+                <Text className="text-gray-400">Delivery Fee</Text>
                 <Text className="font-semibold">{helper.toCurrency(0)}</Text>
               </div>
             </div>

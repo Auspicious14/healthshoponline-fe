@@ -10,14 +10,14 @@ interface IOrderState {
   createOrder: (payload: any) => Promise<void>;
   updateOrderItem: (payload: IOrder, orderId: string) => Promise<void>;
   deleteOrderItem: (orderId: string) => Promise<void>;
-  getAllOrders: (userId: string) => Promise<void>;
+  getUserOrders: (userId: string) => Promise<void>;
 }
 
 const OrderContext = React.createContext<IOrderState>({
   loading: false,
   order: {} as any,
   orders: [],
-  getAllOrders(payload) {
+  getUserOrders(payload) {
     return null as any;
   },
   createOrder(payload) {
@@ -48,12 +48,15 @@ export const OrderContextProvider: React.FC<IProps> = ({ children }) => {
   const [orders, setOrders] = useState<IOrder[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const getAllOrders = async () => {
+  const getUserOrders = async (userId: string) => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:2000/orders`, {
-        method: "GET",
-      });
+      const res = await fetch(
+        `${process?.env?.NEXT_PUBLIC_API_ROUTE}/orders?userId=${userId}`,
+        {
+          method: "GET",
+        }
+      );
       setLoading(false);
       const data = await res.json();
       setOrder(data);
@@ -125,7 +128,7 @@ export const OrderContextProvider: React.FC<IProps> = ({ children }) => {
         loading,
         order,
         orders,
-        getAllOrders,
+        getUserOrders,
         createOrder,
         updateOrderItem,
         deleteOrderItem,

@@ -1,7 +1,8 @@
 import React from "react";
+import { OrderPage } from "../modules/order/page";
 
 const Order = () => {
-  return <div>Order</div>;
+  return <OrderPage />;
 };
 
 export const getServerSideProps = async ({
