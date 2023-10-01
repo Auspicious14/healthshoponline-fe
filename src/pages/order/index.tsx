@@ -1,5 +1,5 @@
 import React from "react";
-import { OrderPage } from "../modules/order/page";
+import { OrderPage } from "../../modules/order/page";
 
 const Order = () => {
   return <OrderPage />;

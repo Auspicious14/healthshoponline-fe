@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { ApImage } from "../../components";
-import { Table, Typography } from "antd";
+import { Button, Table, Typography } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { IOrder } from "./model";
 import { useOrderState } from "./context";
 import { getCookie, helper } from "../../helper";
+import { ICart } from "../cart/model";
 
 const { Text } = Typography;
 
@@ -32,8 +33,8 @@ export const OrderPage = () => {
       render: (_, { cart }) => (
         <ApImage
           className="w-12 h-12"
-          src={cart?.product?.product?.images[0]?.uri}
-          alt={cart?.product?.product?.images[0]?.uri}
+          src={cart[0]?.product?.product?.images[0]?.uri}
+          alt={cart[0]?.product?.product?.images[0]?.uri}
         />
       ),
     },
@@ -41,24 +42,38 @@ export const OrderPage = () => {
     {
       title: "Product Name",
       key: "name",
-      render: (_, { cart }) => <Text>{cart?.product?.product?.name}</Text>,
+      render: (_, { cart }) => <Text>{cart[0]?.product?.product?.name}</Text>,
     },
 
     {
       title: "Price",
       key: "price",
-      render: (_, { cart }) => <Text>{cart?.product?.product?.price}</Text>,
+      render: (_, { cart }) => <Text>{cart[0]?.product?.product?.price}</Text>,
     },
     {
       title: "Qty",
       key: "quantity",
-      render: (_, { cart }) => <Text>{cart?.product?.quantity}</Text>,
+      render: (_, { cart }) => <Text>{cart[0]?.product?.quantity}</Text>,
+    },
+    {
+      title: "Status",
+      key: "status",
+      dataIndex: "status",
     },
     {
       title: "Total",
       key: "Total",
       render: (_, { amount }) => (
         <Text className="font-semibold">{helper.toCurrency(amount)}</Text>
+      ),
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
+        <Button href={`/order/${record?.id}`} htmlType={"button"}>
+          View
+        </Button>
       ),
     },
   ];
@@ -71,11 +86,21 @@ export const OrderPage = () => {
           <Table
             rowSelection={rowSelection}
             columns={columns}
-            dataSource={orders?.length > 0 ? orders : []}
+            dataSource={orders}
             rowKey={(c) => c?.id}
             className="lg:w-[60%] min-w-full"
             rootClassName="w-auto"
             loading={loading}
+            // expandable={{
+            //   expandedRowRender: (record) => {
+            //     return record?.cart?.map((c) => (
+            //       <Text key={c?._id}>{c?.product?.product?.name}</Text>
+            //     ));
+            //   },
+            //   //   rowExpandable: (record) => {
+            //   //     return record?.cart ? record?.cart : [];
+            //   //   },
+            // }}
           />
         </div>
       </div>

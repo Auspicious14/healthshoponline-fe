@@ -3,10 +3,11 @@ import { ICart } from "../cart/model";
 export interface IOrder {
   id: string;
   userId: string;
-  cart: ICart;
+  cart: ICart[];
   amount: number;
   address: IAddress;
   status: IOrderStatus;
+  createdAt: string;
 }
 
 export enum IOrderStatus {

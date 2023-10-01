@@ -8,8 +8,6 @@ interface IOrderState {
   order: IOrder;
   orders: IOrder[];
   createOrder: (payload: any) => Promise<void>;
-  updateOrderItem: (payload: IOrder, orderId: string) => Promise<void>;
-  deleteOrderItem: (orderId: string) => Promise<void>;
   getUserOrders: (userId: string) => Promise<void>;
 }
 
@@ -21,12 +19,6 @@ const OrderContext = React.createContext<IOrderState>({
     return null as any;
   },
   createOrder(payload) {
-    return null as any;
-  },
-  updateOrderItem(payload, cartId) {
-    return null as any;
-  },
-  deleteOrderItem(orderId) {
     return null as any;
   },
 });
@@ -51,15 +43,13 @@ export const OrderContextProvider: React.FC<IProps> = ({ children }) => {
   const getUserOrders = async (userId: string) => {
     setLoading(true);
     try {
-      const res = await fetch(
-        `${process?.env?.NEXT_PUBLIC_API_ROUTE}/orders?userId=${userId}`,
-        {
-          method: "GET",
-        }
-      );
+      const res = await apiReqHandler({
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/order/${userId}`,
+        method: "GET",
+      });
       setLoading(false);
-      const data = await res.json();
-      setOrder(data);
+      const data = await res?.res?.data?.data;
+      setOrders(data);
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -89,39 +79,6 @@ export const OrderContextProvider: React.FC<IProps> = ({ children }) => {
     }
   };
 
-  const deleteOrderItem = async (orderId: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`http://localhost:2000/product/:${orderId}}`, {
-        method: "DELETE",
-      });
-      setLoading(false);
-      const data = await res.json();
-      setOrders(data.filter((del: IOrder, i: number) => del.id !== orderId));
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const updateOrderItem = async (payload: IOrder, orderId: string) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`http://localhost:2000/order/${orderId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      setLoading(false);
-      const data = await res.json();
-      setOrders(data);
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <OrderContext.Provider
       value={{
@@ -130,8 +87,6 @@ export const OrderContextProvider: React.FC<IProps> = ({ children }) => {
         orders,
         getUserOrders,
         createOrder,
-        updateOrderItem,
-        deleteOrderItem,
       }}
     >
       {children}
