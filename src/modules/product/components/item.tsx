@@ -27,7 +27,7 @@ export const ProductListItem: React.FC<IProps> = ({ product }) => {
     if (res) router.push("/cart");
   };
   return (
-    <div className="bg-white w-auto shadow-md mx-8 rounded-md">
+    <div className="bg-white md:w-auto w-full shadow-md md:mx-8 rounded-md">
       <div>
         <Link href={`/products/${product?._id}`} className="">
           <div className="group relative">

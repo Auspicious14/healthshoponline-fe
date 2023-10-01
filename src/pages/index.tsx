@@ -15,8 +15,8 @@ export default function Home({ data }: IProps) {
 
   useEffect(() => {
     if (data) {
-      setCategories(data.data);
-      setNewArrivals(data.newArrival);
+      setCategories(data?.data);
+      setNewArrivals(data?.newArrival);
     }
   }, [data]);
   return (
@@ -26,19 +26,13 @@ export default function Home({ data }: IProps) {
   );
 }
 
-export const getServerSideProps = async ({
-  req,
-  query,
-}: {
-  req: any;
-  query: any;
-}) => {
+export const getServerSideProps = async () => {
   const res = await apiReqHandler({
     endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/category`,
     method: "GET",
   });
 
-  const data = await res.res?.data?.data;
+  const data = await res?.res?.data?.data;
   console.log(data);
 
   const response = await apiReqHandler({

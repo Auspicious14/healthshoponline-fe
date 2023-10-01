@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "antd";
 import Link from "next/link";
 import { useCartState } from "../../modules/cart/context";
+import { getCookie } from "../../helper";
 
 const { Search } = Input;
 
 export const Headernav = () => {
   const [toggle, setToggle] = useState<boolean>(false);
-  const { carts } = useCartState();
+  const { carts, getCart } = useCartState();
+  useEffect(() => {
+    const id = getCookie("user_id");
+    getCart(id);
+  }, []);
   return (
     <header className="relative bg-white">
       <nav

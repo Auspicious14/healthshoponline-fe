@@ -33,6 +33,10 @@ export const CategoryListItem: React.FC<IProps> = ({ product }) => {
       checked: false,
     })),
   };
+
+  if (filters?.length <= 3) {
+    filters.push(catFlt);
+  }
   console.log(filters);
 
   const handleFilter = (section: any, e: any) => {

@@ -123,17 +123,22 @@ export const CartPage = () => {
 
   return (
     <div>
-      <div className="mx-20">
+      <div className="lg:mx-20 mx-4">
         <h1 className="text-3xl my-8 font-semibold">Cart</h1>
-        <div className="flex justify-between w-full gap-4">
+        <div className="lg:flex  lg:justify-between gap-4 ">
           <Table
             rowSelection={rowSelection}
             columns={columns}
             dataSource={carts.length > 0 ? carts : []}
             rowKey={(c) => c?._id}
-            className="w-[60%]"
+            className="lg:w-[60%] min-w-full"
+            rootClassName="w-auto"
           />
-          <Card title={"ORDER SUMMARY"} type="inner" className="w-[40%]">
+          <Card
+            title={"ORDER SUMMARY"}
+            type="inner"
+            className="lg:w-[40%] w-full"
+          >
             <div className="w-full pb-8 border-b ">
               <div className="flex justify-between items-center pb-4">
                 <Text className="text-gray-400">Subtotal</Text>

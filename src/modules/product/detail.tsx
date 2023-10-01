@@ -69,16 +69,15 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
   return (
     <div>
       <Headernav />
-      <div className="bg-white mx-12">
-        <div className="flex gap-8 w-full pt-6">
+      <div className="bg-white md:mx-12 mx-4">
+        <div className="md:flex gap-8 w-full pt-6">
           {/* Image gallery */}
-          <div className="w-[50%] bg-gray py-4 border rounded-lg">
+          <div className="md:w-[50%] w-full bg-gray py-4 border rounded-lg">
             <div className="w-[50%] h-[50%] m-auto">
               <ApImage
                 src={product?.images[0]?.uri}
                 alt={product?.images[0]?.name}
                 className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                unoptimized
               />
             </div>
             <div className="mx-auto mt-6 sm:px-6 w-full grid grid-cols-4 gap-4 items-center  lg:px-8">
@@ -102,13 +101,15 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
           </div>
 
           {/* Product info */}
-          <div className="w-[50%]">
-            <h1 className="pb-4 capitalize text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-              {product.name}
-            </h1>
-            <p className=" text-lg font-bold tracking-tight text-primary">
-              {`$${product.price}`}
-            </p>
+          <div className="md:w-[50%]">
+            <div className="flex justify-between mt-2 md:my-0 md:block">
+              <h1 className="pb-4 capitalize text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+                {product.name}
+              </h1>
+              <p className=" text-lg font-bold tracking-tight text-primary">
+                {`$${product.price}`}
+              </p>
+            </div>
             <div className="flex gap-4 items-center mb-4">
               <ApRatingStar value={totalRatings} className="text-zinc-200" />
               <p>{totalRatings?.toFixed(1) || 0} Ratings</p>

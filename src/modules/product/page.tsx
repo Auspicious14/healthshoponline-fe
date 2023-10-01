@@ -84,7 +84,6 @@ export const ProductPage = () => {
           <div className="md:w-[30%] hidden md:block">
             <CategoryListItem />
           </div>
-          {loading && <div>loading...</div>}
           <div className="md:w-[80%]">
             <div className="flex justify-between my-4">
               <Text code>{`Product: ${products?.length}`}</Text>
