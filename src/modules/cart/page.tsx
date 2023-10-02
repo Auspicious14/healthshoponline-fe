@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { ApImage, ApPlusMinusInput, Headernav } from "../../components";
-import { Button, Card, Popconfirm, Space, Table, Typography } from "antd";
-import { ColumnsType } from "antd/es/table";
 import { DeleteFilled } from "@ant-design/icons";
-import { ICart } from "./model";
-import { useCartState } from "./context";
-import { getCookie, helper } from "../../helper";
-import { Form, Formik } from "formik";
+import { Button, Card, Form, Popconfirm, Table, Typography } from "antd";
+import { ColumnsType } from "antd/es/table";
+import { Formik } from "formik";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { ApImage, ApPlusMinusInput } from "../../components";
+import { getCookie, helper } from "../../helper";
+import { useCartState } from "./context";
+import { ICart } from "./model";
+
 const { Text } = Typography;
 
 export const CartPage = () => {
