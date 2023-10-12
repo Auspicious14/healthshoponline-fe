@@ -19,11 +19,12 @@ export interface IProductImage {
 }
 
 export interface IProductFilter {
-  brand: string;
-  category: string;
-  color: string;
-  size: string;
-  newArrival: string;
+  brand?: string;
+  category?: string;
+  color?: string;
+  size?: string;
+  newArrival?: string;
+  name?: string;
 }
 
 export interface ICategoryFilterProps {

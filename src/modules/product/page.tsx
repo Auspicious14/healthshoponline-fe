@@ -11,17 +11,18 @@ import { useProductState } from "./context";
 import { ProductListItem } from "./components/item";
 import Woman from "../../../public/images/Image.png";
 import { CategoryListItem } from "./components/category";
+import { IProductFilter } from "./model";
 
 const { Text } = Typography;
 const { Search } = Input;
 
 export const ProductPage = () => {
   const { products, getProducts, loading } = useProductState();
-
+  const [filter, setFilter] = useState<IProductFilter>({});
   const [collapsed, setCollapsed] = useState<boolean>(false);
   useEffect(() => {
-    getProducts();
-  }, []);
+    getProducts(filter);
+  }, [filter]);
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
@@ -69,6 +70,11 @@ export const ProductPage = () => {
     ]),
   ];
 
+  const handleSearch = (val: string) => {
+    if (val === undefined) return;
+    console.log(val, "search valll");
+    setFilter({ ...filter, name: val });
+  };
   return (
     <>
       <div className="md:mx-20 px-4 pt-20 md:p-0 ">
@@ -78,7 +84,8 @@ export const ProductPage = () => {
           enterButton="Search"
           size="large"
           className="bg-blue-600 rounded-md md:mt-8"
-          onSearch={() => {}}
+          onSearch={handleSearch}
+          // onChange={handleSearch}
         />
         <div className="md:flex w-full">
           <div className="md:w-[30%] hidden md:block">

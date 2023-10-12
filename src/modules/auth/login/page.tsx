@@ -26,8 +26,8 @@ export const SignInPage = () => {
   };
 
   return (
-    <div className="flex justify-between">
-      <div className="ml-32 mt-24 w-1/4">
+    <div className="lg:flex lg:justify-between">
+      <div className="lg:ml-32 mt-24 lg:w-1/4 w-full">
         <div className="my-6 mx-4 text-left">
           <h2 className=" text-3xl font-bold tracking-tight text-gray-900">
             Welcome Back
@@ -87,10 +87,12 @@ export const SignInPage = () => {
           )}
         </Formik>
       </div>
-      <ApBackgroundImage
-        src={Vector.src}
-        className={"text-white text-5xl text-justify px-8"}
-      ></ApBackgroundImage>
+      <div className="hidden lg:block">
+        <ApBackgroundImage
+          src={Vector.src}
+          className={"text-white lg:block text-5xl text-justify px-8 hidden"}
+        />
+      </div>
     </div>
   );
 };

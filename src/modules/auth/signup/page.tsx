@@ -24,8 +24,8 @@ export const SignUpPage = () => {
     });
   };
   return (
-    <div className=" flex justify-between">
-      <div className="ml-32 mt-12 w-1/4">
+    <div className=" lg:flex lg:justify-between">
+      <div className="lg:ml-32 mt-12 lg:w-1/4 w-full">
         <h2 className="my-6 mx-4 text-3xl font-bold tracking-tight text-gray-900">
           Sign up
         </h2>
@@ -111,7 +111,9 @@ export const SignUpPage = () => {
           )}
         </Formik>
       </div>
-      <ApBackgroundImage src={Section.src} />
+      <div className="hidden lg:block">
+        <ApBackgroundImage src={Section.src} />
+      </div>
     </div>
   );
 };

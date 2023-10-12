@@ -80,7 +80,7 @@ export const CartPage = () => {
                     setQty(val);
                     if (val !== product?.quantity) {
                       const res: any = await updateCartItem(
-                        { product: { ...product, quantity: val } },
+                        { _id: product?.product?._id, quantity: val },
                         _id
                       );
                       console.log(res);
@@ -116,7 +116,7 @@ export const CartPage = () => {
             style: { background: "rgb(37 99 235)" },
           }}
         >
-          <DeleteFilled />
+          <DeleteFilled rev={undefined} />
         </Popconfirm>
       ),
     },

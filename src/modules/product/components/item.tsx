@@ -17,13 +17,13 @@ export const ProductListItem: React.FC<IProps> = ({ product }) => {
   const router = useRouter();
   const handleAddToCart = async (values: any) => {
     const userId = getCookie("user_id");
-    const res: any = await addToCart({
-      product: {
-        quantity: 1,
-        id: product._id,
-      },
+    if (!userId) return router.push("/auth/login");
+    const payload = {
+      productId: product?._id,
+      quantity: 1,
       userId,
-    });
+    };
+    const res: any = await addToCart(payload);
     if (res) router.push("/cart");
   };
   return (
@@ -74,22 +74,30 @@ interface IReviewProps {
 export const ReviewListItem: React.FC<IReviewProps> = ({ review }) => {
   return (
     <>
-      <div className="flex gap-72 my-6">
+      <div className="lg:flex lg:gap-72 my-6">
         {review?.user ? (
-          <Space className="block">
-            <h1>{`${review?.user?.firstName} ${review?.user?.lastName}`}</h1>
-            <p className="text-justify font-bold py-2">
-              {review?.createdAt.substring(0, 10)}
-            </p>
-          </Space>
+          <div>
+            <Space className="hidden lg:block">
+              <h1>{`${review?.user?.firstName} ${review?.user?.lastName}`}</h1>
+              <p className="text-justify font-bold py-2">
+                {review?.createdAt?.substring(0, 10)}
+              </p>
+            </Space>
+            <Space className="flex gap-3 items-center lg:hidden">
+              <ApRatingStar value={review?.rating} />
+              <p className="text-justify font-bold py-2 text-sm">
+                {review?.createdAt?.substring(0, 10)}
+              </p>
+            </Space>
+          </div>
         ) : (
           <div></div>
         )}
         <Space className="block">
-          <ApRatingStar value={review?.rating} />
+          <ApRatingStar value={review?.rating} className="hidden lg:block" />
 
           <Text className="font-bold">{review?.title}</Text>
-          <p className="text-justify my-2">{review?.description}</p>
+          <p className="text-justify lg:my-2">{review?.description}</p>
         </Space>
       </div>
     </>
@@ -110,6 +118,7 @@ export const RateStreakListItem: React.FC<IRateProps> = ({ review }) => {
             className={
               review?.rating >= 1 ? "text-orange-500" : "text-gray-200"
             }
+            rev={undefined}
           />
         )}
       </Space>

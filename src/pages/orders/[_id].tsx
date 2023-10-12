@@ -28,11 +28,11 @@ export const getServerSideProps = async ({
 
   const { _id } = query;
   const data = await apiReqHandler({
-    endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/order/${_id}`,
+    endPoint: `${process?.env?.NEXT_PUBLIC_API_ROUTE}/order/${_id}`,
     method: "GET",
   });
   const order = data?.res?.data?.data;
-  if (!order) return new Error("Unauthorised");
+  console.log(order, "orderrr");
   return {
     props: { order },
   };

@@ -1,7 +1,7 @@
 import { ICart } from "../cart/model";
 
 export interface IOrder {
-  id: string;
+  _id: string;
   userId: string;
   cart: ICart[];
   amount: number;

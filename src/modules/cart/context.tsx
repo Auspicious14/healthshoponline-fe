@@ -57,7 +57,8 @@ export const CartContextProvider: React.FC<IProps> = ({ children }) => {
     // console.log(JSON.stringify(userId));
     try {
       const res = await apiReqHandler({
-        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/cart/${id}`,
+        // endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/cart/${id}`,
+        endPoint: `http://localhost:2000/cart/${id}`,
         method: "GET",
       });
       setLoading(false);
@@ -75,7 +76,8 @@ export const CartContextProvider: React.FC<IProps> = ({ children }) => {
     console.log(JSON.stringify(payload));
     try {
       const res = await apiReqHandler({
-        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/cart`,
+        // endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/cart`,
+        endPoint: `http://localhost:2000/cart`,
         method: "POST",
         payload: JSON.stringify(payload),
       });
@@ -114,7 +116,8 @@ export const CartContextProvider: React.FC<IProps> = ({ children }) => {
     setLoading(true);
     try {
       const res = await apiReqHandler({
-        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/cart/${cartId}`,
+        // endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/cart/${cartId}`,
+        endPoint: `http://localhost:2000/cart/${cartId}`,
         method: "PUT",
         payload: JSON.stringify(payload),
       });

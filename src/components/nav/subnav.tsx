@@ -18,6 +18,9 @@ export const SubNav = () => {
                   <Link href="/products" className="text-sm font-medium">
                     Collections
                   </Link>
+                  <Link href="/orders" className="text-sm font-medium ">
+                    Order
+                  </Link>
                   <Link href="#" className="text-sm font-medium ">
                     Blog
                   </Link>
@@ -33,6 +36,9 @@ export const SubNav = () => {
                   </Link>
                   <Link href="#" className="text-sm font-medium ">
                     Blog
+                  </Link>
+                  <Link href="/orders" className="text-sm font-medium ">
+                    Order
                   </Link>
                   <Link href="#" className="text-sm font-medium">
                     Contact us

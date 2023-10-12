@@ -47,13 +47,13 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
 
   const handleAddToCart = async (values: any) => {
     const userId = getCookie("user_id");
-    const res: any = await addToCart({
-      product: {
-        quantity: values.quantity,
-        id: product._id,
-      },
+    if (!userId) return router.push("/auth/login");
+    const payload = {
+      productId: product?._id,
+      quantity: values.quantity,
       userId,
-    });
+    };
+    const res: any = await addToCart(payload);
     if (res) router.push("/cart");
   };
 
@@ -128,7 +128,7 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
               >
                 {({ values, setFieldValue }) => (
                   <Form className="mt-10">
-                    <div className="flex gap-4 items-center">
+                    <div className="flex gap-4 justify-between items-center">
                       <ApPlusMinusInput
                         name="quantity"
                         label="Quantity"
@@ -139,15 +139,27 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
                       <p className="mt-4">Stock: {product?.quantity}</p>
                     </div>
                     {/* Sizes */}
-                    <div className="mt-10">
+                    <div className="flex items-center gap-2 justify-between">
                       <div className="flex items-center gap-4">
-                        <h3 className="text-sm font-medium text-gray-900">
+                        <h3 className="text-sm lg:text-base font-medium text-gray-900">
                           Size:
                         </h3>
-                        <Text>{product?.size}</Text>
+                        <Text className="text-sm lg:text-base">
+                          {product?.size}
+                        </Text>
+                      </div>
+                      <div
+                        className="flex items-center my-4 cursor-pointer"
+                        onClick={handleCopy}
+                      >
+                        <CopyOutlined
+                          className="w-6 text-primary"
+                          rev={undefined}
+                        />
+                        <p>Copy link</p>
                       </div>
                     </div>
-                    x
+
                     <div className="flex w-full gap-4">
                       <Button
                         htmlType="submit"
@@ -164,13 +176,6 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
                         Buy Now
                       </Button>
                     </div>
-                    <div
-                      className="flex items-center gap-2 my-4 cursor-pointer"
-                      onClick={handleCopy}
-                    >
-                      <CopyOutlined className="w-6 text-primary" />
-                      <p>Copy link</p>
-                    </div>
                   </Form>
                 )}
               </Formik>
@@ -178,8 +183,10 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
           </div>
         </div>
         <div>
-          <Space className="my-4 flex justify-between">
-            <Text className="text-3xl font-bold">Ratings and Review</Text>
+          <Space className="lg:my-4 flex justify-between mt-8 my-4">
+            <Text className="lg:text-3xl text-xl font-bold">
+              Ratings and Review
+            </Text>
             <Button
               type="text"
               className="bg-gray-200 font-semibold"
@@ -190,7 +197,7 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
           </Space>
           <div className="flex gap-24">
             <Space className="block w-40 text-center">
-              <Text className="text-6xl font-bold my-4">
+              <Text className="lg:text-6xl text-4xl font-bold my-4">
                 {totalRatings ? totalRatings.toFixed(1) : "0.0"}
               </Text>
               <div className="">

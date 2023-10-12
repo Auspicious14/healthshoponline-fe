@@ -72,6 +72,8 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
       url = `${url}?category=${filter?.category}`;
     } else if (filter?.size) {
       url = `${url}?size=${filter?.size}`;
+    } else if (filter?.name) {
+      url = `${url}?name=${filter?.name}`;
     } else {
       url = url;
     }

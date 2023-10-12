@@ -71,7 +71,7 @@ export const OrderPage = () => {
       title: "Action",
       key: "action",
       render: (_, record) => (
-        <Button href={`/order/${record?.id}`} htmlType={"button"}>
+        <Button href={`/orders/${record?._id}`} htmlType={"button"}>
           View
         </Button>
       ),
@@ -87,7 +87,7 @@ export const OrderPage = () => {
             rowSelection={rowSelection}
             columns={columns}
             dataSource={orders}
-            rowKey={(c) => c?.id}
+            rowKey={(c) => c?._id}
             className="lg:w-[60%] min-w-full"
             rootClassName="w-auto"
             loading={loading}
