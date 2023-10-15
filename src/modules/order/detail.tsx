@@ -14,7 +14,7 @@ export const OrderDetailPage: React.FC<IProps> = ({ order }) => {
     <div className="flex justify-center items-center border rounded-md">
       <Space className="flex justify-between items-center border-b">
         <Text>Order ID</Text>
-        <Text className="font-bold">{order?.id}</Text>
+        <Text className="font-bold">{order?._id}</Text>
       </Space>
       <Space className="flex justify-between items-center border-b">
         <Text>Transaction Date</Text>

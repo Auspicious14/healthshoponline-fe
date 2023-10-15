@@ -13,18 +13,16 @@ export const OrderItem: React.FC<IProps> = ({ item }) => {
     <Space className="flex justify-between border-b py-4">
       <Space className="flex gap-4 items-center">
         <ApImage
-          src={item?.product?.product?.images[0]?.uri}
-          alt={item?.product?.product?.images[0]?.uri}
+          src={item?.product?.images[0]?.uri}
+          alt={item?.product?.images[0]?.uri}
         />
         <Space>
-          <Text>{item?.product?.product?.name}</Text>
-          <Text>{item?.product?.quantity}</Text>
+          <Text>{item?.product?.name}</Text>
+          <Text>{item?.quantity}</Text>
         </Space>
       </Space>
       <Text>
-        {helper?.toCurrency(
-          parseFloat(item?.product?.product?.price) * item?.product?.quantity
-        )}
+        {helper?.toCurrency(parseFloat(item?.product?.price) * item?.quantity)}
       </Text>
     </Space>
   );

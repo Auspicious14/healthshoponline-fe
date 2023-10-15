@@ -33,8 +33,8 @@ export const OrderPage = () => {
       render: (_, { cart }) => (
         <ApImage
           className="w-12 h-12"
-          src={cart[0]?.product?.product?.images[0]?.uri}
-          alt={cart[0]?.product?.product?.images[0]?.uri}
+          src={cart[0]?.product?.images[0]?.uri}
+          alt={cart[0]?.product?.images[0]?.uri}
         />
       ),
     },
@@ -42,13 +42,13 @@ export const OrderPage = () => {
     {
       title: "Product Name",
       key: "name",
-      render: (_, { cart }) => <Text>{cart[0]?.product?.product?.name}</Text>,
+      render: (_, { cart }) => <Text>{cart[0]?.product?.name}</Text>,
     },
 
     {
       title: "Price",
       key: "price",
-      render: (_, { cart }) => <Text>{cart[0]?.product?.product?.price}</Text>,
+      render: (_, { cart }) => <Text>{cart[0]?.product?.price}</Text>,
     },
     {
       title: "Qty",

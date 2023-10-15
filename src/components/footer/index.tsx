@@ -37,11 +37,11 @@ export const Footer = () => {
               Design amazing digital experiences that create
             </Text>
             <Space>
-              <PhoneOutlined />
+              <PhoneOutlined rev={undefined} />
               <Text className="block text-base text-gray">+2347010018536</Text>
             </Space>
             <Space>
-              <MessageOutlined />
+              <MessageOutlined rev={undefined} />
               <Text className="block text-base text-gray">
                 uthmanabdulganiyu2019@gmail.com
               </Text>

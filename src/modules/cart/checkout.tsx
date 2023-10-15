@@ -20,12 +20,12 @@ export const CheckoutPage = () => {
   const { carts, getCart, emptyCart } = useCartState();
   const router = useRouter();
   const subTotal = carts
-    ?.map((c) => parseFloat(c?.product?.product?.price))
-    ?.reduce((a, b) => a + b, 0);
-  const total = carts?.map(
-    (c) => parseFloat(c?.product?.product?.price) * c.product.quantity
-  );
-  const overallTotal = total.map((t) => t).reduce((a, b) => a + b, 0);
+    ?.map((c) => c?.amount)
+    ?.reduce((a: any, b: any) => a + b, 0);
+  // const total = carts?.map(
+  //   (c) => parseFloat(c?.product?.product?.price) * c.product.quantity
+  // );
+  // const overallTotal = total.map((t) => t).reduce((a, b) => a + b, 0);
   const [modal, setModal] = useState<{ show: boolean; data?: any }>({
     show: false,
   });
@@ -37,7 +37,7 @@ export const CheckoutPage = () => {
 
   const handleSubmit = async (values: any, actions: any) => {
     let { amount, ...otherValues } = values;
-    amount = overallTotal;
+    amount = subTotal;
     const id = getCookie("user_id");
     const res: any = await createOrder({ id, amount, ...otherValues });
     if (res) {
@@ -157,7 +157,7 @@ export const CheckoutPage = () => {
               <div className="flex justify-between items-center pb-4">
                 <Text className="text-gray-400">Subtotal</Text>
                 <Text className="font-semibold">
-                  {helper.toCurrency(overallTotal)}
+                  {helper.toCurrency(subTotal)}
                 </Text>
               </div>
               <div className="flex justify-between items-center ">
@@ -169,7 +169,7 @@ export const CheckoutPage = () => {
               <div className="flex justify-between items-center py-4">
                 <Text className="text-gray-300">Total</Text>
                 <Text className="font-semibold">
-                  {helper.toCurrency(overallTotal)}
+                  {helper.toCurrency(subTotal)}
                 </Text>
               </div>
             </div>
