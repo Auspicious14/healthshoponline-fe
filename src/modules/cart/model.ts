@@ -4,7 +4,8 @@ export interface ICart {
   _id: string;
   userId?: string;
   amount?: number;
-  product: ICartProduct;
+  product: IProduct;
+  quantity: number;
 }
 
 export interface ICartProduct {

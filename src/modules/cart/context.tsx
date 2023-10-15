@@ -57,8 +57,8 @@ export const CartContextProvider: React.FC<IProps> = ({ children }) => {
     // console.log(JSON.stringify(userId));
     try {
       const res = await apiReqHandler({
-        // endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/cart/${id}`,
-        endPoint: `http://localhost:2000/cart/${id}`,
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/cart/${id}`,
+        // endPoint: `http://localhost:2000/cart/${id}`,
         method: "GET",
       });
       setLoading(false);
@@ -76,19 +76,25 @@ export const CartContextProvider: React.FC<IProps> = ({ children }) => {
     console.log(JSON.stringify(payload));
     try {
       const res = await apiReqHandler({
-        // endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/cart`,
-        endPoint: `http://localhost:2000/cart`,
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/cart`,
+        // endPoint: `http://localhost:2000/cart`,
         method: "POST",
         payload: JSON.stringify(payload),
       });
 
       setLoading(false);
       const data = await res.res?.data;
-      setcart(data);
-      toast.success("Product is added to cart");
-      return data;
+      console.log(data);
+      if (data) {
+        setcart(data);
+        toast.success("Product is added to cart");
+        return data;
+      }
+      //  res?.res?.status == 400 &&  toast.error(res?.res?.)
+      // toast.error(res.res);
     } catch (error: any) {
       toast.error(error);
+      console.log(error);
     }
   };
 
@@ -116,8 +122,8 @@ export const CartContextProvider: React.FC<IProps> = ({ children }) => {
     setLoading(true);
     try {
       const res = await apiReqHandler({
-        // endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/cart/${cartId}`,
-        endPoint: `http://localhost:2000/cart/${cartId}`,
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/cart/${cartId}`,
+        // endPoint: `http://localhost:2000/cart/${cartId}`,
         method: "PUT",
         payload: JSON.stringify(payload),
       });
@@ -125,8 +131,8 @@ export const CartContextProvider: React.FC<IProps> = ({ children }) => {
       setLoading(false);
       const data = await res?.res?.data;
       if (data) {
-        setCarts(carts?.map((c) => (c._id == data?._id ? data : c)));
-        console.log(data);
+        setCarts(carts?.map((c) => (c._id == cartId ? data : c)));
+        console.log(carts);
       }
       return data;
     } catch (error) {

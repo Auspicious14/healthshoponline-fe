@@ -15,13 +15,13 @@ export const CartPage = () => {
   const { carts, getCart, deleteCartItem, updateCartItem } = useCartState();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [qty, setQty] = useState<number>(1);
+  // const subTotal = carts
+  //   ?.map((c) => parseFloat(c?.product?.price))
+  //   ?.reduce((a, b) => a + b, 0);
+  const total = carts?.map((c) => parseFloat(c?.product?.price) * c.quantity);
   const subTotal = carts
-    ?.map((c) => parseFloat(c?.product?.product?.price))
-    ?.reduce((a, b) => a + b, 0);
-  const total = carts?.map(
-    (c) => parseFloat(c?.product?.product?.price) * c.product.quantity
-  );
-  const overallTotal = total.map((t) => t).reduce((a, b) => a + b, 0);
+    .map((t) => t.amount)
+    .reduce((a: any, b: any) => a + b, 0);
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     console.log("selectedRowKeys changed: ", newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
@@ -30,7 +30,7 @@ export const CartPage = () => {
   useEffect(() => {
     const id = getCookie("user_id");
     getCart(id);
-  }, []);
+  }, [subTotal]);
   const rowSelection = {
     selectedRowKeys,
     onChange: onSelectChange,
@@ -39,33 +39,34 @@ export const CartPage = () => {
     {
       title: "Image",
       key: "image",
-      render: (_, { product }) => (
-        <ApImage
-          className="w-12 h-12"
-          src={product?.product?.images[0]?.uri}
-          alt={product?.product?.images[0]?.uri}
-        />
-      ),
+      render: (_, { product }) =>
+        !!product?.images?.length && (
+          <ApImage
+            className="w-12 h-12"
+            src={product?.images[0]?.uri}
+            alt={product?.images[0]?.uri}
+          />
+        ),
     },
 
     {
       title: "Product Name",
       key: "name",
-      render: (_, { product }) => <Text>{product?.product?.name}</Text>,
+      render: (_, { product }) => <Text>{product?.name}</Text>,
     },
 
     {
       title: "Price",
       key: "price",
-      render: (_, { product }) => <Text>{product?.product?.price}</Text>,
+      render: (_, { product }) => <Text>{product?.price}</Text>,
     },
     {
       title: "Qty",
       key: "quantity",
-      render: (_, { _id, product }) => (
+      render: (_, { _id, quantity, product }) => (
         <Formik
           initialValues={{
-            quantity: product?.quantity || "",
+            quantity: quantity || "",
           }}
           onSubmit={() => {}}
         >
@@ -78,16 +79,16 @@ export const CartPage = () => {
                   inputClassName=" h-8 py-2 px-10 bg-white font-extrabold"
                   onChange={async (val) => {
                     setQty(val);
-                    if (val !== product?.quantity) {
+                    if (val !== quantity) {
                       const res: any = await updateCartItem(
-                        { _id: product?.product?._id, quantity: val },
+                        { productId: product?._id, quantity: val },
                         _id
                       );
                       console.log(res);
                       if (res) toast.success("Quantity updated");
                     }
                   }}
-                  disable={qty == product?.product?.quantity ? true : false}
+                  disable={qty == product?.quantity ? true : false}
                 />
               </div>
             </Form>
@@ -98,10 +99,8 @@ export const CartPage = () => {
     {
       title: "Total",
       key: "Total",
-      render: (_, { _id, product }) => (
-        <Text className="font-semibold">
-          {parseFloat(product?.product?.price) * product.quantity}
-        </Text>
+      render: (_, { _id, amount }) => (
+        <Text className="font-semibold">{amount}</Text>
       ),
     },
 
@@ -122,6 +121,7 @@ export const CartPage = () => {
     },
   ];
 
+  console.log(subTotal);
   return (
     <div>
       <div className="lg:mx-20 mx-4">
@@ -144,7 +144,7 @@ export const CartPage = () => {
               <div className="flex justify-between items-center pb-4">
                 <Text className="text-gray-400">Subtotal</Text>
                 <Text className="font-semibold">
-                  {helper.toCurrency(overallTotal)}
+                  {helper.toCurrency(subTotal)}
                 </Text>
               </div>
               <div className="flex justify-between items-center ">
@@ -156,7 +156,7 @@ export const CartPage = () => {
               <div className="flex justify-between items-center py-4">
                 <Text className="text-gray-300">Total</Text>
                 <Text className="font-semibold">
-                  {helper.toCurrency(overallTotal)}
+                  {helper.toCurrency(subTotal)}
                 </Text>
               </div>
               <Button className="w-full" type="primary" href={"/checkout"}>

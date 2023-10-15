@@ -70,7 +70,7 @@ export const apiReqHandler = async ({
       res: res ? res : null,
     };
   } catch (err: any) {
-    toast.error(err.message, {
+    toast.error(err.response.data.error, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
