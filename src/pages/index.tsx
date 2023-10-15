@@ -43,6 +43,6 @@ export const getServerSideProps = async () => {
   console.log(newArrival, "new arrival");
 
   return {
-    props: { data: { data, newArrival } },
+    props: { data: { data, newArrival } || null },
   };
 };
