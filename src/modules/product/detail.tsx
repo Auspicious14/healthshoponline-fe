@@ -16,8 +16,9 @@ import { useRouter } from "next/router";
 import { Review } from "./components/review";
 import { RateStreakListItem, ReviewListItem } from "./components/item";
 import { ShareIcon } from "@heroicons/react/24/outline";
-import { CopyOutlined } from "@ant-design/icons";
+import { BackwardOutlined, CopyOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
+import { ArrowLeftCircleIcon } from "@heroicons/react/20/solid";
 
 const { Text } = Typography;
 interface IProps {
@@ -66,6 +67,12 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
   return (
     <div>
       <Headernav />
+      <div className="lg:hidden">
+        <ArrowLeftCircleIcon
+          className="w-8 h-8"
+          onClick={() => router.back()}
+        />
+      </div>
       <div className="bg-white md:mx-12 mx-4">
         <div className="md:flex gap-8 w-full pt-6">
           {/* Image gallery */}
@@ -75,6 +82,7 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
                 src={product?.images[0]?.uri}
                 alt={product?.images[0]?.name}
                 className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                priority
               />
             </div>
             <div className="mx-auto mt-6 sm:px-6 w-full grid grid-cols-4 gap-4 items-center  lg:px-8">
@@ -91,6 +99,7 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
                     height={200}
                     className="h-full w-full object-cover object-center"
                     unoptimized
+                    priority
                   />
                 </div>
               ))}

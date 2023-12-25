@@ -177,7 +177,7 @@ export const CheckoutPage = () => {
         </div>
       </div>
       <ApModal show={modal.show} onDimiss={() => setModal({ show: false })}>
-        <PaymentPage />
+        <PaymentPage onDissmiss={() => setModal({ show: false })} />
       </ApModal>
     </div>
   );

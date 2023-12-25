@@ -18,8 +18,12 @@ import { CheckoutListItem } from "../cart/components/checkoutitems";
 import { usePaymentState } from "./context";
 const { Text } = Typography;
 
-export const PaymentPage = () => {
+interface IProps {
+  onDissmiss: () => void;
+}
+export const PaymentPage: React.FC<IProps> = ({ onDissmiss }) => {
   const { loading, payWithPayStack } = usePaymentState();
+  const router = useRouter();
   const [link, setLink] = useState<string>("");
   const [modal, setModal] = useState<{ show: boolean; data?: any }>({
     show: false,
@@ -28,15 +32,20 @@ export const PaymentPage = () => {
   const handleSubmit = async (values: any) => {
     const res: any = await payWithPayStack(values);
     if (res) {
+      res && onDissmiss();
       setLink(res?.authorization_url);
       setModal({ show: true });
     }
   };
 
+  const verifyPayment = () => {
+    router.push(link);
+    setModal({ show: false });
+  };
   return (
     <div>
       {/* <Headernav /> */}
-      <div className="mx-20">
+      <div className="lg:mx-20">
         {/* <div className="bg-gray-50 w-fit px-4 my-12 rounded-md flex gap-6">
           <div className="flex gap-4">
             <Text>Cart</Text>
@@ -52,7 +61,7 @@ export const PaymentPage = () => {
         </div> */}
         <h1 className="text-3xl my-8 font-semibold">Payment</h1>
         <div className="flex justify-between w-full gap-4">
-          <Card className="w-[60%]">
+          <Card className="lg:w-[60%]">
             <div className="flex justify-between items-center mx-4 my-2 py-1 px-4 bg-gray-100 border rounded-md">
               <Text className="font-bold">Credit Card</Text>
               <div className="flex items-center gap-6">
@@ -131,8 +140,9 @@ export const PaymentPage = () => {
                 <Button
                   type="link"
                   htmlType="button"
-                  href={link}
+                  // href={link}
                   target="_blank"
+                  onClick={verifyPayment}
                 >
                   Verify Payment
                 </Button>

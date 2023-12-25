@@ -75,7 +75,7 @@ export const ApModal: React.FC<IProps> = ({
             </Transition.Child>
 
             <div className="fixed w-screen inset-0 z-10 overflow-y-auto">
-              <div className="mx-24 my-12 p-4 text-center sm:items-center sm:p-0">
+              <div className="lg:mx-24 my-12 p-4 text-center sm:items-center sm:p-0">
                 <Transition.Child
                   as={Fragment}
                   enter="ease-out duration-300"
