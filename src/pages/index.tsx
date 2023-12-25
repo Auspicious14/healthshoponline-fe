@@ -33,14 +33,12 @@ export const getServerSideProps = async () => {
   });
 
   const data = await res?.res?.data?.data;
-  console.log(data);
 
   const response = await apiReqHandler({
     endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/products?newArrival=newArrival`,
     method: "GET",
   });
   const newArrival = await response?.res?.data?.data;
-  console.log(newArrival, "new arrival");
 
   return {
     props: { data: { data, newArrival } || null },

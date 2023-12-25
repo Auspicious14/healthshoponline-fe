@@ -93,7 +93,6 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
 
   const createReview = async (payload: IReview) => {
     setLoading(true);
-    console.log(JSON.stringify(payload));
     try {
       const res = await apiReqHandler({
         endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/review`,
@@ -109,7 +108,6 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
       toast.success(data.message);
       return data.data;
     } catch (error: any) {
-      console.log(error);
       toast.error(error);
     }
   };
@@ -126,16 +124,14 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
       const { data } = await res.res?.data;
       setReviews(data.review);
       setTotalRatings(data.total);
-      console.log(data);
       return data;
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error);
     }
   };
 
   const updateReview = async (payload: IReview, productId: string) => {
     setLoading(true);
-    console.log(JSON.stringify(payload));
     try {
       const res = await apiReqHandler({
         endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/review/${productId}`,
@@ -147,14 +143,12 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
       if (data.success === false) {
         toast.error(data.message);
       }
-      console.log(data);
       setReviews(
         reviews?.map((r) => (r?._id == data?.data?._id ? data.data : r))
       );
       toast.success(data.message);
       return data.data;
     } catch (error: any) {
-      console.log(error);
       toast.error(error);
     }
   };

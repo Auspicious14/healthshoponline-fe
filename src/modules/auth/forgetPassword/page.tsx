@@ -7,6 +7,7 @@ import { ApBackgroundImage, ApTextInput } from "../../../components";
 import { useForgetPasswordState } from "./context";
 import { Button } from "antd";
 import Vector from "../../../../public/images/unsplash_MU70DTGr7d0.png";
+import { toast } from "react-toastify";
 
 const FormSchema = Yup.object().shape({
   email: Yup.string().required("email is required").email(),
@@ -17,9 +18,10 @@ export const ForgetPasswordPage = () => {
   const { handleForgetPassword, loading } = useForgetPasswordState();
   const handleSubmit = async (values: any) => {
     const res = handleForgetPassword(values);
-    // res.then(() => {
-    //   router.push("/auth/verify");
-    // });
+    res.then((res: any) => {
+      toast.success(res?.message);
+      router.push("/auth/verify");
+    });
   };
 
   return (

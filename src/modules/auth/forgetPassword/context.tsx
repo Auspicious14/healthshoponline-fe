@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { apiReqHandler } from "../../../components";
 import { setCookie } from "../../../helper";
+import { toast } from "react-toastify";
 
 interface IForgetPasswordState {
   loading: boolean;
@@ -33,18 +34,17 @@ export const ForgetPasswordContextProvider: React.FC<IProps> = ({
 
   const handleForgetPassword = async (email: string) => {
     setLoading(true);
-    console.log(JSON.stringify(email));
     try {
       const response = await apiReqHandler({
-        endPoint: `http://${process.env.NEXT_PUBLIC_API_ROUTE}/auth/forget`,
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/auth/forget`,
         method: "POST",
         payload: JSON.stringify(email),
       });
       setLoading(false);
       const data = await response.res?.data;
-      console.log(data);
-    } catch (error) {
-      console.log(error);
+      return data;
+    } catch (error: any) {
+      toast.error(error);
     }
   };
   return (

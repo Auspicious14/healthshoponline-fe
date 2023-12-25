@@ -50,15 +50,14 @@ export const OrderContextProvider: React.FC<IProps> = ({ children }) => {
       setLoading(false);
       const data = await res?.res?.data?.data;
       setOrders(data);
-      console.log(data);
-    } catch (error) {
-      console.log(error);
+      return data;
+    } catch (error: any) {
+      toast.error(error);
     }
   };
 
   const createOrder = async (payload: any) => {
     setLoading(true);
-    console.log(JSON.stringify(payload));
     try {
       const res = await apiReqHandler({
         endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/order`,
@@ -70,11 +69,9 @@ export const OrderContextProvider: React.FC<IProps> = ({ children }) => {
       if (data) {
         toast.success("Order successfully placed.");
         setOrders(data.data);
-        console.log(data.data);
       }
       return data;
     } catch (error: any) {
-      console.log(error);
       toast.error(error);
     }
   };

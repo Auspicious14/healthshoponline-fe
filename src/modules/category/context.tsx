@@ -45,9 +45,9 @@ export const CategoryContextProvider: React.FC<IProps> = ({ children }) => {
       setLoading(false);
       const data = await res.res?.data;
       setCategories(data.data);
-      console.log(data.data);
-    } catch (error) {
-      console.log(error);
+      return data;
+    } catch (error: any) {
+      toast.error(error);
     }
   };
 

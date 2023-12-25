@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { apiReqHandler } from "../../../components";
 import { setCookie } from "../../../helper";
+import { toast } from "react-toastify";
 
 interface IVerifyState {
   loading: boolean;
@@ -31,19 +32,17 @@ export const VerifyOTPContextProvider: React.FC<IProps> = ({ children }) => {
 
   const handleVerifyOTP = async (params: any) => {
     setLoading(true);
-    console.log(JSON.stringify(params));
     try {
       const response = await apiReqHandler({
-        endPoint: `http://${process.env.NEXT_PUBLIC_API_ROUTE}/auth/verify`,
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/auth/verify`,
         method: "POST",
         payload: JSON.stringify(params),
       });
       setLoading(false);
       const data = await response.res?.data;
-      console.log(data);
-      console.log(data);
-    } catch (error) {
-      console.log(error);
+      return data;
+    } catch (error: any) {
+      toast.error(error);
     }
   };
   return (

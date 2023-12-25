@@ -9,7 +9,6 @@ interface IProps {
 }
 export const CheckoutListItem: React.FC<IProps> = ({ cart }) => {
   const price = cart?.product?.price;
-  console.log(price);
   return (
     <Space className="flex justify-between items-center border-b py-4">
       <Space className="flex gap-4 items-center">

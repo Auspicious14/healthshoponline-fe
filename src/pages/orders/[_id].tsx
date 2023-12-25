@@ -32,7 +32,6 @@ export const getServerSideProps = async ({
     method: "GET",
   });
   const order = data?.res?.data?.data;
-  console.log(order, "orderrr");
   return {
     props: { order },
   };

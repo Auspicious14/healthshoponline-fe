@@ -19,6 +19,7 @@ export const CheckoutPage = () => {
   const { orders, createOrder, loading } = useOrderState();
   const { carts, getCart, emptyCart } = useCartState();
   const router = useRouter();
+  const id = getCookie("user_id");
   const subTotal = carts
     ?.map((c) => c?.amount)
     ?.reduce((a: any, b: any) => a + b, 0);
@@ -31,14 +32,13 @@ export const CheckoutPage = () => {
   });
 
   useEffect(() => {
-    const id = getCookie("user_id");
     getCart(id);
   }, []);
 
   const handleSubmit = async (values: any, actions: any) => {
     let { amount, ...otherValues } = values;
     amount = subTotal;
-    const id = getCookie("user_id");
+    // const id = getCookie("user_id");
     const res: any = await createOrder({ id, amount, ...otherValues });
     if (res) {
       const response = await emptyCart(id);

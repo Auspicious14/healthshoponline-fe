@@ -23,7 +23,6 @@ export const Review: React.FC<IProps> = ({ productId, review }) => {
 
   const handleSubmit = async (values: any) => {
     const userId = getCookie("user_id");
-    console.log(values, rate);
     let res;
 
     res = await createReview({
@@ -32,7 +31,6 @@ export const Review: React.FC<IProps> = ({ productId, review }) => {
       userId,
       rating: rate,
     });
-    console.log(res);
   };
   return (
     <Formik

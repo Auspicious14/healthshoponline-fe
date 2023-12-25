@@ -27,7 +27,6 @@ interface IProps {
 export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
   const { addToCart, loading } = useCartState();
   const { reviews, getReviews, totalRatings } = useProductState();
-  console.log(product);
   const [modal, setModal] = useState<{
     show: boolean;
     data?: any;
@@ -37,7 +36,6 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
   });
   const formRef = useRef<FormikProps<any>>();
   const [qty, setQty] = useState<any>(1);
-  // const totalRating = Math.round(total);
   const router = useRouter();
 
   useEffect(() => {
@@ -62,7 +60,6 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
     navigator.clipboard.writeText(text);
     toast.success("copied");
   };
-  console.log(Math.round(totalRatings));
   const handleEachRating = () => {
     reviews?.find((r) => r?._id);
   };

@@ -15,15 +15,11 @@ export const CartPage = () => {
   const { carts, getCart, deleteCartItem, updateCartItem } = useCartState();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [qty, setQty] = useState<number>(1);
-  // const subTotal = carts
-  //   ?.map((c) => parseFloat(c?.product?.price))
-  //   ?.reduce((a, b) => a + b, 0);
   const total = carts?.map((c) => parseFloat(c?.product?.price) * c.quantity);
   const subTotal = carts
     .map((t) => t.amount)
     .reduce((a: any, b: any) => a + b, 0);
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
@@ -84,7 +80,6 @@ export const CartPage = () => {
                         { productId: product?._id, quantity: val },
                         _id
                       );
-                      console.log(res);
                       if (res) toast.success("Quantity updated");
                     }
                   }}
@@ -121,7 +116,6 @@ export const CartPage = () => {
     },
   ];
 
-  console.log(subTotal);
   return (
     <div>
       <div className="lg:mx-20 mx-4">

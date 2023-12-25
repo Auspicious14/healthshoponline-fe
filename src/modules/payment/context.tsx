@@ -39,10 +39,9 @@ export const PaymentContextProvider: React.FC<IProps> = ({ children }) => {
       });
       setLoading(false);
       const data = await res.res?.data?.data;
-      console.log(data);
       return data;
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error);
     }
   };
 

@@ -32,8 +32,6 @@ export const ProductPage = () => {
     const name =
       e?.item?.props?.children[1]?.props?.props?.children[1].props?.children;
     getProducts(e?.key);
-    console.log(name);
-    console.log(e);
   };
   type MenuItem = Required<MenuProps>["items"][number];
 
@@ -72,7 +70,6 @@ export const ProductPage = () => {
 
   const handleSearch = (val: string) => {
     if (val === undefined) return;
-    console.log(val, "search valll");
     setFilter({ ...filter, name: val });
   };
   return (

@@ -37,10 +37,8 @@ export const CategoryListItem: React.FC<IProps> = ({ product }) => {
   if (filters?.length <= 3) {
     filters.push(catFlt);
   }
-  console.log(filters);
 
   const handleFilter = (section: any, e: any) => {
-    console.log(e.target?.value);
     if (section?.name === "COLOR") {
       getProducts({
         ...filter,

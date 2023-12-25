@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { apiReqHandler } from "../../../components";
 import { setCookie } from "../../../helper";
+import { toast } from "react-toastify";
 
 interface IResetPasswordState {
   loading: boolean;
@@ -33,19 +34,17 @@ export const ResetPasswordContextProvider: React.FC<IProps> = ({
 
   const handleResetPassword = async (params: any) => {
     setLoading(true);
-    console.log(JSON.stringify(params));
     try {
       const response = await apiReqHandler({
-        endPoint: `http://${process.env.NEXT_PUBLIC_API_ROUTE}/auth/reset`,
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/auth/reset`,
         method: "POST",
         payload: JSON.stringify(params),
       });
       setLoading(false);
       const data = await response.res?.data;
-      console.log(data);
-      console.log(data);
-    } catch (error) {
-      console.log(error);
+      return data;
+    } catch (error: any) {
+      toast.error(error);
     }
   };
   return (
