@@ -13,6 +13,7 @@ import { useOrderState } from "../order/context";
 import { CheckoutListItem } from "./components/checkoutitems";
 import { useRouter } from "next/router";
 import { PaymentPage } from "../payment/page";
+import { ArrowLeftCircleIcon } from "@heroicons/react/20/solid";
 const { Text } = Typography;
 
 export const CheckoutPage = () => {
@@ -63,6 +64,12 @@ export const CheckoutPage = () => {
   return (
     <div>
       <Headernav />
+      <div className="lg:hidden">
+        <ArrowLeftCircleIcon
+          className="w-8 h-8"
+          onClick={() => router.back()}
+        />
+      </div>
       <div className="lg:mx-20 mx-4">
         <h1 className="text-3xl my-8 font-semibold">Checkout</h1>
         <div className="lg:flex lg:justify-between w-full gap-4">

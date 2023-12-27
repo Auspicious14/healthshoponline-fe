@@ -8,10 +8,13 @@ import { ApImage, ApPlusMinusInput } from "../../components";
 import { getCookie, helper } from "../../helper";
 import { useCartState } from "./context";
 import { ICart } from "./model";
+import { ArrowLeftCircleIcon } from "@heroicons/react/20/solid";
+import { useRouter } from "next/router";
 
 const { Text } = Typography;
 
 export const CartPage = () => {
+  const router = useRouter();
   const { carts, getCart, deleteCartItem, updateCartItem } = useCartState();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [qty, setQty] = useState<number>(1);
@@ -118,6 +121,12 @@ export const CartPage = () => {
 
   return (
     <div>
+      <div className="lg:hidden shadow-sm bg-white w-full py-2">
+        <ArrowLeftCircleIcon
+          className="w-8 h-8"
+          onClick={() => router.back()}
+        />
+      </div>
       <div className="lg:mx-20 mx-4">
         <h1 className="text-3xl my-8 font-semibold">Cart</h1>
         <div className="lg:flex  lg:justify-between gap-4 ">
