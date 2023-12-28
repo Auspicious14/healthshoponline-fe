@@ -19,7 +19,7 @@ import { usePaymentState } from "./context";
 const { Text } = Typography;
 
 interface IProps {
-  onDissmiss: () => void;
+  onDissmiss?: () => void;
 }
 export const PaymentPage: React.FC<IProps> = ({ onDissmiss }) => {
   const { loading, payWithPayStack } = usePaymentState();
@@ -32,7 +32,7 @@ export const PaymentPage: React.FC<IProps> = ({ onDissmiss }) => {
   const handleSubmit = async (values: any) => {
     const res: any = await payWithPayStack(values);
     if (res) {
-      res && onDissmiss();
+      if (onDissmiss) onDissmiss();
       setLink(res?.authorization_url);
       setModal({ show: true });
     }
