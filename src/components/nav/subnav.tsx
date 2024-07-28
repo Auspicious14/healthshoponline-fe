@@ -15,6 +15,9 @@ export const SubNav = () => {
             <>
               <div className="md:flex md:justify-end md:py-4 md:px-12 md:items-center hidden">
                 <div className="  lg:items-center lg:justify-center lg:space-x-16">
+                  <Link href="/stores" className="text-sm font-medium">
+                    Stores
+                  </Link>
                   <Link href="/products" className="text-sm font-medium">
                     Collections
                   </Link>
@@ -31,6 +34,9 @@ export const SubNav = () => {
               </div>
               <div className="fixed w-full bg-primary bg-opacity-90 z-50 md:hidden">
                 <div className="flex justify-between py-4 px-12 items-center  md:hidden ">
+                  <Link href="/stores" className="text-sm font-medium">
+                    Stores
+                  </Link>
                   <Link href="/products" className="text-sm font-medium">
                     Collections
                   </Link>

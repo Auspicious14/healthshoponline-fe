@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { apiReqHandler } from "../../components";
-import { getCookie } from "../../helper";
 import { ProductDetailPage } from "../../modules/product/detail";
 import { IProduct } from "../../modules/product/model";
 
@@ -15,6 +14,8 @@ const ProductDetail: React.FC<IProps> = ({ product }) => {
   );
 };
 
+export default ProductDetail;
+
 export async function getServerSideProps({
   query,
   req,
@@ -23,24 +24,19 @@ export async function getServerSideProps({
   req: any;
 }) {
   const { _id } = query;
+
   const data = await apiReqHandler({
     endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/product/${_id}`,
     method: "GET",
   });
-  const product = data?.res?.data?.data;
-  if (!product) return new Error("Unauthorised");
 
-  // if (!req?.cookies.user_id) {
-  //   return {
-  //     redirect: {
-  //       destination: "/auth/login",
-  //       permenant: false,
-  //     },
-  //   };
-  // }
+  const product = data?.res?.data?.data;
+  console.log(product, "productt");
+  if (!product) return new Error("Network Error");
 
   return {
-    props: { product },
+    props: {
+      product: product || null,
+    },
   };
 }
-export default ProductDetail;

@@ -25,6 +25,7 @@ export interface IProductFilter {
   size?: string;
   newArrival?: string;
   name?: string;
+  storeId?: string;
 }
 
 export interface ICategoryFilterProps {

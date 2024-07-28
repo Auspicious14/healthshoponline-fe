@@ -1,5 +1,4 @@
 import React from "react";
-import { ProductContextProvider } from "../../modules/product/context";
 import { ProductPage } from "../../modules/product/page";
 import { MainLayout } from "../../modules/layout";
 
@@ -10,6 +9,7 @@ const Product = () => {
     </MainLayout>
   );
 };
+export default Product;
 
 // export const getServerSideProps = async ({
 //   req,
@@ -30,4 +30,3 @@ const Product = () => {
 //     props: {},
 //   };
 // };
-export default Product;

@@ -1,77 +1,36 @@
 import React, { useEffect, useState } from "react";
-import {
-  ApBackgroundImage,
-  ApImage,
-  Footer,
-  Headernav,
-} from "../../components";
-import { Button, Input, Menu, MenuProps, Pagination, Space, Spin } from "antd";
+import { ApImage, ApModal, Footer } from "../../components";
+import { Input, Pagination, Spin } from "antd";
 import { Typography } from "antd";
 import { useProductState } from "./context";
 import { ProductListItem } from "./components/item";
 import Woman from "../../../public/images/Image.png";
-import { CategoryListItem } from "./components/category";
 import { IProductFilter } from "./model";
+import { FilterProduct } from "./components/filter";
+import { MenuFoldOutlined } from "@ant-design/icons";
 
 const { Text } = Typography;
 const { Search } = Input;
 
-export const ProductPage = () => {
+interface IProps {
+  storeId?: string;
+}
+
+export const ProductPage: React.FC<IProps> = ({ storeId }) => {
   const { products, getProducts, loading } = useProductState();
-  const [filter, setFilter] = useState<IProductFilter>({});
-  const [collapsed, setCollapsed] = useState<boolean>(false);
+  const [filter, setFilter] = useState<IProductFilter>({ storeId });
+  const [modal, setModal] = useState<boolean>(false);
+
   useEffect(() => {
-    getProducts(filter);
+    getProducts({ ...filter, storeId });
   }, [filter]);
-
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
-
-  const onClick: MenuProps["onClick"] = (e: any) => {
-    const name =
-      e?.item?.props?.children[1]?.props?.props?.children[1].props?.children;
-    getProducts(e?.key);
-  };
-  type MenuItem = Required<MenuProps>["items"][number];
-
-  function getItem(
-    label: React.ReactNode,
-    key: React.Key,
-    children?: MenuItem[],
-    type?: "group"
-  ): MenuItem {
-    return {
-      key,
-      children,
-      label,
-      type,
-    } as MenuItem;
-  }
-
-  const items: MenuProps["items"] = [
-    getItem("BRAND", "sub1", [
-      getItem("Kedi", "Kedi"),
-      getItem("Tuyil", "Tuyil"),
-    ]),
-
-    getItem("Color", "sub2", [
-      getItem("White", "White"),
-      getItem("Red", "Red"),
-    ]),
-
-    getItem("Price", "sub4", [
-      getItem(["100", "10000"], "34"),
-      getItem("Option 10", "10"),
-      getItem("Option 11", "11"),
-      getItem("Option 12", "12"),
-    ]),
-  ];
 
   const handleSearch = (val: string) => {
     if (val === undefined) return;
     setFilter({ ...filter, name: val });
   };
+
+  console.log(products, "filter");
   return (
     <>
       <div className="md:mx-20 px-4 pt-20 md:p-0 ">
@@ -82,15 +41,20 @@ export const ProductPage = () => {
           size="large"
           className="bg-blue-600 rounded-md md:mt-8"
           onSearch={handleSearch}
-          // onChange={handleSearch}
+          onChange={(e) => handleSearch(e.target.value)}
         />
-        <div className="md:flex w-full">
+
+        <div className="md:flex gap-10 w-full">
           <div className="md:w-[30%] hidden md:block">
-            <CategoryListItem />
+            <FilterProduct setFilter={setFilter} />
           </div>
           <div className="md:w-[80%]">
-            <div className="flex justify-between my-4">
+            <div className="flex justify-between items-center my-4">
               <Text code>{`Product: ${products?.length}`}</Text>
+              <MenuFoldOutlined
+                className="md:hidden"
+                onClick={() => setModal(!modal)}
+              />
             </div>
             {loading && (
               <Spin size="large" className="flex justify-center items-center" />
@@ -120,6 +84,9 @@ export const ProductPage = () => {
         className="w-full md:h-[500px] m-auto mt-6 sm:object-cover object-contain"
       />
       <Footer />
+      <ApModal show={modal} onDimiss={() => setModal(false)}>
+        <FilterProduct setFilter={setFilter} />
+      </ApModal>
     </>
   );
 };

@@ -41,6 +41,8 @@ export const getServerSideProps = async () => {
   const newArrival = await response?.res?.data?.data;
 
   return {
-    props: { data: { data, newArrival } || null },
+    props: {
+      data: { data, newArrival } || null,
+    },
   };
 };

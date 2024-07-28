@@ -61,22 +61,8 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
 
   const getProducts = async (filter?: IProductFilter) => {
     setLoading(true);
-    let url = `${process.env.NEXT_PUBLIC_API_ROUTE}/products`;
-    if (filter?.brand) {
-      url = `${url}?brand=${filter?.brand}`;
-    } else if (filter?.color) {
-      url = `${url}?color=${filter?.color}`;
-    } else if (filter?.newArrival) {
-      url = `${url}?newArrival=${filter?.newArrival}`;
-    } else if (filter?.category) {
-      url = `${url}?category=${filter?.category}`;
-    } else if (filter?.size) {
-      url = `${url}?size=${filter?.size}`;
-    } else if (filter?.name) {
-      url = `${url}?name=${filter?.name}`;
-    } else {
-      url = url;
-    }
+    const query = new URLSearchParams(filter as any).toString();
+    const url = `${process.env.NEXT_PUBLIC_API_ROUTE}/products?${query}`;
 
     try {
       const res = await apiReqHandler({
