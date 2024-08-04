@@ -2,16 +2,24 @@ import React from "react";
 import { CartContextProvider } from "../modules/cart/context";
 import { CheckoutPage } from "../modules/cart/checkout";
 import { OrderContextProvider } from "../modules/order/context";
+import jwt from "jsonwebtoken";
 
-const CheckOut = () => {
+const tokenSecret: string | undefined = process.env.JWT_SECRET;
+interface IProps {
+  user: { id: string; isAdmin: boolean };
+}
+
+const CheckOut: React.FC<IProps> = ({ user }) => {
   return (
     <CartContextProvider>
       <OrderContextProvider>
-        <CheckoutPage />
+        <CheckoutPage userId={user.id} />
       </OrderContextProvider>
     </CartContextProvider>
   );
 };
+
+export default CheckOut;
 
 export const getServerSideProps = async ({
   req,
@@ -20,7 +28,18 @@ export const getServerSideProps = async ({
   req: any;
   query: any;
 }) => {
-  if (!req?.cookies.user_id) {
+  const cookie = req?.cookies?.token;
+  if (!cookie) {
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permenant: false,
+      },
+    };
+  }
+  const token: any = jwt.verify(cookie, tokenSecret as string);
+
+  if (token?.isAdmin) {
     return {
       redirect: {
         destination: "/auth/login",
@@ -29,7 +48,8 @@ export const getServerSideProps = async ({
     };
   }
   return {
-    props: {},
+    props: {
+      user: token || null,
+    },
   };
 };
-export default CheckOut;

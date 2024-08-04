@@ -1,9 +1,18 @@
 import React from "react";
 import { OrderPage } from "../../modules/order/page";
 
-const Order = () => {
+import jwt from "jsonwebtoken";
+
+const tokenSecret = process.env.JWT_SECRET;
+interface IProps {
+  user: { id: string; isAdmin: boolean };
+}
+
+const Order: React.FC<IProps> = ({ user }) => {
   return <OrderPage />;
 };
+
+export default Order;
 
 export const getServerSideProps = async ({
   req,
@@ -12,7 +21,18 @@ export const getServerSideProps = async ({
   req: any;
   query: any;
 }) => {
-  if (!req?.cookies.user_id) {
+  const cookie = req?.cookies?.token;
+  if (!cookie) {
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permenant: false,
+      },
+    };
+  }
+  const token: any = jwt.verify(cookie, tokenSecret as string);
+
+  if (token?.isAdmin) {
     return {
       redirect: {
         destination: "/auth/login",
@@ -24,5 +44,3 @@ export const getServerSideProps = async ({
     props: {},
   };
 };
-
-export default Order;

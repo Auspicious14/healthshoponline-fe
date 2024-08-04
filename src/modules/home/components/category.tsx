@@ -3,6 +3,7 @@ import { useCategorystate } from "../../category/context";
 import { ApImage } from "../../../components";
 import { Button } from "antd";
 import Categories from "../../../../public/images/Frame 1000005044 (2).png";
+import Link from "next/link";
 
 export const Category = () => {
   const { categories } = useCategorystate();
@@ -17,7 +18,10 @@ export const Category = () => {
               alt={c?.images[0]?.name}
             />
           )}
-          <Button className="bg-white border-none relative -top-20 font-bold px-12 text-black text-center ">
+          <Button
+            href={`/products`}
+            className="bg-white border-none relative -top-20 font-bold px-12 text-black text-center "
+          >
             {c?.name}
           </Button>
         </div>

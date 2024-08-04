@@ -2,7 +2,9 @@ import React from "react";
 import { OrderDetailPage } from "../../modules/order/detail";
 import { IOrder } from "../../modules/order/model";
 import { apiReqHandler } from "../../components";
+import jwt  from "jsonwebtoken";
 
+const tokenSecret = process.env.JWT_SECRET
 interface IProps {
   order: IOrder;
 }
@@ -17,7 +19,18 @@ export const getServerSideProps = async ({
   req: any;
   query: any;
 }) => {
-  if (!req?.cookies.user_id) {
+  const cookie = req?.cookies?.token;
+  if (!cookie) {
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permenant: false,
+      },
+    };
+  }
+  const token: any = jwt.verify(cookie, tokenSecret as string);
+
+  if (token?.isAdmin) {
     return {
       redirect: {
         destination: "/auth/login",

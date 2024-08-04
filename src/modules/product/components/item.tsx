@@ -11,13 +11,14 @@ import { useRouter } from "next/router";
 const { Text } = Typography;
 interface IProps {
   product: IProduct;
+  userId?: string | null;
 }
-export const ProductListItem: React.FC<IProps> = ({ product }) => {
+export const ProductListItem: React.FC<IProps> = ({ product, userId }) => {
   const { addToCart, loading } = useCartState();
   const router = useRouter();
   const handleAddToCart = async (values: any) => {
-    const userId = getCookie("user_id");
     if (!userId) return router.push("/auth/login");
+
     const payload = {
       productId: product?._id,
       quantity: 1,

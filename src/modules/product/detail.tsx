@@ -23,9 +23,10 @@ import { ArrowLeftCircleIcon } from "@heroicons/react/20/solid";
 const { Text } = Typography;
 interface IProps {
   product: IProduct;
+  userId: string | null;
 }
 
-export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
+export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
   const { addToCart, loading } = useCartState();
   const { reviews, getReviews, totalRatings } = useProductState();
   const [modal, setModal] = useState<{
@@ -45,7 +46,6 @@ export const ProductDetailPage: React.FC<IProps> = ({ product }) => {
   }, [qty]);
 
   const handleAddToCart = async (values: any) => {
-    const userId = getCookie("user_id");
     if (!userId) return router.push("/auth/login");
     const payload = {
       productId: product?._id,

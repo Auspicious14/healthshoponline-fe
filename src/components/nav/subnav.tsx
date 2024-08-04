@@ -13,8 +13,8 @@ export const SubNav = () => {
         <header className="relative bg-primary text-white">
           <nav aria-label="Top" className="  sm:px-6 ">
             <>
-              <div className="md:flex md:justify-end md:py-4 md:px-12 md:items-center hidden">
-                <div className="  lg:items-center lg:justify-center lg:space-x-16">
+              <div className="md:flex lg:justify-end md:py-4 md:px-12 md:justify-center md:items-center hidden">
+                <div className="  lg:items-center lg:justify-center space-x-16">
                   <Link href="/stores" className="text-sm font-medium">
                     Stores
                   </Link>

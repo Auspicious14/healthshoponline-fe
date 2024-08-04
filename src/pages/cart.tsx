@@ -3,13 +3,22 @@ import { CartContextProvider } from "../modules/cart/context";
 import { CartPage } from "../modules/cart/page";
 import { MainLayout } from "../modules/layout";
 
-const Cart = () => {
+import jwt from "jsonwebtoken";
+
+const tokenSecret = process.env.JWT_SECRET;
+interface IProps {
+  user: { id: string; isAdmin: boolean };
+}
+
+const Cart: React.FC<IProps> = ({ user }) => {
   return (
     <MainLayout>
-      <CartPage />
+      <CartPage userId={user.id} />
     </MainLayout>
   );
 };
+
+export default Cart;
 
 export const getServerSideProps = async ({
   req,
@@ -18,7 +27,8 @@ export const getServerSideProps = async ({
   req: any;
   query: any;
 }) => {
-  if (!req?.cookies.user_id) {
+  const cookie = req?.cookies?.token;
+  if (!cookie) {
     return {
       redirect: {
         destination: "/auth/login",
@@ -26,8 +36,20 @@ export const getServerSideProps = async ({
       },
     };
   }
+  const token: any = jwt.verify(cookie, tokenSecret as string);
+
+  if (token?.isAdmin) {
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permenant: false,
+      },
+    };
+  }
+
   return {
-    props: {},
+    props: {
+      user: token || null,
+    },
   };
 };
-export default Cart;

@@ -12,28 +12,33 @@ import { ArrowLeftCircleIcon } from "@heroicons/react/20/solid";
 import { useRouter } from "next/router";
 
 const { Text } = Typography;
+interface IProps {
+  userId: string;
+}
 
-export const CartPage = () => {
+export const CartPage: React.FC<IProps> = ({ userId }) => {
   const router = useRouter();
   const { carts, getCart, deleteCartItem, updateCartItem } = useCartState();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [qty, setQty] = useState<number>(1);
+
   const total = carts?.map((c) => parseFloat(c?.product?.price) * c.quantity);
   const subTotal = carts
-    .map((t) => t.amount)
-    .reduce((a: any, b: any) => a + b, 0);
+    ?.map((t) => t.amount)
+    ?.reduce((a: any, b: any) => a + b, 0);
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
   useEffect(() => {
-    const id = getCookie("user_id");
-    getCart(id);
-  }, [subTotal]);
+    getCart(userId);
+  }, [subTotal, userId]);
+
   const rowSelection = {
     selectedRowKeys,
     onChange: onSelectChange,
   };
+
   const columns: ColumnsType<ICart> = [
     {
       title: "Image",
@@ -133,10 +138,9 @@ export const CartPage = () => {
           <Table
             rowSelection={rowSelection}
             columns={columns}
-            dataSource={carts.length > 0 ? carts : []}
+            dataSource={carts?.length > 0 ? carts : []}
             rowKey={(c) => c?._id}
-            className="lg:w-[60%] min-w-full"
-            rootClassName="w-auto"
+            rootClassName="w-auto lg:w-full"
           />
           <Card
             title={"ORDER SUMMARY"}

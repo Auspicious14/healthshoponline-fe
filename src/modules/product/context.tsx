@@ -63,7 +63,7 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
     setLoading(true);
     const query = new URLSearchParams(filter as any).toString();
     const url = `${process.env.NEXT_PUBLIC_API_ROUTE}/products?${query}`;
-
+    console.log(query, "query");
     try {
       const res = await apiReqHandler({
         endPoint: url,

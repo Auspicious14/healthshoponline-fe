@@ -14,23 +14,29 @@ const { Search } = Input;
 
 interface IProps {
   storeId?: string;
+  userId: string | null;
 }
 
-export const ProductPage: React.FC<IProps> = ({ storeId }) => {
+export const ProductPage: React.FC<IProps> = ({ storeId, userId }) => {
   const { products, getProducts, loading } = useProductState();
-  const [filter, setFilter] = useState<IProductFilter>({ storeId });
+  const [filter, setFilter] = useState<IProductFilter>({});
   const [modal, setModal] = useState<boolean>(false);
 
   useEffect(() => {
-    getProducts({ ...filter, storeId });
-  }, [filter]);
+    if (storeId) {
+      setFilter({ ...filter, storeId });
+    }
+  }, [storeId]);
+
+  useEffect(() => {
+    getProducts(filter);
+  }, [filter, storeId]);
 
   const handleSearch = (val: string) => {
     if (val === undefined) return;
     setFilter({ ...filter, name: val });
   };
 
-  console.log(products, "filter");
   return (
     <>
       <div className="md:mx-20 px-4 pt-20 md:p-0 ">
@@ -62,7 +68,7 @@ export const ProductPage: React.FC<IProps> = ({ storeId }) => {
             {!loading && products?.length > 0 ? (
               <div className="grid grid-cols-2 gap-4 my-2 py-4 align-middle border-gray-200 border rounded-lg">
                 {products?.map((p) => (
-                  <ProductListItem product={p} key={p?._id} />
+                  <ProductListItem product={p} key={p?._id} userId={userId} />
                 ))}
               </div>
             ) : (

@@ -1,32 +1,40 @@
 import React from "react";
 import { ProductPage } from "../../modules/product/page";
 import { MainLayout } from "../../modules/layout";
+import jwt from "jsonwebtoken";
 
-const Product = () => {
+const tokenSecret = process.env.JWT_SECRET;
+interface IProps {
+  user: { id: string | null; isAdmin: boolean };
+}
+const Product: React.FC<IProps> = ({ user }) => {
   return (
     <MainLayout home>
-      <ProductPage />
+      <ProductPage userId={user?.id} />
     </MainLayout>
   );
 };
 export default Product;
 
-// export const getServerSideProps = async ({
-//   req,
-//   query,
-// }: {
-//   req: any;
-//   query: any;
-// }) => {
-//   if (!req?.cookies.user_id) {
-//     return {
-//       redirect: {
-//         destination: "/auth/login",
-//         permenant: false,
-//       },
-//     };
-//   }
-//   return {
-//     props: {},
-//   };
-// };
+export const getServerSideProps = async ({
+  req,
+  query,
+}: {
+  req: any;
+  query: any;
+}) => {
+  const cookie = req?.cookies?.token;
+
+  let token;
+  if (cookie) {
+    token = jwt.verify(cookie, tokenSecret as string, {
+      algorithms: ["HS256", "RS256"],
+    });
+  }
+
+  return {
+    props: {
+      user: token || null,
+    },
+  };
+};

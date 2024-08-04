@@ -2,14 +2,17 @@ import React from "react";
 import { apiReqHandler } from "../../components";
 import { ProductDetailPage } from "../../modules/product/detail";
 import { IProduct } from "../../modules/product/model";
+import jwt from "jsonwebtoken";
 
+const tokenSecret = process.env.JWT_SECRET;
 interface IProps {
   product: IProduct;
+  user: { id: string | null; isAdmin: boolean };
 }
-const ProductDetail: React.FC<IProps> = ({ product }) => {
+const ProductDetail: React.FC<IProps> = ({ product, user }) => {
   return (
     <div>
-      <ProductDetailPage product={product} />
+      <ProductDetailPage product={product} userId={user?.id} />
     </div>
   );
 };
@@ -23,6 +26,15 @@ export async function getServerSideProps({
   query: any;
   req: any;
 }) {
+  const cookie = req?.cookies?.token;
+
+  let token;
+  if (cookie) {
+    token = jwt.verify(cookie, tokenSecret as string, {
+      algorithms: ["HS256", "RS256"],
+    });
+  }
+
   const { _id } = query;
 
   const data = await apiReqHandler({
@@ -31,12 +43,12 @@ export async function getServerSideProps({
   });
 
   const product = data?.res?.data?.data;
-  console.log(product, "productt");
   if (!product) return new Error("Network Error");
 
   return {
     props: {
       product: product || null,
+      user: token || null,
     },
   };
 }

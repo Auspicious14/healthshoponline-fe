@@ -16,11 +16,13 @@ import { PaymentPage } from "../payment/page";
 import { ArrowLeftCircleIcon } from "@heroicons/react/20/solid";
 const { Text } = Typography;
 
-export const CheckoutPage = () => {
+interface IProps {
+  userId: string;
+}
+export const CheckoutPage: React.FC<IProps> = ({ userId }) => {
   const { orders, createOrder, loading } = useOrderState();
   const { carts, getCart, emptyCart } = useCartState();
   const router = useRouter();
-  const id = getCookie("user_id");
   const subTotal = carts
     ?.map((c) => c?.amount)
     ?.reduce((a: any, b: any) => a + b, 0);
@@ -33,16 +35,17 @@ export const CheckoutPage = () => {
   });
 
   useEffect(() => {
-    getCart(id);
-  }, []);
+    getCart(userId);
+  }, [userId]);
 
   const handleSubmit = async (values: any, actions: any) => {
     let { amount, ...otherValues } = values;
     amount = subTotal;
     // const id = getCookie("user_id");
-    const res: any = await createOrder({ id, amount, ...otherValues });
-    if (res) {
-      const response = await emptyCart(id);
+    const res: any = await createOrder({ userId, amount, ...otherValues });
+    console.log(res);
+    if (res?.data) {
+      const response = await emptyCart(userId);
       // router.push("/payment");
       actions.resetForm({
         values: {
