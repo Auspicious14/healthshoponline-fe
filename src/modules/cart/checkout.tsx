@@ -14,6 +14,8 @@ import { CheckoutListItem } from "./components/checkoutitems";
 import { useRouter } from "next/router";
 import { PaymentPage } from "../payment/page";
 import { ArrowLeftCircleIcon } from "@heroicons/react/20/solid";
+import { number } from "yup";
+import { IOrder } from "../order/model";
 const { Text } = Typography;
 
 interface IProps {
@@ -22,10 +24,11 @@ interface IProps {
 export const CheckoutPage: React.FC<IProps> = ({ userId }) => {
   const { orders, createOrder, loading } = useOrderState();
   const { carts, getCart, emptyCart } = useCartState();
+  const [order, setOrder] = useState<IOrder>();
   const router = useRouter();
-  const subTotal = carts
+  const subTotal: number = carts
     ?.map((c) => c?.amount)
-    ?.reduce((a: any, b: any) => a + b, 0);
+    ?.reduce((a, b: any) => a + b, 0) as number;
   // const total = carts?.map(
   //   (c) => parseFloat(c?.product?.product?.price) * c.product.quantity
   // );
@@ -45,6 +48,7 @@ export const CheckoutPage: React.FC<IProps> = ({ userId }) => {
     const res: any = await createOrder({ userId, amount, ...otherValues });
     console.log(res);
     if (res?.data) {
+      setOrder(res.data);
       const response = await emptyCart(userId);
       // router.push("/payment");
       actions.resetForm({
@@ -167,7 +171,7 @@ export const CheckoutPage: React.FC<IProps> = ({ userId }) => {
               <div className="flex justify-between items-center pb-4">
                 <Text className="text-gray-400">Subtotal</Text>
                 <Text className="font-semibold">
-                  {helper.toCurrency(subTotal)}
+                  {helper.toCurrency(subTotal as number)}
                 </Text>
               </div>
               <div className="flex justify-between items-center ">
@@ -179,7 +183,7 @@ export const CheckoutPage: React.FC<IProps> = ({ userId }) => {
               <div className="flex justify-between items-center py-4">
                 <Text className="text-gray-300">Total</Text>
                 <Text className="font-semibold">
-                  {helper.toCurrency(subTotal)}
+                  {helper.toCurrency(subTotal as number)}
                 </Text>
               </div>
             </div>
@@ -187,7 +191,11 @@ export const CheckoutPage: React.FC<IProps> = ({ userId }) => {
         </div>
       </div>
       <ApModal show={modal.show} onDimiss={() => setModal({ show: false })}>
-        <PaymentPage onDissmiss={() => setModal({ show: false })} />
+        <PaymentPage
+          onDissmiss={() => setModal({ show: false })}
+          totalAmount={subTotal}
+          order={order}
+        />
       </ApModal>
     </div>
   );

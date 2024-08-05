@@ -8,6 +8,7 @@ export interface IOrder {
   address: IAddress;
   status: IOrderStatus;
   createdAt: string;
+  updatedAt: string;
 }
 
 export enum IOrderStatus {

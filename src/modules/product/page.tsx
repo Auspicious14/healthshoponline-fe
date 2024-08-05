@@ -24,19 +24,20 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId }) => {
 
   useEffect(() => {
     if (storeId) {
+      console.log(storeId, "ss");
       setFilter({ ...filter, storeId });
     }
   }, [storeId]);
 
   useEffect(() => {
     getProducts(filter);
-  }, [filter, storeId]);
+  }, [filter]);
 
   const handleSearch = (val: string) => {
     if (val === undefined) return;
     setFilter({ ...filter, name: val });
   };
-
+  console.log(filter);
   return (
     <>
       <div className="md:mx-20 px-4 pt-20 md:p-0 ">

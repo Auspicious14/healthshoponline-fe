@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useStoreState } from "./context";
-import { Spin } from "antd";
+import { Input, Spin } from "antd";
 import { StoreListItem } from "./components/item";
-import Search from "antd/es/input/Search";
+// import Search from "antd/es/input/Search";
+const { Search } = Input;
 
 export const StorePage = () => {
   const { stores, loading, getStores } = useStoreState();

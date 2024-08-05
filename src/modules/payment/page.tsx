@@ -7,12 +7,19 @@ import Visa from "../../../public/images/Payment method icon.png";
 import VisaIcon from "../../../public/images/Payment methodicon-visa - Copy.png";
 import { usePaymentState } from "./context";
 import Link from "next/link";
+import { IOrder } from "../order/model";
 const { Text } = Typography;
 
 interface IProps {
+  totalAmount?: number;
+  order?: IOrder;
   onDissmiss?: () => void;
 }
-export const PaymentPage: React.FC<IProps> = ({ onDissmiss }) => {
+export const PaymentPage: React.FC<IProps> = ({
+  totalAmount,
+  order,
+  onDissmiss,
+}) => {
   const { loading, payWithPayStack } = usePaymentState();
   const router = useRouter();
   const [link, setLink] = useState<string>("");
@@ -20,8 +27,12 @@ export const PaymentPage: React.FC<IProps> = ({ onDissmiss }) => {
     show: false,
   });
 
-  const handleSubmit = async (values: any) => {
-    const res: any = await payWithPayStack(values);
+  const handlePay = async () => {
+    const res: any = await payWithPayStack({
+      amount: totalAmount,
+      userId: order?.userId,
+      order,
+    });
     if (res) {
       setLink(res?.authorization_url);
       setModal({ show: true });
@@ -61,7 +72,7 @@ export const PaymentPage: React.FC<IProps> = ({ onDissmiss }) => {
                     </div>
                   </div>
                 </div>
-                <Formik
+                {/* <Formik
                   initialValues={{
                     email: "",
                     amount: "",
@@ -86,22 +97,23 @@ export const PaymentPage: React.FC<IProps> = ({ onDissmiss }) => {
                         placeHolder="1029"
                         containerClass="flex-col"
                       />
-                      <Button
-                        type="primary"
-                        size="large"
-                        htmlType="submit"
-                        loading={loading}
-                        className="group relative flex w-full justify-center rounded-md bg-[#2158E8] px-3 py-2 my-4 text-sm font-semibold text-white hover:bg-blue-500"
-                      >
-                        Pay now
-                      </Button>
                     </Form>
                   )}
-                </Formik>
+                </Formik> */}
+                <Button
+                  type="primary"
+                  size="large"
+                  htmlType="button"
+                  loading={loading}
+                  onClick={handlePay}
+                  className="group relative flex w-full justify-center rounded-md bg-[#2158E8] px-3 py-2 my-4 text-sm font-semibold text-white hover:bg-blue-500"
+                >
+                  Pay now
+                </Button>
               </div>
             </Card>
           ) : (
-            link.length > 0 && (
+            link?.length > 0 && (
               <Link
                 href={`${link}`}
                 target="_blank"
