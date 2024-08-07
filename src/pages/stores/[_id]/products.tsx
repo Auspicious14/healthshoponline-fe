@@ -31,9 +31,7 @@ export const getServerSideProps = async ({
 
   let token;
   if (cookie) {
-    token = jwt.verify(cookie, tokenSecret as string, {
-      algorithms: ["HS256", "RS256"],
-    });
+    token = jwt.verify(cookie, tokenSecret as string);
   }
   return {
     props: {
