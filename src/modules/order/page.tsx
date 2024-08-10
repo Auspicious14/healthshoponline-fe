@@ -6,10 +6,14 @@ import { IOrder } from "./model";
 import { useOrderState } from "./context";
 import { getCookie, helper } from "../../helper";
 import { ICart } from "../cart/model";
+import Link from "next/link";
 
 const { Text } = Typography;
 
-export const OrderPage = () => {
+interface IProps {
+  userId: string;
+}
+export const OrderPage: React.FC<IProps> = ({ userId }) => {
   const { orders, getUserOrders, loading } = useOrderState();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
@@ -18,13 +22,14 @@ export const OrderPage = () => {
   };
 
   useEffect(() => {
-    const id = getCookie("user_id");
-    getUserOrders(id);
-  }, []);
+    getUserOrders(userId);
+  }, [userId]);
+
   const rowSelection = {
     selectedRowKeys,
     onChange: onSelectChange,
   };
+
   const columns: ColumnsType<IOrder> = [
     {
       title: "Image",
@@ -41,18 +46,36 @@ export const OrderPage = () => {
     {
       title: "Product Name",
       key: "name",
-      render: (_, { cart }) => <Text>{cart[0]?.product?.name}</Text>,
+      render: (_, { cart }) => (
+        <Text className="flex flex-col gap-4">
+          {cart?.slice(0, 2)?.map((c) => (
+            <Text key={c._id}>{c.product?.name}</Text>
+          ))}
+        </Text>
+      ),
     },
 
     {
       title: "Price",
       key: "price",
-      render: (_, { cart }) => <Text>{cart[0]?.product?.price}</Text>,
+      render: (_, { cart }) => (
+        <div className="flex flex-col gap-4">
+          {cart?.slice(0, 2)?.map((c) => (
+            <Text key={c?._id}>{c.product?.price}</Text>
+          ))}
+        </div>
+      ),
     },
     {
       title: "Qty",
       key: "quantity",
-      render: (_, { cart }) => <Text>{cart[0]?.product?.quantity}</Text>,
+      render: (_, { cart }) => (
+        <div className="flex flex-col gap-4">
+          {cart?.slice(0, 2)?.map((c) => (
+            <Text key={c?._id}>{c.quantity}</Text>
+          ))}
+        </div>
+      ),
     },
     {
       title: "Status",
@@ -70,8 +93,8 @@ export const OrderPage = () => {
       title: "Action",
       key: "action",
       render: (_, record) => (
-        <Button href={`/orders/${record?._id}`} htmlType={"button"}>
-          View
+        <Button>
+          <Link href={`/orders/${record?._id}`}>View</Link>
         </Button>
       ),
     },
@@ -92,9 +115,21 @@ export const OrderPage = () => {
             loading={loading}
             // expandable={{
             //   expandedRowRender: (record) => {
-            //     return record?.cart?.map((c) => (
-            //       <Text key={c?._id}>{c?.product?.product?.name}</Text>
-            //     ));
+            //     if (record?.cart.length > 1) {
+            //       return (
+            //         <div className="flex flex-col gap-4">
+            //           {record?.cart?.map((c) => (
+            //             <div key={c?._id} className=" flex gap-20 items-center">
+            //               <Text></Text>
+            //               <Text>{c?.product?.name}</Text>
+            //               <Text>{c?.product?.price}</Text>
+            //               <Text>{c?.quantity}</Text>
+            //               <Text key={record?._id}>{record.status}</Text>
+            //             </div>
+            //           ))}
+            //         </div>
+            //       );
+            //     }
             //   },
             //   //   rowExpandable: (record) => {
             //   //     return record?.cart ? record?.cart : [];

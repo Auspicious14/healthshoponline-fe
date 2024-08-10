@@ -35,7 +35,7 @@ export function getCookie(name: string) {
 }
 
 export const helper = {
-  toCurrency: (val: number, currency = "$") => {
+  toCurrency: (val: number, currency = "N") => {
     if (!val) return `${currency} 0.0`;
     return currency + val?.toFixed(2)?.replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
   },

@@ -2,23 +2,29 @@ import React from "react";
 import { OrderDetailPage } from "../../modules/order/detail";
 import { IOrder } from "../../modules/order/model";
 import { apiReqHandler } from "../../components";
-import jwt  from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
-const tokenSecret = process.env.JWT_SECRET
+const tokenSecret = process.env.JWT_SECRET;
 interface IProps {
   order: IOrder;
 }
 const OrderDetail: React.FC<IProps> = ({ order }) => {
-  return <OrderDetailPage order={order} />;
+  return (
+    <>
+      <OrderDetailPage order={order} />
+    </>
+  );
 };
 
-export const getServerSideProps = async ({
-  req,
+export default OrderDetail;
+
+export async function getServerSideProps({
   query,
+  req,
 }: {
-  req: any;
   query: any;
-}) => {
+  req: any;
+}) {
   const cookie = req?.cookies?.token;
   if (!cookie) {
     return {
@@ -28,6 +34,7 @@ export const getServerSideProps = async ({
       },
     };
   }
+
   const token: any = jwt.verify(cookie, tokenSecret as string);
 
   if (token?.isAdmin) {
@@ -38,16 +45,18 @@ export const getServerSideProps = async ({
       },
     };
   }
-
   const { _id } = query;
   const data = await apiReqHandler({
-    endPoint: `${process?.env?.NEXT_PUBLIC_API_ROUTE}/order/${_id}`,
+    endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/order/${_id}`,
     method: "GET",
   });
+  console.log(data?.res?.data);
   const order = data?.res?.data?.data;
-  return {
-    props: { order },
-  };
-};
+  if (!order) return new Error("Network Error");
 
-export default OrderDetail;
+  return {
+    props: {
+      order: order || null,
+    },
+  };
+}

@@ -9,7 +9,7 @@ interface IProps {
 }
 
 const Order: React.FC<IProps> = ({ user }) => {
-  return <OrderPage />;
+  return <OrderPage userId={user?.id} />;
 };
 
 export default Order;
@@ -41,6 +41,8 @@ export const getServerSideProps = async ({
     };
   }
   return {
-    props: {},
+    props: {
+      user: token || null,
+    },
   };
 };

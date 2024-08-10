@@ -1,12 +1,14 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import { IRequestSchema } from "./model";
+import { getCookie } from "../../helper";
+
+const tokenSecret = process.env.JWT_SECRET;
 
 export const apiReqHandler = async ({
   endPoint,
   payload,
   method,
-  bearerAuth,
 }: IRequestSchema) => {
   let reqConfig = {
     url: endPoint,
@@ -17,6 +19,7 @@ export const apiReqHandler = async ({
     },
   };
 
+  const bearerAuth: any = getCookie("token");
   if (bearerAuth) {
     // @ts-ignore
     reqConfig.headers.Authorization = `Bearer ${bearerAuth}`;

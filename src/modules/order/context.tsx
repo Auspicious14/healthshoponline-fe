@@ -8,7 +8,8 @@ interface IOrderState {
   order: IOrder;
   orders: IOrder[];
   createOrder: (payload: any) => Promise<void>;
-  getUserOrders: (userId: string) => Promise<void>;
+  getOrderDetail: (order: string) => Promise<IOrder>;
+  getUserOrders: (userId: string) => Promise<IOrder[]>;
 }
 
 const OrderContext = React.createContext<IOrderState>({
@@ -16,6 +17,9 @@ const OrderContext = React.createContext<IOrderState>({
   order: {} as any,
   orders: [],
   getUserOrders(payload) {
+    return null as any;
+  },
+  getOrderDetail(order) {
     return null as any;
   },
   createOrder(payload) {
@@ -40,16 +44,34 @@ export const OrderContextProvider: React.FC<IProps> = ({ children }) => {
   const [orders, setOrders] = useState<IOrder[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const getUserOrders = async (userId: string) => {
+  const getUserOrders = async (userId: string): Promise<IOrder[]> => {
     setLoading(true);
     try {
       const res = await apiReqHandler({
-        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/order/${userId}`,
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/orders?userId=${userId}`,
         method: "GET",
       });
       setLoading(false);
       const data = await res?.res?.data?.data;
       setOrders(data);
+      return data;
+    } catch (error: any) {
+      toast.error(error);
+      return error;
+    }
+  };
+
+  const getOrderDetail = async (orderId: string) => {
+    setLoading(true);
+    try {
+      const res = await apiReqHandler({
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/order/${orderId}`,
+        method: "GET",
+      });
+      setLoading(false);
+      const data = await res?.res?.data?.data;
+      console.log(data);
+      setOrder(data);
       return data;
     } catch (error: any) {
       toast.error(error);
@@ -83,6 +105,7 @@ export const OrderContextProvider: React.FC<IProps> = ({ children }) => {
         order,
         orders,
         getUserOrders,
+        getOrderDetail,
         createOrder,
       }}
     >
