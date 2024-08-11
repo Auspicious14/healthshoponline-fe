@@ -64,7 +64,8 @@ export const CheckoutPage: React.FC<IProps> = ({ userId }) => {
           amount: "",
         },
       });
-      setModal({ show: true });
+      // setModal({ show: true });
+      router.push("/orders");
     }
   };
 
@@ -190,13 +191,13 @@ export const CheckoutPage: React.FC<IProps> = ({ userId }) => {
           </Card>
         </div>
       </div>
-      <ApModal show={modal.show} onDimiss={() => setModal({ show: false })}>
+      {/* <ApModal show={modal.show} onDimiss={() => setModal({ show: false })}>
         <PaymentPage
           onDissmiss={() => setModal({ show: false })}
           totalAmount={subTotal}
           order={order}
         />
-      </ApModal>
+      </ApModal> */}
     </div>
   );
 };

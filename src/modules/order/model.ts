@@ -9,9 +9,11 @@ export interface IOrder {
   status: IOrderStatus;
   createdAt: string;
   updatedAt: string;
+  deliveryDate: string;
 }
 
 export enum IOrderStatus {
+  new = "new",
   pending = "pending",
   confirmed = "confirmed",
   packed = "packed",

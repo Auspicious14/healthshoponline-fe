@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IOrder } from "./model";
+import { IOrder, IOrderStatus } from "./model";
 import { apiReqHandler } from "../../components";
 import { toast } from "react-toastify";
 
@@ -10,6 +10,8 @@ interface IOrderState {
   createOrder: (payload: any) => Promise<void>;
   getOrderDetail: (order: string) => Promise<IOrder>;
   getUserOrders: (userId: string) => Promise<IOrder[]>;
+  refund: (order: IOrder) => Promise<any>;
+  updateOrderStatus: (orderId: string, status: IOrderStatus) => Promise<IOrder>;
 }
 
 const OrderContext = React.createContext<IOrderState>({
@@ -23,6 +25,12 @@ const OrderContext = React.createContext<IOrderState>({
     return null as any;
   },
   createOrder(payload) {
+    return null as any;
+  },
+  refund(order) {
+    return null as any;
+  },
+  updateOrderStatus(orderId, status) {
     return null as any;
   },
 });
@@ -97,6 +105,45 @@ export const OrderContextProvider: React.FC<IProps> = ({ children }) => {
       toast.error(error);
     }
   };
+  const updateOrderStatus = async (orderId: string, status: IOrderStatus) => {
+    setLoading(true);
+    try {
+      const res = await apiReqHandler({
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/order/${orderId}`,
+        method: "PUT",
+        payload: JSON.stringify({ status }),
+      });
+      setLoading(false);
+      const data = await res.res?.data;
+      console.log(data.data);
+      if (data) {
+        toast.success("Order successfully placed.");
+        setOrder(data.data);
+        getOrderDetail(orderId);
+      }
+      return data;
+    } catch (error: any) {
+      toast.error(error);
+    }
+  };
+
+  const refund = async (order: IOrder) => {
+    setLoading(true);
+    try {
+      const res = await apiReqHandler({
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/refund`,
+        method: "POST",
+        payload: JSON.stringify(order),
+      });
+      setLoading(false);
+      const data = await res?.res?.data?.data;
+      console.log(data);
+      // setOrder(data);
+      return data;
+    } catch (error: any) {
+      toast.error(error);
+    }
+  };
 
   return (
     <OrderContext.Provider
@@ -107,6 +154,8 @@ export const OrderContextProvider: React.FC<IProps> = ({ children }) => {
         getUserOrders,
         getOrderDetail,
         createOrder,
+        refund,
+        updateOrderStatus,
       }}
     >
       {children}
