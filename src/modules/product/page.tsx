@@ -7,7 +7,8 @@ import { ProductListItem } from "./components/item";
 import Woman from "../../../public/images/Image.png";
 import { IProductFilter } from "./model";
 import { FilterProduct } from "./components/filter";
-import { MenuFoldOutlined } from "@ant-design/icons";
+import { MenuFoldOutlined, MessageOutlined } from "@ant-design/icons";
+import { ChatPage } from "../chat/page";
 
 const { Text } = Typography;
 const { Search } = Input;
@@ -20,11 +21,13 @@ interface IProps {
 export const ProductPage: React.FC<IProps> = ({ storeId, userId }) => {
   const { products, getProducts, loading } = useProductState();
   const [filter, setFilter] = useState<IProductFilter>({});
-  const [modal, setModal] = useState<boolean>(false);
+  const [modal, setModal] = useState<{
+    show: boolean;
+    type?: "chat" | "detail";
+  }>({ show: false, type: "detail" });
 
   useEffect(() => {
     if (storeId) {
-      console.log(storeId, "ss");
       setFilter({ ...filter, storeId });
     }
   }, [storeId]);
@@ -37,9 +40,9 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId }) => {
     if (val === undefined) return;
     setFilter({ ...filter, name: val });
   };
-  console.log(filter);
+
   return (
-    <>
+    <div className="relative">
       <div className="md:mx-20 px-4 pt-20 md:p-0 ">
         <Search
           placeholder="search product"
@@ -60,7 +63,7 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId }) => {
               <Text code>{`Product: ${products?.length}`}</Text>
               <MenuFoldOutlined
                 className="md:hidden"
-                onClick={() => setModal(!modal)}
+                onClick={() => setModal({ show: !modal, type: "detail" })}
               />
             </div>
             {loading && (
@@ -85,15 +88,30 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId }) => {
         </div>
       </div>
 
+      {storeId && (
+        <div className="fixed right-10 bottom-16">
+          <div className="flex justify-center items-center shadow-sm bg-blue-700 cursor-pointer text-white p-4 rounded-full">
+            <MessageOutlined
+              size={30}
+              className="text-3xl"
+              onClick={() => setModal({ show: true, type: "chat" })}
+            />
+          </div>
+        </div>
+      )}
       <ApImage
         src={Woman.src}
         alt="image"
         className="w-full md:h-[500px] m-auto mt-6 sm:object-cover object-contain"
       />
       <Footer />
-      <ApModal show={modal} onDimiss={() => setModal(false)}>
-        <FilterProduct setFilter={setFilter} />
-      </ApModal>
-    </>
+      {modal.type == "detail" && (
+        <ApModal show={modal.show} onDimiss={() => setModal({ show: false })}>
+          <FilterProduct setFilter={setFilter} />
+        </ApModal>
+      )}
+
+      {modal.type == "chat" && modal.show && <ChatPage />}
+    </div>
   );
 };
