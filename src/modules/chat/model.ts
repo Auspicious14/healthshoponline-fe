@@ -8,3 +8,10 @@ export interface IChat {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface IChatPayload {
+  message: string;
+  storeId: string;
+  userId: string;
+  senderId: string;
+}

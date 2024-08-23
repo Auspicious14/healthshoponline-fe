@@ -8,6 +8,7 @@ interface IProps {
   user: { id: string | null; isAdmin: boolean };
 }
 const Product: React.FC<IProps> = ({ user }) => {
+  console.log(user, "userrr");
   return (
     <MainLayout home>
       <ProductPage userId={user?.id} />
@@ -27,9 +28,7 @@ export const getServerSideProps = async ({
 
   let token;
   if (cookie) {
-    token = jwt.verify(cookie, tokenSecret as string, {
-      algorithms: ["HS256", "RS256"],
-    });
+    token = jwt.verify(cookie, tokenSecret as string);
   }
 
   return {

@@ -31,6 +31,7 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId }) => {
       setFilter({ ...filter, storeId });
     }
   }, [storeId]);
+  console.log(userId, "userrrr");
 
   useEffect(() => {
     getProducts(filter);
@@ -111,7 +112,13 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId }) => {
         </ApModal>
       )}
 
-      {modal.type == "chat" && modal.show && <ChatPage />}
+      {modal.type == "chat" && modal.show && (
+        <ChatPage
+          storeId={storeId as string}
+          userId={userId as string}
+          onDissmiss={() => setModal({ show: false, type: "chat" })}
+        />
+      )}
     </div>
   );
 };

@@ -28,11 +28,25 @@ export const getServerSideProps = async ({
   query: any;
 }) => {
   const cookie = req?.cookies?.token;
-
-  let token;
-  if (cookie) {
-    token = jwt.verify(cookie, tokenSecret as string);
+  if (!cookie) {
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permenant: false,
+      },
+    };
   }
+  const token: any = jwt.verify(cookie, tokenSecret as string);
+
+  if (token?.isAdmin) {
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permenant: false,
+      },
+    };
+  }
+
   return {
     props: {
       user: token || null,

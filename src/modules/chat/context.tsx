@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { apiReqHandler } from "../../components";
-import { IChat } from "./model";
+import { IChat, IChatPayload } from "./model";
 
 interface IChatState {
   loading: boolean;
   messages: IChat[];
   setMessages: (category: IChat[]) => void;
   getMessages: (query?: any) => Promise<void>;
+  sendMessage: (payload: IChatPayload) => Promise<any>;
 }
 
 const ChatContext = React.createContext<IChatState>({
@@ -15,6 +16,9 @@ const ChatContext = React.createContext<IChatState>({
   messages: [],
   setMessages(category) {},
   getMessages() {
+    return null as any;
+  },
+  sendMessage(payload) {
     return null as any;
   },
 });
@@ -51,6 +55,22 @@ export const ChatContextProvider: React.FC<IProps> = ({ children }) => {
     }
   };
 
+  const sendMessage = async (payload: IChatPayload) => {
+    try {
+      const res = await apiReqHandler({
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/chat`,
+        method: "POST",
+        payload,
+      });
+      setLoading(false);
+      const data = await res.res?.data;
+      console.log(data, "data");
+      // setMessages(data.data);
+      return data;
+    } catch (error: any) {
+      toast.error(error);
+    }
+  };
   return (
     <ChatContext.Provider
       value={{
@@ -58,6 +78,7 @@ export const ChatContextProvider: React.FC<IProps> = ({ children }) => {
         messages,
         getMessages,
         setMessages,
+        sendMessage,
       }}
     >
       {children}
