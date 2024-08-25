@@ -1,11 +1,14 @@
 import Image from "next/image";
 import React from "react";
 import { IChat } from "../model";
-
+import chatImg from "../../../../public/images/user chat image.webp";
 interface IProps {
   message: IChat;
 }
 export const MessageComponent: React.FC<IProps> = ({ message }) => {
+  const hours = new Date(message?.createdAt).getHours();
+  const minutes = new Date(message?.createdAt).getMinutes();
+
   return (
     <div
       className={`flex items-start gap-4 ${
@@ -13,7 +16,7 @@ export const MessageComponent: React.FC<IProps> = ({ message }) => {
       }`}
     >
       <Image
-        src={"/user1.png"}
+        src={chatImg}
         width={31}
         height={31}
         alt="user-image"
@@ -21,12 +24,12 @@ export const MessageComponent: React.FC<IProps> = ({ message }) => {
       />
       <div
         className={`p-4 rounded-2xl max-w-[70%] ${
-          message?.align === "right" ? "bg-blue-500 text-white" : "bg-gray-200"
+          message?.align === "right" ? "bg-blue-500 text-white" : "bg-blue-300"
         }`}
       >
         <p className="text-base leading-5">{message.message}</p>
         <small className="block text-xs mt-2 text-right">
-          {new Date(message.createdAt).toLocaleTimeString()}
+          {`${hours}:${minutes} ${hours <= 11 ? "am" : "pm"}`}
         </small>
       </div>
     </div>
