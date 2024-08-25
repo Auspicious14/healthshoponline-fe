@@ -6,8 +6,9 @@ interface IProps {
   message: IChat;
 }
 export const MessageComponent: React.FC<IProps> = ({ message }) => {
-  const hours = new Date(message?.createdAt).getHours();
-  const minutes = new Date(message?.createdAt).getMinutes();
+  const date = new Date();
+  const hours = new Date((message?.createdAt || date) as string).getHours();
+  const minutes = new Date((message?.createdAt || date) as string).getMinutes();
 
   return (
     <div

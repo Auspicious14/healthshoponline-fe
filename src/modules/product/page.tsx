@@ -14,11 +14,12 @@ const { Text } = Typography;
 const { Search } = Input;
 
 interface IProps {
-  storeId?: string;
   userId: string | null;
+  user: { id: string | null; isAdmin: boolean };
+  storeId?: string;
 }
 
-export const ProductPage: React.FC<IProps> = ({ storeId, userId }) => {
+export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
   const { products, getProducts, loading } = useProductState();
   const [filter, setFilter] = useState<IProductFilter>({});
   const [modal, setModal] = useState<{
@@ -117,6 +118,7 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId }) => {
           storeId={storeId as string}
           userId={userId as string}
           onDissmiss={() => setModal({ show: false, type: "chat" })}
+          user={user}
         />
       )}
     </div>

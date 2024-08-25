@@ -1,12 +1,12 @@
 export interface IChat {
-  _id: string;
+  _id?: string;
   message: string;
   storeId: string;
   userId: string;
   senderId: string;
-  align: "left" | "right";
-  createdAt: string;
-  updatedAt: string;
+  align?: "left" | "right";
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface IChatPayload {

@@ -13,7 +13,7 @@ interface IProps {
 const StoreProducts: React.FC<IProps> = ({ user, storeId }) => {
   return (
     <MainLayout home>
-      <ProductPage storeId={storeId} userId={user?.id} />
+      <ProductPage storeId={storeId} userId={user?.id} user={user} />
     </MainLayout>
   );
 };
