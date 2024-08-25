@@ -15,46 +15,39 @@ export const ChatPage: React.FC<IProps> = ({ storeId, userId, onDissmiss }) => {
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<IChat[]>([]);
   const socketRef = useRef<Socket | null>(null);
-  const socket = io(`${process.env.NEXT_PUBLIC_API_ROUTE}`);
 
   useEffect(() => {
-    console.log("useEffect is firing");
-
+    const socket = io(`${process.env.NEXT_PUBLIC_API_ROUTE}`);
     socketRef.current = socket;
 
     socket.on("connect", () => {
-      console.log(socket, "socket connected");
+      console.log(socket.id, "socket connected");
     });
 
     socket.on("connect_error", (err) => {
-      console.log(err, "error");
       socket.connect();
     });
-    socket.emit("chats", (chats: any) => {
-      console.log(chats, "chats");
-    });
+
+    socket.emit("chats", { storeId, userId });
 
     socket.on("all_messages", (data: any) => {
-      console.log(data, "all message");
       setMessages(data);
     });
 
     socket.on("new_message", (message: any) => {
-      console.log(message, "new message");
-      setMessages([...messages, message]);
+      setMessages((prevMessages) => [...prevMessages, message]);
     });
 
     socket.on("disconnect", (reason) => {
-      console.log(reason);
       if (reason === "io server disconnect") {
         socket.connect();
       }
     });
 
-    // return () => {
-    //   socket.disconnect();
-    // };
-  }, [messages]);
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   const handleSendMessage = (message: string) => {
     const payload = {
