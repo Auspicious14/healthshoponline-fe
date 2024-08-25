@@ -15,7 +15,7 @@ const { Search } = Input;
 
 interface IProps {
   userId: string | null;
-  user: { id: string | null; isAdmin: boolean };
+  user?: { id: string | null; isAdmin: boolean };
   storeId?: string;
 }
 

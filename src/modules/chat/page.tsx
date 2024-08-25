@@ -9,7 +9,7 @@ import { IChat } from "./model";
 interface IProps {
   storeId: string;
   userId: string;
-  user: { id: string | null; isAdmin: boolean };
+  user?: { id: string | null; isAdmin: boolean };
   onDissmiss: () => void;
 }
 export const ChatPage: React.FC<IProps> = ({ storeId, userId, onDissmiss }) => {
@@ -55,8 +55,8 @@ export const ChatPage: React.FC<IProps> = ({ storeId, userId, onDissmiss }) => {
     };
   }, []);
 
-  const handleSendMessage = (message: string, senderRole: 'user' | 'store') => {
-    const senderId = senderRole === 'user' ? userId : storeId;
+  const handleSendMessage = (message: string, senderRole: "user" | "store") => {
+    const senderId = senderRole === "user" ? userId : storeId;
     const payload = {
       message,
       storeId,
@@ -77,7 +77,8 @@ export const ChatPage: React.FC<IProps> = ({ storeId, userId, onDissmiss }) => {
 
   useEffect(() => {
     if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
     }
   }, [messages]);
 
@@ -107,7 +108,7 @@ export const ChatPage: React.FC<IProps> = ({ storeId, userId, onDissmiss }) => {
         />
         <button
           className="flex justify-center items-center bg-blue-500 text-white p-3 rounded-full"
-          onClick={() => handleSendMessage(message, 'user')}
+          onClick={() => handleSendMessage(message, "user")}
         >
           <SendOutlined className="text-lg" />
         </button>
