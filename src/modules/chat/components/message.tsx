@@ -13,7 +13,7 @@ export const MessageComponent: React.FC<IProps> = ({ message }) => {
   return (
     <div
       className={`flex items-start gap-4 ${
-        message?.align === "right" ? "flex-row-reverse" : ""
+        message?.senderId === message?.userId ? "flex-row-reverse" : ""
       }`}
     >
       <Image
@@ -25,7 +25,9 @@ export const MessageComponent: React.FC<IProps> = ({ message }) => {
       />
       <div
         className={`p-4 rounded-2xl max-w-[70%] ${
-          message?.align === "right" ? "bg-blue-500 text-white" : "bg-blue-300"
+          message?.senderId === message?.userId
+            ? "bg-blue-500 text-white"
+            : "bg-blue-300"
         }`}
       >
         <p className="text-base leading-5">{message.message}</p>

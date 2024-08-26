@@ -3,7 +3,11 @@ import { useChatState } from "./context";
 import { io, Socket } from "socket.io-client";
 import { MessageComponent } from "./components/message";
 import { ApTextInput } from "../../components";
-import { CloseCircleFilled, SendOutlined } from "@ant-design/icons";
+import {
+  CloseCircleFilled,
+  LoadingOutlined,
+  SendOutlined,
+} from "@ant-design/icons";
 import { IChat } from "./model";
 
 interface IProps {
@@ -23,7 +27,7 @@ export const ChatPage: React.FC<IProps> = ({ storeId, userId, onDissmiss }) => {
     socketRef.current = socket;
 
     const role = userId ? "user" : "store";
-    const senderId = userId || storeId;
+    const senderId = userId;
 
     socket.on("connect", () => {
       console.log(socket.id, "socket connected");
@@ -37,12 +41,13 @@ export const ChatPage: React.FC<IProps> = ({ storeId, userId, onDissmiss }) => {
     socket.emit("chats", { storeId, userId });
 
     socket.on("all_messages", (data: IChat[]) => {
+      console.log(data, "all message data");
       setMessages(data);
     });
 
-    // socket.on("new_message", (message: IChat) => {
-    //   setMessages((prevMessages) => [...prevMessages, message]);
-    // });
+    socket.on("new_message", (message: IChat) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
 
     socket.on("disconnect", (reason) => {
       if (reason === "io server disconnect") {
@@ -54,6 +59,13 @@ export const ChatPage: React.FC<IProps> = ({ storeId, userId, onDissmiss }) => {
       socket.disconnect();
     };
   }, []);
+
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   const handleSendMessage = (message: string, senderRole: "user" | "store") => {
     const senderId = senderRole === "user" ? userId : storeId;
@@ -75,13 +87,6 @@ export const ChatPage: React.FC<IProps> = ({ storeId, userId, onDissmiss }) => {
     }
   };
 
-  useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop =
-        chatContainerRef.current.scrollHeight;
-    }
-  }, [messages]);
-
   return (
     <div className="fixed top-20 bottom-0 right-0 w-full sm:w-1/2 lg:w-1/3 rounded-2xl bg-white p-4 shadow-lg flex flex-col justify-between z-50">
       <div className="flex justify-end">
@@ -92,6 +97,11 @@ export const ChatPage: React.FC<IProps> = ({ storeId, userId, onDissmiss }) => {
           <CloseCircleFilled />
         </button>
       </div>
+      {messages?.length == 0 && (
+        <div className="flex justify-center items-center my-auto">
+          <p className="italic">Say something</p>
+        </div>
+      )}
       <div ref={chatContainerRef} className="overflow-y-auto mb-4 space-y-4">
         {messages?.map((message) => (
           <MessageComponent message={message} key={message?._id} />
