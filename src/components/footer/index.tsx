@@ -13,7 +13,7 @@ export const Footer = () => {
   return (
     <Space className="block md:p-20 p-6 bg-gray">
       <Space className="sm:flex sm:justify-between block">
-        <Text className="font-bold text-2xl block">
+        <Text className="font-bold text-2xl block font-sans">
           Get our emails for info on new <br /> items, sales and more
         </Text>
         <Space className="block my-4">
@@ -23,7 +23,7 @@ export const Footer = () => {
               Subscribe
             </Button>
           </Space.Compact>
-          <Text className="block text-gray mt-2">
+          <Text className="block text-gray mt-2 font-sans">
             By subscribing, you agree to our terms and conditions, privacy and
             cookies policy
           </Text>
@@ -33,16 +33,18 @@ export const Footer = () => {
         <Space className="block">
           <Space className="block">
             <Link href={"/"}>Logo</Link>
-            <Text className="block text-base">
+            <Text className="block text-base font-sans">
               Design amazing digital experiences that create
             </Text>
             <Space>
               <PhoneOutlined rev={undefined} />
-              <Text className="block text-base text-gray">+2347010018536</Text>
+              <Text className="block text-base text-gray font-sans">
+                +2347010018536
+              </Text>
             </Space>
             <Space>
               <MessageOutlined rev={undefined} />
-              <Text className="block text-base text-gray">
+              <Text className="block text-base text-gray font-sans">
                 uthmanabdulganiyu2019@gmail.com
               </Text>
             </Space>
@@ -50,45 +52,45 @@ export const Footer = () => {
         </Space>
         <Space className="flex items-center justify-between my-2 md:my-0">
           <Space className="block my-4 md:my-0">
-            <Text className="block text-base font-bold">Shop</Text>
-            <Text className="block text-base my-1 text-[#1A45B5] font-semibold">
+            <Text className="block text-base font-bold font-sans">Shop</Text>
+            <Text className="block text-base my-1 text-[#1A45B5] font-semibold font-sans">
               Collections
             </Text>
-            <Text className="block text-base my-1 text-[#1A45B5] font-semibold">
+            <Text className="block text-base my-1 text-[#1A45B5] font-semibold font-sans">
               Discount
             </Text>
-            <Text className="block text-base my-1 text-[#1A45B5] font-semibold">
+            <Text className="block text-base my-1 text-[#1A45B5] font-semibold font-sans">
               Blogs
             </Text>
           </Space>
 
           <Space className="block my-4 md:my-0">
-            <Text className="block text-base font-bold">Company</Text>
-            <Text className="block text-base my-1 text-[#1A45B5] font-semibold">
+            <Text className="block text-base font-bold font-sans">Company</Text>
+            <Text className="block text-base my-1 text-[#1A45B5] font-semibold font-sans">
               About Us
             </Text>
-            <Text className="block text-base my-1 text-[#1A45B5] font-semibold">
+            <Text className="block text-base my-1 text-[#1A45B5] font-semibold font-sans">
               Contact Us
             </Text>
-            <Text className="block text-base my-1 text-[#1A45B5] font-semibold">
+            <Text className="block text-base my-1 text-[#1A45B5] font-semibold font-sans">
               Support
             </Text>
           </Space>
           <Space className="block my-4 md:my-0">
-            <Text className="block text-base font-bold">Support</Text>
-            <Text className="block text-base my-1 text-[#1A45B5] font-semibold">
+            <Text className="block text-base font-bold font-sans">Support</Text>
+            <Text className="block text-base my-1 text-[#1A45B5] font-semibold font-sans">
               FAQs
             </Text>
-            <Text className="block text-base my-1 text-[#1A45B5] font-semibold">
+            <Text className="block text-base my-1 text-[#1A45B5] font-semibold font-sans">
               Cookie Policy
             </Text>
-            <Text className="block text-base my-1 text-[#1A45B5] font-semibold">
+            <Text className="block text-base my-1 text-[#1A45B5] font-semibold font-sans">
               Terms of use
             </Text>
           </Space>
         </Space>
         <Space className=" block mt-8">
-          <Text className=" block text-base text-gray mt-2">
+          <Text className=" block text-base text-gray mt-2 font-sans">
             Accepted Payment
           </Text>
           <Space className="  flex gap-4">

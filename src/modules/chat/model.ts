@@ -15,3 +15,20 @@ export interface IChatPayload {
   userId: string;
   senderId: string;
 }
+
+export interface IUserMessageStore {
+  _id?: string;
+  messages?: IChat[];
+  read?: boolean;
+  unreadMessagesCount: number;
+  lastMessage: {
+    message: string;
+    createdAt: string;
+  };
+  unreadMessagesFromStore: number;
+  unreadMessagesFromUser: number;
+  user?: {
+    firstName: string;
+    lastName: string;
+  };
+}

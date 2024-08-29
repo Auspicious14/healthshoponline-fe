@@ -9,6 +9,7 @@ import { IProductFilter } from "./model";
 import { FilterProduct } from "./components/filter";
 import { MenuFoldOutlined, MessageOutlined } from "@ant-design/icons";
 import { ChatPage } from "../chat/page";
+import { useChatState } from "../chat/context";
 
 const { Text } = Typography;
 const { Search } = Input;
@@ -21,7 +22,9 @@ interface IProps {
 
 export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
   const { products, getProducts, loading } = useProductState();
+  const { users, getUsersWhoMessageStore } = useChatState();
   const [filter, setFilter] = useState<IProductFilter>({});
+  const [unreadMessage, setUnreadMessage] = useState<number>(0);
   const [modal, setModal] = useState<{
     show: boolean;
     type?: "chat" | "detail";
@@ -38,10 +41,27 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
     getProducts(filter);
   }, [filter]);
 
+  useEffect(() => {
+    getUsersWhoMessageStore(storeId as string);
+  }, []);
+
+  useEffect(() => {
+    setUnreadMessage(
+      users.find((user) => user._id === userId)
+        ?.unreadMessagesFromStore as number
+    );
+  }, [users]);
+
   const handleSearch = (val: string) => {
     if (val === undefined) return;
     setFilter({ ...filter, name: val });
   };
+
+  console.log(
+    users.find((user) => user._id === userId)
+      ?.unreadMessagesFromStore as number,
+    "unread message from store"
+  );
 
   return (
     <div className="relative">
@@ -92,6 +112,11 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
 
       {storeId && (
         <div className="fixed right-10 bottom-16">
+          {unreadMessage !== 0 && (
+            <div className="w-7 h-7 relative top-4 right-3 flex justify-center items-center text-primary bg-white rounded-full m-auto">
+              {unreadMessage}
+            </div>
+          )}
           <div className="flex justify-center items-center shadow-sm bg-blue-700 cursor-pointer text-white p-4 rounded-full">
             <MessageOutlined
               size={30}

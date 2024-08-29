@@ -14,7 +14,7 @@ export const Category = () => {
           {!!c?.images?.length && (
             <ApImage
               src={c?.images[0]?.uri}
-              className="border object-cover rounded-lg"
+              className="w-full h-60 object-cover rounded-lg"
               alt={c?.images[0]?.name}
             />
           )}
@@ -29,3 +29,25 @@ export const Category = () => {
     </div>
   );
 };
+
+{
+  /* <div className="grid gap-4 sm:grid-cols-3 grid-cols-2">
+      {categories?.map((c) => (
+        <div key={c?._id} className="relative">
+          {!!c?.images?.length && (
+            <ApImage
+              src={c?.images[0]?.uri}
+              className="w-full h-60 object-cover rounded-lg"
+              alt={c?.images[0]?.name}
+            />
+          )}
+          <Button
+            href={`/products`}
+            className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white border-none font-bold px-4 py-2 text-black"
+          >
+            {c?.name}
+          </Button>
+        </div>
+      ))}
+    </div> */
+}

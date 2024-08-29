@@ -26,12 +26,11 @@ export const ChatPage: React.FC<IProps> = ({ storeId, userId, onDissmiss }) => {
     const socket = io(`${process.env.NEXT_PUBLIC_API_ROUTE}`);
     socketRef.current = socket;
 
-    const role = userId ? "user" : "store";
     const senderId = userId;
 
     socket.on("connect", () => {
       console.log(socket.id, "socket connected");
-      socket.emit("register_client", { senderId, role });
+      socket.emit("register_client", { senderId, role: "user" });
     });
 
     socket.on("connect_error", (err) => {
@@ -40,8 +39,7 @@ export const ChatPage: React.FC<IProps> = ({ storeId, userId, onDissmiss }) => {
 
     socket.emit("chats", { storeId, userId });
 
-    socket.on("all_messages", (data: IChat[]) => {
-      console.log(data, "all message data");
+    socket.on("user_store_messages", (data: IChat[]) => {
       setMessages(data);
     });
 
@@ -97,7 +95,7 @@ export const ChatPage: React.FC<IProps> = ({ storeId, userId, onDissmiss }) => {
           <CloseCircleFilled />
         </button>
       </div>
-      {messages?.length == 0 && (
+      {messages?.length === 0 && (
         <div className="flex justify-center items-center my-auto">
           <p className="italic">Say something</p>
         </div>
