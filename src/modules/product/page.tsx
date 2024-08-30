@@ -64,8 +64,8 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
   );
 
   return (
-    <div className="relative">
-      <div className="md:mx-20 px-4 pt-20 md:p-0 ">
+    <div className="relative mt-24">
+      <div className="md:mx-20 px-4 md:p-0 ">
         <Search
           placeholder="search product"
           allowClear

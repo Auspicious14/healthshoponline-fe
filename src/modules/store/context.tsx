@@ -7,7 +7,7 @@ interface IStoreState {
   loading: boolean;
   product: IStore;
   stores: IStore[];
-  getStores: (query?: any) => Promise<void>;
+  getStores: (storeName?: string) => Promise<void>;
   getOneStore: (storeId: string) => Promise<any>;
   createStore: (payload: IStore) => Promise<any>;
   updateStore: (payload: IStore, storeId: string) => Promise<any>;
@@ -64,11 +64,13 @@ export const StoreContextProvider: React.FC<IProps> = ({ children }) => {
   const [stores, setStores] = useState<IStore[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const getStores = async (query?: any) => {
+  const getStores = async (storeName?: string) => {
     setLoading(true);
     try {
       const res = await apiReqHandler({
-        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/stores`,
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/stores${
+          storeName ? `?storeName=${storeName}` : ""
+        }`,
         method: "GET",
       });
       setLoading(false);
