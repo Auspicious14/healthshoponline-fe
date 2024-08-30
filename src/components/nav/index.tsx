@@ -3,16 +3,26 @@ import { Input } from "antd";
 import Link from "next/link";
 import { useCartState } from "../../modules/cart/context";
 import { getCookie } from "../../helper";
+import { ApImage } from "../image";
+import Logo from "../../../public/images/vendify logo white.jpg";
+import { useProductState } from "../../modules/product/context";
 
 const { Search } = Input;
 
 export const Headernav = () => {
   const [toggle, setToggle] = useState<boolean>(false);
   const { carts, getCart } = useCartState();
+  const { products, getProducts } = useProductState();
+  const [filter, setFilter] = useState();
   useEffect(() => {
     const id = getCookie("user_id");
     getCart(id);
   }, []);
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
   return (
     <header className="relative bg-white">
       <nav
@@ -20,7 +30,7 @@ export const Headernav = () => {
         className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 hidden lg:block"
       >
         <div className="border-b border-gray-200">
-          <div className="flex justify-center h-16 items-center">
+          <div className="flex justify-center gap-20 h-16 items-center">
             {/* <button
           type="button"
           className="rounded-md bg-white p-2 text-gray-400 lg:hidden"
@@ -30,44 +40,22 @@ export const Headernav = () => {
           <Bars3Icon className="h-6 w-6" aria-hidden="true" />
         </button> */}
 
-            {/* Logo */}
-            <div className="ml-4 flex gap-32 lg:ml-0">
-              <h1 className="font-semibold text-xl">HEALTHSHOP</h1>
-              <div className="flex lg:ml-6">
-                <Search
-                  placeholder="input search text"
-                  onSearch={() => {}}
-                  enterButton
-                  className="w-72 bg-blue-600 border rounded-md"
-                />
-              </div>
+            <div className="ml-4 flex gap-32 lg:ml-0 lg:w-1/3">
+              <ApImage
+                src={Logo}
+                alt={"logo"}
+                className="object-cover w-auto"
+              />
             </div>
-            {/* <div className=" lg:flex lg:flex-1 lg:items-center lg:justify-center lg:space-x-6">
-            <Link
-              href="/"
-              className="text-sm font-medium text-gray-700 hover:text-gray-800"
-            >
-              Home
-            </Link>
-            <Link
-              href="/products"
-              className="text-sm font-medium text-gray-700 hover:text-gray-800"
-            >
-              Collections
-            </Link>
-            <Link
-              href="#"
-              className="text-sm font-medium text-gray-700 hover:text-gray-800"
-            >
-              Blog
-            </Link>
-            <Link
-              href="#"
-              className="text-sm font-medium text-gray-700 hover:text-gray-800"
-            >
-              Contact us
-            </Link>
-          </div> */}
+
+            <div className="lg:w-1/3">
+              <input
+                type="search"
+                placeholder="Search Products"
+                onChange={() => {}}
+                className="w-full  border rounded-md outline-none px-4 py-2"
+              />
+            </div>
 
             <div className="ml-auto flex items-center">
               {/* Cart */}

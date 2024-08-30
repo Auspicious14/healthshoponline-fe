@@ -8,8 +8,10 @@ interface IProps {
 export const MainLayout = ({ home, children }: IProps) => {
   return (
     <div>
-      <Headernav />
-      {home && <SubNav />}
+      <div className="fixed top-0 w-full z-50">
+        <Headernav />
+        {home && <SubNav />}
+      </div>
       {children}
     </div>
   );
