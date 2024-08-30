@@ -4,6 +4,7 @@ export interface IChat {
   storeId: string;
   userId: string;
   senderId: string;
+  images: IFile[];
   align?: "left" | "right";
   createdAt?: string;
   updatedAt?: string;
@@ -31,4 +32,10 @@ export interface IUserMessageStore {
     firstName: string;
     lastName: string;
   };
+}
+
+export interface IFile {
+  uri: string;
+  name: string;
+  type: string;
 }

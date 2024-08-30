@@ -8,7 +8,11 @@ import {
   LoadingOutlined,
   SendOutlined,
 } from "@ant-design/icons";
-import { IChat } from "./model";
+import { IChat, IFile } from "./model";
+import { Upload, UploadFile } from "antd";
+import { fileSvc } from "../../file";
+import { toast } from "react-toastify";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
 
 interface IProps {
   storeId: string;
@@ -19,6 +23,7 @@ interface IProps {
 export const ChatPage: React.FC<IProps> = ({ storeId, userId, onDissmiss }) => {
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<IChat[]>([]);
+  const [files, setFiles] = useState<IFile[]>([]);
   const socketRef = useRef<Socket | null>(null);
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
 
@@ -72,17 +77,37 @@ export const ChatPage: React.FC<IProps> = ({ storeId, userId, onDissmiss }) => {
       storeId,
       userId,
       senderId,
+      files,
     };
     if (socketRef.current) {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { ...payload, align: "right" },
-      ]);
-      socketRef.current.emit("send_message", payload);
-      setMessage("");
+      if (message !== "" || files.length > 0) {
+        setMessages(
+          (prevMessages) =>
+            [
+              ...prevMessages,
+              { ...payload, images: files, align: "right" },
+            ] as IChat[]
+        );
+        socketRef.current.emit("send_message", payload);
+        setMessage("");
+        setFiles([]);
+      } else {
+        return toast.error("Invalid text");
+      }
     } else {
       console.log("No socket Instance");
     }
+  };
+
+  const handleFileUpload = async (fileList: UploadFile<any>[]) => {
+    const fls: IFile[] = await Promise.all(
+      fileList.map(async (f) => ({
+        name: f.name,
+        uri: await fileSvc.fileToBase64(f.originFileObj as any),
+        type: f.type as string,
+      }))
+    );
+    setFiles(fls);
   };
 
   return (
@@ -106,6 +131,17 @@ export const ChatPage: React.FC<IProps> = ({ storeId, userId, onDissmiss }) => {
         ))}
       </div>
       <div className="flex items-center gap-4">
+        <Upload
+          name="avatar"
+          listType="text"
+          className="avatar-uploader"
+          showUploadList={false}
+          multiple
+          onChange={({ fileList }) => handleFileUpload(fileList)}
+          rootClassName="w-10 h-10 flex justify-center items-center cursor-pointer"
+        >
+          <PlusCircleIcon fontSize={10} className="w-7 h-7" />
+        </Upload>
         <input
           name="new_message"
           type="text"
