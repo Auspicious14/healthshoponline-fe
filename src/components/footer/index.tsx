@@ -4,6 +4,7 @@ import { ApImage } from "../image";
 import visaCardImage from "../../../public/images/Payment method icon (1).png";
 import masterCardImage from "../../../public/images/Payment method icon.png";
 import skrillCardImage from "../../../public/images/Payment method icon (2).png";
+import Logo from "../../../public/images/vendify logo white.jpg";
 import { Button, Input, Space, Typography } from "antd";
 import { MessageOutlined, PhoneOutlined } from "@ant-design/icons";
 const { Text } = Typography;
@@ -32,7 +33,9 @@ export const Footer = () => {
       <Space className="md:flex md:justify-between block items-start mt-8 pb-8 border-b">
         <Space className="block">
           <Space className="block">
-            <Link href={"/"}>Logo</Link>
+            <Link href={"/"}>
+              <ApImage src={Logo} width={100} height={100} alt="logo" />
+            </Link>
             <Text className="block text-base font-sans">
               Design amazing digital experiences that create
             </Text>
@@ -50,7 +53,7 @@ export const Footer = () => {
             </Space>
           </Space>
         </Space>
-        <Space className="flex items-center justify-between my-2 md:my-0">
+        <Space className="flex items-center justify-between gap-8 my-2 md:my-0">
           <Space className="block my-4 md:my-0">
             <Text className="block text-base font-bold font-sans">Shop</Text>
             <Text className="block text-base my-1 text-[#1A45B5] font-semibold font-sans">
