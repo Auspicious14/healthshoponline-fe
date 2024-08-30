@@ -10,7 +10,7 @@ export default function Document() {
         content="A digital multi-vendor e-commerce platform"
       />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="/images/vendify logo white.jpg" />
       <link
         rel="preconnect"
         href="https://fonts.gstatic.com"

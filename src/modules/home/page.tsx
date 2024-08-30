@@ -13,44 +13,16 @@ import {
 import { ScaleIcon } from "@heroicons/react/24/outline";
 import { Category } from "./components/category";
 import { NewArrivals } from "./components/newArrivals";
+import Link from "next/link";
 
 const { Text } = Typography;
 
 export const HomePage = () => {
   return (
     <>
-      <div className="">
-        {/* <div className="lg:flex xl:flex md:flex xl:justify-between lg:justify-between md:justify-between gap-12 xl:px-16 lg:px-16 md:px-16 xl:lg:md:py-8 p-6 items-center bg-gray">
-          <div className="md:w-1/2 xl:w-1/2 lg:w-[50%] w-full md:text-left text-center">
-            <p className="text-5xl font-bold text-center md:text-left">
-              Quality Medicine and Healthcare at your Doorstep
-            </p>
-            <p className="pt-3 font-normal">
-              {
-                "Millions of men around the world face this challenge, but the good news is that there's a solution that can help you overcome it."
-              }
-            </p>
-            <div className="flex md:w-1/2 my-4 gap-4 sm:justify-center items-center">
-              <Button className="border-none rounded-lg text-white h-12 font-bold text-center px-4 bg-primary">
-                Explore Store
-              </Button>
-              <Button className="border-none font-bold rounded-lg bg-offWhite w-full px-4 h-12 text-center text-primary">
-                Learn More
-              </Button>
-            </div>
-          </div>
-          <div className="md:w-1/2 xl:w-1/2 lg:w-[50%] py-4">
-            <ApImage
-              // width={500}
-              className="flex-1 xl:lg:md:w-[400px] w-full h-96 justify-end border object-cover rounded-lg"
-              // height={200}
-              src={HeroImage}
-              alt="hero-image"
-            />
-          </div>
-        </div> */}
+      <div className="mt-24">
         <div className="flex flex-col md:flex-row items-center justify-between gap-12 px-6 lg:px-16 py-8 bg-white">
-          <div className="w-full md:w-1/2 text-center md:text-left mt-12 md:mt-0 font-sans">
+          <div className="w-full md:w-1/2 text-center md:text-left md:mt-0 font-sans">
             <h1 className="text-4xl lg:text-5xl font-bold">
               Discover Thousands of Products from Multiple Vendors
             </h1>
@@ -59,13 +31,16 @@ export const HomePage = () => {
               from trusted sellers. Shop with confidence and find exactly what
               you need, all in one place.
             </p>
-            <div className="flex justify-center md:justify-start my-4 gap-4">
-              <Button className="border-none rounded-lg text-white h-12 font-bold bg-primary px-4">
+            <div className="flex justify-center items-center md:justify-start my-4 gap-4">
+              <Link
+                href="/products"
+                className="border-none rounded-lg text-white font-bold bg-primary p-4"
+              >
                 Start Shopping
-              </Button>
-              <Button className="border-none font-bold rounded-lg bg-offWhite px-4 h-12 text-primary">
+              </Link>
+              <button className="border-none font-bold rounded-lg bg-offWhite p-4 text-primary">
                 Learn More
-              </Button>
+              </button>
             </div>
           </div>
           <div className="w-full md:w-1/2 py-4">
@@ -140,7 +115,10 @@ export const HomePage = () => {
             <div>
               <p className="block font-bold text-3xl">Why we are better</p>
             </div>
-            <Button className="bg-primary text-white text-center px-4 h-12 my-4 lg:xl:md:my-0">
+            <Button
+              href="/stores"
+              className="bg-primary text-white text-center px-4 h-12 my-4 lg:xl:md:my-0"
+            >
               Explore Store
             </Button>
           </div>
