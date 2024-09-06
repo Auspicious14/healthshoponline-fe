@@ -1,11 +1,11 @@
 import React from "react";
 
 import jwt from "jsonwebtoken";
-import { BlogDetail } from "../../../../modules/blog/detail";
 import { MainLayout } from "../../../../modules/layout";
 import { apiReqHandler } from "../../../../components";
 import { IBlog } from "../../../../modules/blog/model";
 import { useBlogState } from "../../../../modules/blog/context";
+import BlogDetail from "../../../../modules/blog/detail";
 
 const tokenSecret = process.env.JWT_SECRET;
 interface IProps {

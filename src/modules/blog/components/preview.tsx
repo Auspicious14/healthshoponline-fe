@@ -2,29 +2,23 @@ import React from "react";
 import { IBlog } from "../model";
 import { ApImage } from "../../../components";
 import { Typography } from "antd";
-import moment from "moment";
+import Link from "next/link";
+import { formatDate } from "../../../helper";
 
 const { Text } = Typography;
 
 interface IProps {
   blog: IBlog;
-  onClick: () => void;
 }
 
-export const BlogPreview: React.FC<IProps> = ({ blog, onClick }) => {
-  const formatDate = (dateString: string) => {
-    if (!dateString) return "Unknown Date";
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    return new Date(dateString).toLocaleDateString(undefined, options as any);
-  };
-
+export const BlogPreview: React.FC<IProps> = ({ blog }) => {
   return (
-    <div
+    <Link
+      href={`/stores/${blog?.author?._id}/blog/${blog?._id}`}
       className="cursor-pointer border border-gray-200 rounded-lg shadow-sm transition-transform hover:shadow-lg hover:scale-105"
-      onClick={onClick}
     >
       {blog?.images?.length > 0 ? (
-        <img
+        <ApImage
           src={blog?.images[0]?.uri}
           alt={blog?.images[0]?.name}
           className="w-full h-64 object-cover"
@@ -50,6 +44,6 @@ export const BlogPreview: React.FC<IProps> = ({ blog, onClick }) => {
             : `${blog?.description.slice(0, 100)}...`}
         </p>
       </div>
-    </div>
+    </Link>
   );
 };
