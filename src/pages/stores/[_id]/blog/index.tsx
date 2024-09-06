@@ -1,24 +1,23 @@
 import React from "react";
-import { MainLayout } from "../../../modules/layout";
-import { ProductPage } from "../../../modules/product/page";
-import { apiReqHandler } from "../../../components";
 import jwt from "jsonwebtoken";
+import { BlogPage } from "../../../../modules/blog/page";
+import { MainLayout } from "../../../../modules/layout";
 
 const tokenSecret = process.env.JWT_SECRET;
 interface IProps {
-  storeId?: string;
+  storeId: string;
   user: { id: string | null; isAdmin: boolean };
 }
 
-const StoreProducts: React.FC<IProps> = ({ user, storeId }) => {
+const StoreBlog: React.FC<IProps> = ({ storeId, user }) => {
   return (
     <MainLayout storeId={storeId}>
-      <ProductPage storeId={storeId} userId={user?.id} user={user} />
+      <BlogPage storeId={storeId} />
     </MainLayout>
   );
 };
 
-export default StoreProducts;
+export default StoreBlog;
 
 export const getServerSideProps = async ({
   req,

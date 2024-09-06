@@ -10,6 +10,7 @@ import { CategoryContextProvider } from "./modules/category/context";
 import { PaymentContextProvider } from "./modules/payment/context";
 import { StoreContextProvider } from "./modules/store/context";
 import { ChatContextProvider } from "./modules/chat/context";
+import { BlogContextProvider } from "./modules/blog/context";
 
 export const combineContext = (...components: FC[]): FC<any> => {
   const CombinedComponent = components.reduce(
@@ -49,6 +50,7 @@ const providers = [
   PaymentContextProvider,
   StoreContextProvider,
   ChatContextProvider,
+  BlogContextProvider,
 ] as any;
 
 export const AppContextProvider = combineContext(...providers);

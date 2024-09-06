@@ -1,24 +1,28 @@
 import React from "react";
-import { MainLayout } from "../../../modules/layout";
-import { ProductPage } from "../../../modules/product/page";
-import { apiReqHandler } from "../../../components";
+
 import jwt from "jsonwebtoken";
+import { BlogDetail } from "../../../../modules/blog/detail";
+import { MainLayout } from "../../../../modules/layout";
+import { apiReqHandler } from "../../../../components";
+import { IBlog } from "../../../../modules/blog/model";
+import { useBlogState } from "../../../../modules/blog/context";
 
 const tokenSecret = process.env.JWT_SECRET;
 interface IProps {
-  storeId?: string;
+  blog: IBlog;
   user: { id: string | null; isAdmin: boolean };
+  storeId: string;
 }
 
-const StoreProducts: React.FC<IProps> = ({ user, storeId }) => {
+const StoreBlogDetail: React.FC<IProps> = ({ blog, user, storeId }) => {
   return (
     <MainLayout storeId={storeId}>
-      <ProductPage storeId={storeId} userId={user?.id} user={user} />
+      <BlogDetail blog={blog} />
     </MainLayout>
   );
 };
 
-export default StoreProducts;
+export default StoreBlogDetail;
 
 export const getServerSideProps = async ({
   req,
@@ -47,10 +51,21 @@ export const getServerSideProps = async ({
     };
   }
 
+  const { _id } = query;
+
+  const data = await apiReqHandler({
+    endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/blog/${_id}`,
+    method: "GET",
+  });
+
+  const blog = data?.res?.data?.data;
+  if (!blog) return new Error("Network Error");
+
   return {
     props: {
       user: token || null,
-      storeId: query._id || null,
+      blog: blog || null,
+      storeId: _id || null,
     },
   };
 };
