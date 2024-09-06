@@ -51,10 +51,10 @@ export const getServerSideProps = async ({
     };
   }
 
-  const { _id } = query;
+  const { blogId, _id } = query;
 
   const data = await apiReqHandler({
-    endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/blog/${_id}`,
+    endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/blog/${blogId}`,
     method: "GET",
   });
 
