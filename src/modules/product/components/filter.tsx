@@ -20,6 +20,7 @@ const filterData: {
 interface IProps {
   setFilter: React.Dispatch<React.SetStateAction<IProductFilter>>;
 }
+
 export const FilterProduct: React.FC<IProps> = ({ setFilter }) => {
   const [localFilters, setLocalFilters] = useState<IProductFilter>({});
   const [filterCategories, setFilterCategories] = useState(filterData);
@@ -69,48 +70,56 @@ export const FilterProduct: React.FC<IProps> = ({ setFilter }) => {
   };
 
   return (
-    <div className="p-4 border rounded-md">
-      <div className="mb-4">
-        {filterCategories.map(({ category, options }) => (
-          <div key={category} className="mb-4">
-            <div className="flex justify-between items-center">
-              <h3 className="font-bold">{category.toUpperCase()}</h3>
+    <div className="p-4 border border-gray-300 rounded-md w-full max-w-xs bg-white">
+      {filterCategories.map(({ category, options }) => (
+        <div key={category} className="mb-4">
+          <div className="flex justify-between items-center border-b border-gray-200 pb-2">
+            <h3 className="font-bold text-sm text-gray-700 uppercase tracking-wide">
+              {category}
+            </h3>
+            <button
+              className="focus:outline-none"
+              onClick={() => handleToggle(category)}
+            >
               {toggle[category] ? (
-                <MinusIcon
-                  className="h-5 w-5"
-                  aria-hidden="true"
-                  onClick={() => handleToggle(category)}
-                />
+                <MinusIcon className="h-5 w-5 text-gray-600" />
               ) : (
-                <PlusIcon
-                  className="h-5 w-5"
-                  aria-hidden="true"
-                  onClick={() => handleToggle(category)}
-                />
+                <PlusIcon className="h-5 w-5 text-gray-600" />
               )}
-            </div>
-            <div>
-              {toggle[category] &&
-                options.map((option) => (
-                  <div key={option}>
-                    <input
-                      type="radio"
-                      name={category}
-                      value={option}
-                      checked={localFilters?.[category] === option}
-                      onChange={(e) =>
-                        handleFilterChange(
-                          category as keyof IProductFilter,
-                          e.target.value
-                        )
-                      }
-                    />
-                    <label className="ml-2">{option}</label>
-                  </div>
-                ))}
-            </div>
+            </button>
           </div>
-        ))}
+          {toggle[category] && (
+            <div className="mt-3 space-y-2 transition-all duration-200 ease-in-out">
+              {options.map((option) => (
+                <div key={option} className="flex items-center py-2">
+                  <input
+                    type="radio"
+                    name={category}
+                    value={option}
+                    checked={localFilters?.[category] === option}
+                    onChange={(e) =>
+                      handleFilterChange(
+                        category as keyof IProductFilter,
+                        e.target.value
+                      )
+                    }
+                    className="text-indigo-600 focus:ring-indigo-500 h-4 w-4"
+                  />
+                  <label className="ml-3 text-sm text-gray-600">{option}</label>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+      {/* Add a clear filter button if needed */}
+      <div className="pt-4 border-t border-gray-200 mt-4">
+        <button
+          className="text-sm text-blue-600 hover:text-blue-800 font-semibold"
+          onClick={() => setFilter({})}
+        >
+          Clear Filters
+        </button>
       </div>
     </div>
   );

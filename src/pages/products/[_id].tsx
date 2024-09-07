@@ -3,6 +3,7 @@ import { apiReqHandler } from "../../components";
 import { ProductDetailPage } from "../../modules/product/detail";
 import { IProduct } from "../../modules/product/model";
 import jwt from "jsonwebtoken";
+import { MainLayout } from "../../modules/layout";
 
 const tokenSecret = process.env.JWT_SECRET;
 interface IProps {
@@ -11,9 +12,9 @@ interface IProps {
 }
 const ProductDetail: React.FC<IProps> = ({ product, user }) => {
   return (
-    <div>
+    <MainLayout>
       <ProductDetailPage product={product} userId={user?.id} />
-    </div>
+    </MainLayout>
   );
 };
 

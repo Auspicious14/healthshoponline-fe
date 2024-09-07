@@ -1,5 +1,6 @@
-import Link from "next/link";
 import React from "react";
+import Link from "next/link";
+import { Progress } from "antd"; // Assuming you're using Ant Design for the progress bar
 import { IProduct, IReview } from "../model";
 import { Button, Space, Typography } from "antd";
 import { ApImage, ApRatingStar } from "../../../components";
@@ -96,6 +97,7 @@ export const ReviewListItem: React.FC<IReviewProps> = ({ review }) => {
         )}
         <Space className="block">
           <ApRatingStar value={review?.rating} className="hidden lg:block" />
+          <div></div>
 
           <Text className="font-bold">{review?.title}</Text>
           <p className="text-justify lg:my-2">{review?.description}</p>
@@ -106,26 +108,35 @@ export const ReviewListItem: React.FC<IReviewProps> = ({ review }) => {
 };
 
 interface IRateProps {
-  review: IReview;
+  review?: IReview;
+  rating: number;
+  totalRatings: number;
+  count: number;
 }
 
-export const RateStreakListItem: React.FC<IRateProps> = ({ review }) => {
+export const RateStreakListItem: React.FC<IRateProps> = ({
+  rating,
+  review,
+  count,
+  totalRatings,
+}) => {
+  const percentage = (count / 100) * 100;
+  console.log(percentage, "percent");
   return (
-    <Space className="flex gap-4 items-center w-20">
-      <Space className="">
-        {review?.rating > 0 && (
-          <StarFilled
-            value={review?.rating}
-            className={
-              review?.rating >= 1 ? "text-orange-500" : "text-gray-200"
-            }
-            rev={undefined}
-          />
-        )}
-      </Space>
-      <Space>
-        <Text>{review?.rating}</Text>
-      </Space>
-    </Space>
+    <div className="flex items-center gap-2 w-full">
+      {/* Star Rating */}
+      <div className="flex gap-4 items-center w-[15%]">
+        <StarFilled className="text-yellow-500" />
+      </div>
+      <div className="">{rating}</div>
+
+      <div className="w-[100%]">
+        <Progress percent={percentage} showInfo={false} strokeColor="#007bff" />
+      </div>
+
+      <div className="w-[10%] text-right">
+        <span>{count}</span>
+      </div>
+    </div>
   );
 };

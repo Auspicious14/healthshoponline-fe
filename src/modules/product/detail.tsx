@@ -16,7 +16,11 @@ import { useRouter } from "next/router";
 import { Review } from "./components/review";
 import { RateStreakListItem, ReviewListItem } from "./components/item";
 import { ShareIcon } from "@heroicons/react/24/outline";
-import { BackwardOutlined, CopyOutlined } from "@ant-design/icons";
+import {
+  BackwardOutlined,
+  CopyOutlined,
+  ShareAltOutlined,
+} from "@ant-design/icons";
 import { toast } from "react-toastify";
 import { ArrowLeftCircleIcon } from "@heroicons/react/20/solid";
 
@@ -29,6 +33,10 @@ interface IProps {
 export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
   const { addToCart, loading } = useCartState();
   const { reviews, getReviews, totalRatings } = useProductState();
+  const formRef = useRef<FormikProps<any>>();
+  const [qty, setQty] = useState<any>(1);
+  const router = useRouter();
+  const [selectedImage, setSelectedImage] = useState(product?.images[0]?.uri);
   const [modal, setModal] = useState<{
     show: boolean;
     data?: any;
@@ -36,9 +44,6 @@ export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
   }>({
     show: false,
   });
-  const formRef = useRef<FormikProps<any>>();
-  const [qty, setQty] = useState<any>(1);
-  const router = useRouter();
 
   useEffect(() => {
     setQty(qty);
@@ -64,9 +69,17 @@ export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
   const handleEachRating = () => {
     reviews?.find((r) => r?._id);
   };
+  const ratingsData = [
+    { rating: 5, count: 9 },
+    { rating: 4, count: 21 },
+    { rating: 3, count: 3 },
+    { rating: 2, count: 5 },
+    { rating: 1, count: 1 },
+  ];
+
   return (
-    <div>
-      <Headernav />
+    <div className="md:mt-28">
+      {/* <Headernav /> */}
       <div className="lg:hidden">
         <ArrowLeftCircleIcon
           className="w-8 h-8"
@@ -77,27 +90,35 @@ export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
         <div className="md:flex gap-8 w-full pt-6">
           {/* Image gallery */}
           <div className="md:w-[50%] w-full bg-gray py-4 border rounded-lg">
-            <div className="w-[50%] h-[50%] m-auto">
+            {/* Main Image */}
+            <div className="w-full h-[400px] flex items-center justify-center m-auto">
               <ApImage
-                src={product?.images[0]?.uri}
-                alt={product?.images[0]?.name}
-                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                src={selectedImage}
+                alt="Product Image"
+                className="h-full w-full object-cover object-center"
                 priority
               />
             </div>
-            <div className="mx-auto mt-6 sm:px-6 w-full grid grid-cols-4 gap-4 items-center  lg:px-8">
+
+            {/* Thumbnails */}
+            <div className="mx-auto mt-6 sm:px-6 w-full grid grid-cols-4 gap-4 items-center lg:px-8">
               {product?.images?.map((p) => (
                 <div
                   key={p._id}
-                  className="w-[80%] bg-slate-300 rounded-md border"
+                  className={`w-[80px] h-[80px] bg-slate-300 rounded-md border cursor-pointer ${
+                    selectedImage === p.uri
+                      ? "border-blue-600"
+                      : "border-gray-200"
+                  }`}
+                  onClick={() => setSelectedImage(p.uri)}
                 >
                   <ApImage
                     key={p._id}
                     src={p.uri}
                     alt={p.name}
-                    width={200}
-                    height={200}
-                    className="h-full w-full object-cover object-center"
+                    className="h-full w-full rounded-lg object-cover object-center"
+                    width={80}
+                    height={80}
                     unoptimized
                     priority
                   />
@@ -106,13 +127,12 @@ export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
             </div>
           </div>
 
-          {/* Product info */}
-          <div className="md:w-[50%]">
+          <div className="md:w-[50%] text-sm">
             <div className="flex justify-between mt-2 md:my-0 md:block">
               <h1 className="pb-4 capitalize text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
                 {product.name}
               </h1>
-              <p className=" text-lg font-bold tracking-tight text-primary">
+              <p className="text-lg font-bold tracking-tight text-primary">
                 {`$${product.price}`}
               </p>
             </div>
@@ -120,13 +140,12 @@ export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
               <ApRatingStar value={totalRatings} className="text-zinc-200" />
               <p>{totalRatings?.toFixed(1) || 0} Ratings</p>
             </div>
-            {/* Description and details */}
+
             <div className="space-y-6 text-justify">
-              <p className="text-base text-gray-400">{product?.description}</p>
+              <p className="text-sm text-gray">{product?.description}</p>
             </div>
 
             <div className="mt-4 lg:row-span-3 lg:mt-0">
-              {/* Reviews */}
               <Formik
                 innerRef={formRef as any}
                 initialValues={{ quantity: qty }}
@@ -144,90 +163,81 @@ export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
                       />
                       <p className="mt-4">Stock: {product?.quantity}</p>
                     </div>
-                    {/* Sizes */}
-                    <div className="flex items-center gap-2 justify-between">
-                      <div className="flex items-center gap-4">
-                        <h3 className="text-sm lg:text-base font-medium text-gray-900">
-                          Size:
-                        </h3>
-                        <Text className="text-sm lg:text-base">
-                          {product?.size}
-                        </Text>
-                      </div>
-                      <div
-                        className="flex items-center my-4 cursor-pointer"
-                        onClick={handleCopy}
-                      >
-                        <CopyOutlined
-                          className="w-6 text-primary"
-                          rev={undefined}
-                        />
-                        <p>Copy link</p>
-                      </div>
-                    </div>
 
-                    <div className="flex w-full gap-4">
+                    <div className="flex w-full gap-4 text-base">
                       <Button
                         htmlType="submit"
                         type="text"
                         loading={loading}
-                        className="mt-10 flex w-full p-6 items-center justify-center rounded-md border border-gray-200 bg-gray-200  text-base font-medium text-black "
+                        className="mt-10 flex w-full p-6 items-center justify-center rounded-md border border-gray-200 bg-gray-200  text-base font-medium text-black"
                       >
                         Add to cart
                       </Button>
                       <Button
                         type="primary"
-                        className="mt-10 flex w-full p-6 items-center justify-center rounded-md border border-transparent bg-blue-600 text-base font-medium text-white "
+                        className="mt-10 flex w-full p-6 items-center justify-center rounded-md border border-transparent bg-blue-600 text-base font-medium text-white"
                       >
                         Buy Now
                       </Button>
                     </div>
+                    <ShareAltOutlined
+                      className="my-4"
+                      size={20}
+                      onClick={handleCopy}
+                    />
                   </Form>
                 )}
               </Formik>
             </div>
           </div>
         </div>
-        <div>
+
+        <div className="mt-12">
           <Space className="lg:my-4 flex justify-between mt-8 my-4">
-            <Text className="lg:text-3xl text-xl font-bold">
+            <Text className="lg:text-3xl text-xl font-bold font-sans">
               Ratings and Review
             </Text>
             <Button
               type="text"
-              className="bg-gray-200 font-semibold"
+              className="bg-gray-200 font-semibold font-sans"
               onClick={() => setModal({ show: true })}
             >
               Write Review
             </Button>
           </Space>
-          <div className="flex gap-24">
+          <div className="flex md:gap-24 gap-10">
             <Space className="block w-40 text-center">
-              <Text className="lg:text-6xl text-4xl font-bold my-4">
+              <Text className="lg:text-6xl text-4xl font-bold my-4 font-sans">
                 {totalRatings ? totalRatings.toFixed(1) : "0.0"}
               </Text>
-              <div className="">
-                <ApRatingStar
-                  value={totalRatings}
-                  size={30}
-                  className="justify-center my-2"
-                />
-              </div>
-
-              <Text className="text-gray-300 my-3">{`${reviews?.length} Product Ratings`}</Text>
+              <ApRatingStar
+                value={totalRatings}
+                size={30}
+                className="justify-center my-2"
+              />
+              <Text className="text-gray-300 my-3 font-sans">{`${reviews?.length} Product Ratings`}</Text>
             </Space>
             <Space className="block">
-              {reviews?.map((r) => (
+              {/* {reviews?.map((r) => (
                 <RateStreakListItem review={r} key={r?._id} />
+              ))} */}
+              {ratingsData.map((data) => (
+                <RateStreakListItem
+                  key={data.rating}
+                  rating={data.rating}
+                  count={data.count}
+                  totalRatings={totalRatings}
+                />
               ))}
             </Space>
           </div>
 
           <Space className="block mt-4">
-            <Text className="text-2xl font-bold">Reviews</Text>
+            <Text className="text-2xl font-sans font-bold">Reviews</Text>
           </Space>
-          {reviews &&
-            reviews?.map((r) => <ReviewListItem review={r} key={r?._id} />)}
+          {reviews?.map((r) => (
+            <ReviewListItem review={r} key={r?._id} />
+          ))}
         </div>
       </div>
 

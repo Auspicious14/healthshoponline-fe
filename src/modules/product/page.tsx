@@ -27,7 +27,7 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
   const [unreadMessage, setUnreadMessage] = useState<number>(0);
   const [modal, setModal] = useState<{
     show: boolean;
-    type?: "chat" | "detail";
+    type?: "chat" | "detail" | "filter";
   }>({ show: false, type: "detail" });
 
   useEffect(() => {
@@ -65,29 +65,36 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
 
   return (
     <div className="relative mt-24">
-      <div className="md:mx-20 px-4 md:p-0 ">
+      <div className="md:mx-20 px-4 md:p-0">
+        {/* Search Input */}
         <Search
           placeholder="search product"
           allowClear
           enterButton="Search"
           size="large"
-          className="bg-blue-600 rounded-md md:mt-8"
+          className="bg-blue-600 rounded-md md:mt-10 md:mb-8"
           onSearch={handleSearch}
           onChange={(e) => handleSearch(e.target.value)}
         />
 
         <div className="md:flex gap-10 w-full">
-          <div className="md:w-[30%] hidden md:block">
-            <FilterProduct setFilter={setFilter} />
+          <div className="hidden md:block md:w-[30%] mt-4">
+            <div className="fixed w-[25%] h-[70%] overflow-auto">
+              <FilterProduct setFilter={setFilter} />
+            </div>
           </div>
-          <div className="md:w-[80%]">
+
+          {/* Product List Section */}
+          <div className="md:w-[70%]">
             <div className="flex justify-between items-center my-4">
-              <Text code>{`Product: ${products?.length}`}</Text>
+              <Text code>{`Products: ${products?.length}`}</Text>
               <MenuFoldOutlined
                 className="md:hidden"
-                onClick={() => setModal({ show: !modal, type: "detail" })}
+                onClick={() => setModal({ show: !modal.show, type: "filter" })}
               />
             </div>
+
+            {/* Product Grid */}
             {loading && (
               <Spin size="large" className="flex justify-center items-center" />
             )}
@@ -100,16 +107,18 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
             ) : (
               !loading && products?.length === 0 && <div>No products...</div>
             )}
+
+            {/* Pagination */}
             <Pagination
               className="text-center"
               defaultCurrent={1}
-              // showTotal={(t, r: [number, number]) => <div>{t}</div>}
               total={products?.length}
             />
           </div>
         </div>
       </div>
 
+      {/* Chat Button */}
       {storeId && (
         <div className="fixed right-10 bottom-16">
           {unreadMessage !== 0 && (
@@ -126,19 +135,26 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
           </div>
         </div>
       )}
+
+      {/* Product Banner */}
       <ApImage
         src={Woman.src}
         alt="image"
         className="w-full md:h-[500px] m-auto mt-6 sm:object-cover object-contain"
       />
+
+      {/* Footer */}
       <Footer />
-      {modal.type == "detail" && (
+
+      {/* Modal for Mobile Filter */}
+      {modal.type === "filter" && modal.show && (
         <ApModal show={modal.show} onDimiss={() => setModal({ show: false })}>
           <FilterProduct setFilter={setFilter} />
         </ApModal>
       )}
 
-      {modal.type == "chat" && modal.show && (
+      {/* Chat Modal */}
+      {modal.type === "chat" && modal.show && (
         <ChatPage
           storeId={storeId as string}
           userId={userId as string}
