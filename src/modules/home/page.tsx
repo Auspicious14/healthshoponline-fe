@@ -14,6 +14,8 @@ import { ScaleIcon } from "@heroicons/react/24/outline";
 import { Category } from "./components/category";
 import { NewArrivals } from "./components/newArrivals";
 import Link from "next/link";
+import { TopStores } from "./components/topStores";
+import { NewStores } from "./components/newStores";
 
 const { Text } = Typography;
 
@@ -43,7 +45,7 @@ export const HomePage = () => {
               </button>
             </div>
           </div>
-          <div className="w-full md:w-1/2 py-4">
+          <div className="w-full md:w-1/2 py-4 hidden md:block">
             <ApImage
               className="w-full h-96 object-cover rounded-lg"
               src={HeroImage}
@@ -61,16 +63,23 @@ export const HomePage = () => {
           </p>
           <NewArrivals />
         </div>
-        <div className="text-center xl:mt-12 lg:mt-12 md:mt-12 xl:px-16 lg:px-16 md:px-16 xl:py-8 lg:py-8 md:py-8 p-6 mt-8">
-          <h1 className="font-bold text-3xl mb-6">
+        <div className="text-center xl:mt-12 lg:mt-12 md:mt-12 xl:px-16 lg:px-16 md:px-16 xl:py-8 lg:py-8 md:py-8 px-6 py-2">
+          <h1 className="font-bold md:text-3xl text-xl mb-6">
             Shop Our Best-Selling Categories
           </h1>
-
-          <p className="block mb-12 text-gray-500 text-base mt-2">
-            Over the months, people like you visit our platform to get quality
-            medications in these categories
-          </p>
           <Category />
+        </div>
+        <div className="text-center xl:mt-12 lg:mt-12 md:mt-12 xl:px-16 lg:px-16 md:px-16 xl:py-8 lg:py-8 md:py-8 px-6 py-2">
+          <h1 className="font-bold md:text-3xl text-xl mb-6">
+            Shop Our Best-Selling Stores
+          </h1>
+          <TopStores />
+        </div>
+        <div className="text-center xl:mt-12 lg:mt-12 md:mt-12 xl:px-16 lg:px-16 md:px-16 xl:py-8 lg:py-8 md:py-8 px-6 py-2">
+          <h1 className="font-bold md:text-3xl text-xl mb-6">
+            Shop Our New growing Stores
+          </h1>
+          <NewStores />
         </div>
         <div className="text-center xl:mt-12 lg:mt-12 md:mt-12 xl:px-16 lg:px-16 md:px-16 xl:py-8 lg:py-8 md:py-8 p-6 mt-8 bg-gray-100">
           <div className="sm:flex sm:justify-center items-center grid grid-cols-2 gap-4">

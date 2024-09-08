@@ -57,34 +57,30 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
     setFilter({ ...filter, name: val });
   };
 
-  console.log(
-    users.find((user) => user._id === userId)
-      ?.unreadMessagesFromStore as number,
-    "unread message from store"
-  );
-
   return (
-    <div className="relative mt-24">
+    <div className="relative mt-16 z-50">
       <div className="md:mx-20 px-4 md:p-0">
-        {/* Search Input */}
-        <Search
-          placeholder="search product"
-          allowClear
-          enterButton="Search"
-          size="large"
-          className="bg-blue-600 rounded-md md:mt-10 md:mb-8"
-          onSearch={handleSearch}
-          onChange={(e) => handleSearch(e.target.value)}
-        />
+        <div className="fixed top-[64px] left-0 w-full z-[200] bg-white shadow-md">
+          <div className="w-full px-4 py-2 md:py-4">
+            <Search
+              placeholder="search product"
+              allowClear
+              enterButton="Search"
+              size="large"
+              className="bg-blue-600 rounded-md"
+              onSearch={handleSearch}
+              onChange={(e) => handleSearch(e.target.value)}
+            />
+          </div>
+        </div>
 
-        <div className="md:flex gap-10 w-full">
+        <div className="md:flex gap-10 w-full mt-[9rem]">
           <div className="hidden md:block md:w-[30%] mt-4">
             <div className="fixed w-[25%] h-[70%] overflow-auto">
               <FilterProduct setFilter={setFilter} />
             </div>
           </div>
 
-          {/* Product List Section */}
           <div className="md:w-[70%]">
             <div className="flex justify-between items-center my-4">
               <Text code>{`Products: ${products?.length}`}</Text>
@@ -94,12 +90,11 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
               />
             </div>
 
-            {/* Product Grid */}
             {loading && (
               <Spin size="large" className="flex justify-center items-center" />
             )}
             {!loading && products?.length > 0 ? (
-              <div className="grid grid-cols-2 gap-4 my-2 py-4 align-middle border-gray-200 border rounded-lg">
+              <div className="grid md:grid-cols-3 grid-cols-2 gap-4 my-2 py-4 align-middle border-gray-200 border rounded-lg">
                 {products?.map((p) => (
                   <ProductListItem product={p} key={p?._id} userId={userId} />
                 ))}
@@ -108,11 +103,14 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
               !loading && products?.length === 0 && <div>No products...</div>
             )}
 
-            {/* Pagination */}
             <Pagination
               className="text-center"
               defaultCurrent={1}
               total={products?.length}
+              responsive
+              onChange={(page: number, pageSize: number) =>
+                setFilter({ ...filter })
+              }
             />
           </div>
         </div>

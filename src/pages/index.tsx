@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useCategorystate } from "../modules/category/context";
 import { useProductState } from "../modules/product/context";
 import { MainLayout } from "../modules/layout";
+import { useStoreState } from "../modules/store/context";
 
 interface IProps {
   data: any;
@@ -12,11 +13,14 @@ interface IProps {
 export default function Home({ data }: IProps) {
   const { setCategories } = useCategorystate();
   const { setNewArrivals } = useProductState();
+  const { setStores, setnewStores } = useStoreState();
 
   useEffect(() => {
     if (data) {
       setCategories(data?.data);
       setNewArrivals(data?.newArrival);
+      setStores(data.topStores);
+      setnewStores(data.newStores);
     }
   }, [data]);
   return (
@@ -40,9 +44,21 @@ export const getServerSideProps = async () => {
   });
   const newArrival = await response?.res?.data?.data;
 
+  const topStoresRes = await apiReqHandler({
+    endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/stores/top`,
+    method: "GET",
+  });
+  const topStores = await topStoresRes?.res?.data?.data;
+
+  const newStoresRes = await apiReqHandler({
+    endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/stores/new`,
+    method: "GET",
+  });
+  const newStores = await newStoresRes?.res?.data?.data;
+
   return {
     props: {
-      data: { data, newArrival } || null,
+      data: { data, newArrival, topStores, newStores } || null,
     },
   };
 };

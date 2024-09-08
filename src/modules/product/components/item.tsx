@@ -29,7 +29,7 @@ export const ProductListItem: React.FC<IProps> = ({ product, userId }) => {
     if (res) router.push("/cart");
   };
   return (
-    <div className="bg-white md:w-auto w-full shadow-md md:mx-8 rounded-md">
+    <div className="bg-white md:w-auto w-full shadow-md rounded-md transition-transform hover:shadow-lg hover:scale-105 flex flex-col justify-between h-full">
       <div>
         <Link href={`/products/${product?._id}`} className="">
           <div className="group relative">
@@ -43,24 +43,28 @@ export const ProductListItem: React.FC<IProps> = ({ product, userId }) => {
               />
             </div>
             <div className="mt-4 mx-4">
-              <h3 className=" text-gray-700 font-bold">
-                {product?.name?.length > 15
-                  ? `${product?.name?.substring(0, 15)}...`
-                  : product?.name}
+              {/* Product Name */}
+              <h3 className="text-gray-700 text-sm font-bold line-clamp-2 max-h-12 overflow-hidden">
+                {product?.name}
               </h3>
 
-              <p className=" font-bold text-gray-900">
+              {/* Price */}
+              <p className="font-bold text-gray-900">
                 {helper.toCurrency(parseFloat(product?.price))}
               </p>
             </div>
           </div>
         </Link>
+      </div>
+
+      {/* Add to Cart Button */}
+      <div className="mt-4">
         <Button
           size="large"
           loading={loading}
           disabled={loading}
           onClick={handleAddToCart}
-          className="text-white font-bold w-full my-4 text-center bg-[#1D2939] rounded-md"
+          className="text-white font-bold w-full text-center bg-[#1D2939] rounded-md"
         >
           + Add to Cart
         </Button>
