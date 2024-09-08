@@ -14,7 +14,7 @@ export const MainLayout = ({ home, children, storeId }: IProps) => {
         <Headernav storeId={storeId} />
         {/* {home ? "" : <StoreNav storeId={storeId as string} />} */}
       </div>
-      {children}
+      <div className="bg-gray md:mt-28 mb-4 max-w-7xl mx-auto">{children}</div>
     </div>
   );
 };

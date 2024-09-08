@@ -39,22 +39,19 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
     <header className="relative bg-white">
       <nav aria-label="Top" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Desktop Menu */}
-        <div className="hidden lg:flex justify-between items-center h-16">
-          <div className="flex gap-32 items-center">
-            {/* Logo */}
+        <div className="hidden xl:flex justify-between items-center h-16">
+          <Link href={"/"} className="flex items-center">
             <ApImage src={Logo} alt="logo" className="object-cover w-auto" />
-
-            {/* Search Bar */}
-            <input
-              type="search"
-              placeholder="Search Products"
-              className="w-full border rounded-md outline-none px-4 mx-4 py-2"
-              onChange={() => {}}
-            />
-          </div>
+          </Link>
+          <input
+            type="search"
+            placeholder="Search Products"
+            className="w-full border rounded-md outline-none px-4 mx-4 py-2"
+            onChange={() => {}}
+          />
 
           {/* Navigation Links */}
-          <div className="flex space-x-16 text-sm font-medium">
+          <div className="flex space-x-10 text-sm font-medium">
             <Link href="/stores" className="text-gray-700 hover:text-black">
               Stores
             </Link>
@@ -126,7 +123,13 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
         >
           <div className="p-4">
             <div className="flex justify-between items-center">
-              <ApImage src={Logo} alt="logo" className="object-cover w-auto" />
+              <Link href={"/"}>
+                <ApImage
+                  src={Logo}
+                  alt="logo"
+                  className="object-cover w-auto"
+                />
+              </Link>
 
               <button
                 type="button"

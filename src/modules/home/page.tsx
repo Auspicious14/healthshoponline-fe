@@ -23,65 +23,59 @@ export const HomePage = () => {
   return (
     <>
       <div className="mt-24">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-12 px-6 lg:px-16 py-8 bg-white">
-          <div className="w-full md:w-1/2 text-center md:text-left md:mt-0 font-sans">
-            <h1 className="text-4xl lg:text-5xl font-bold">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-12 px-6 lg:px-16 py-8 bg-primary text-white">
+          <div className="w-full  text-center md:mt-0 font-sans">
+            <h1 className="text-4xl lg:text-7xl font-bold">
               Discover Thousands of Products from Multiple Vendors
             </h1>
-            <p className="pt-3 font-normal text-gray-600">
+            <p className="pt-3 md:w-1/2 m-auto font-normal text-gray-600">
               Explore a vast collection of products across various categories
               from trusted sellers. Shop with confidence and find exactly what
               you need, all in one place.
             </p>
-            <div className="flex justify-center items-center md:justify-start my-4 gap-4">
+            <div className="flex justify-center items-center my-4 gap-4">
               <Link
                 href="/products"
-                className="border-none rounded-lg text-white font-bold bg-primary p-4"
+                className="border-none rounded-lg text-primary font-bold bg-white p-4 transition-transform hover:shadow-lg hover:scale-105"
               >
                 Start Shopping
               </Link>
-              <button className="border-none font-bold rounded-lg bg-offWhite p-4 text-primary">
-                Learn More
-              </button>
             </div>
           </div>
-          <div className="w-full md:w-1/2 py-4 hidden md:block">
+          {/* <div className="w-full md:w-1/2 py-4 hidden md:block">
             <ApImage
               className="w-full h-96 object-cover rounded-lg"
               src={HeroImage}
               alt="hero-multi-vendor"
             />
-          </div>
+          </div> */}
         </div>
 
-        <div className="text-center xl:mt-12 lg:mt-12 md:mt-12 xl:px-16 lg:px-16 md:px-16 xl:py-8 lg:py-8 md:py-8 p-6 mt-8">
-          <h1 className="font-bold text-3xl mb-6">
-            Get a taste of Our products as they come
+        <div className="text-center xl:px-16 lg:px-16 md:px-16 p-6">
+          <h1 className="font-bold md:text-2xl text-lg mb-6 bg-primary text-white">
+            New Arrivals
           </h1>
-          <p className="block mb-12 text-base mt-2 text-gray-500">
-            Products are kept updated for you to have a good taste and view
-          </p>
           <NewArrivals />
         </div>
-        <div className="text-center xl:mt-12 lg:mt-12 md:mt-12 xl:px-16 lg:px-16 md:px-16 xl:py-8 lg:py-8 md:py-8 px-6 py-2">
-          <h1 className="font-bold md:text-3xl text-xl mb-6">
-            Shop Our Best-Selling Categories
+        <div className="text-center xl:px-16 lg:px-16 md:px-16 px-6 py-2">
+          <h1 className="font-bold md:text-2xl text-xl mb-6 bg-primary text-white">
+            Categories
           </h1>
           <Category />
         </div>
-        <div className="text-center xl:mt-12 lg:mt-12 md:mt-12 xl:px-16 lg:px-16 md:px-16 xl:py-8 lg:py-8 md:py-8 px-6 py-2">
-          <h1 className="font-bold md:text-3xl text-xl mb-6">
-            Shop Our Best-Selling Stores
+        <div className="text-center xl:px-16 lg:px-16 md:px-16 px-6 py-2">
+          <h1 className="font-bold md:text-2xl text-xl mb-6 bg-primary text-white">
+            Best-Selling Stores
           </h1>
           <TopStores />
         </div>
-        <div className="text-center xl:mt-12 lg:mt-12 md:mt-12 xl:px-16 lg:px-16 md:px-16 xl:py-8 lg:py-8 md:py-8 px-6 py-2">
-          <h1 className="font-bold md:text-3xl text-xl mb-6">
-            Shop Our New growing Stores
+        <div className="text-center xl:px-16 lg:px-16 md:px-16 px-6 py-2">
+          <h1 className="font-bold md:text-2xl text-xl mb-6 bg-primary text-white">
+            New Stores
           </h1>
           <NewStores />
         </div>
-        <div className="text-center xl:mt-12 lg:mt-12 md:mt-12 xl:px-16 lg:px-16 md:px-16 xl:py-8 lg:py-8 md:py-8 p-6 mt-8 bg-gray-100">
+        {/* <div className="text-center xl:mt-12 lg:mt-12 md:mt-12 xl:px-16 lg:px-16 md:px-16 xl:py-8 lg:py-8 md:py-8 p-6 mt-8 bg-gray-100">
           <div className="sm:flex sm:justify-center items-center grid grid-cols-2 gap-4">
             <div className="flex gap-4 items-center sm:w-[25%] border-r-2">
               <div className="bg-white rounded-md text-center border-none p-2">
@@ -216,7 +210,7 @@ export const HomePage = () => {
             alt="image"
             className="w-full h-[500px] m-auto mt-6 sm:object-cover object-contain"
           />
-        </div>
+        </div> */}
       </div>
 
       <Footer />

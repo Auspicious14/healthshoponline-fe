@@ -58,10 +58,10 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
   };
 
   return (
-    <div className="relative mt-16 z-50">
+    <div className="relative mt-16 z-50 bg-white">
       <div className="md:mx-20 px-4 md:p-0">
         <div className="fixed top-[64px] left-0 w-full z-[200] bg-white shadow-md">
-          <div className="w-full px-4 py-2 md:py-4">
+          {/* <div className="w-full px-4 py-2 md:py-4">
             <Search
               placeholder="search product"
               allowClear
@@ -71,7 +71,7 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
               onSearch={handleSearch}
               onChange={(e) => handleSearch(e.target.value)}
             />
-          </div>
+          </div> */}
         </div>
 
         <div className="md:flex gap-10 w-full mt-[9rem]">

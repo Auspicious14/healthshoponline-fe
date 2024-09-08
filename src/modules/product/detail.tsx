@@ -4,6 +4,7 @@ import {
   ApModal,
   ApPlusMinusInput,
   ApRatingStar,
+  Footer,
   Headernav,
 } from "../../components";
 import { useProductState } from "./context";
@@ -78,15 +79,14 @@ export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
   ];
 
   return (
-    <div className="md:mt-28">
-      {/* <Headernav /> */}
-      <div className="lg:hidden">
+    <div className="">
+      {/* <div className="lg:hidden">
         <ArrowLeftCircleIcon
           className="w-8 h-8"
           onClick={() => router.back()}
         />
-      </div>
-      <div className="bg-white md:mx-12 mx-4">
+      </div> */}
+      <div className="bg-white mt-20 md:mx-12 md:p-4 px-4 mx-4 rounded-lg">
         <div className="md:flex gap-8 w-full pt-6">
           {/* Image gallery */}
           <div className="md:w-[50%] w-full bg-gray py-4 border rounded-lg">
@@ -191,56 +191,56 @@ export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
             </div>
           </div>
         </div>
-
-        <div className="mt-12">
-          <Space className="lg:my-4 flex justify-between mt-8 my-4">
-            <Text className="lg:text-3xl text-xl font-bold font-sans">
-              Ratings and Review
+      </div>
+      <div className="md:m-12 rounded-lg bg-white m-4 p-4">
+        <Space className="lg:my-4 flex justify-between mt-8 my-4">
+          <Text className="lg:text-3xl text-xl font-bold font-sans">
+            Ratings and Review
+          </Text>
+          <Button
+            type="text"
+            className="bg-gray-200 font-semibold font-sans"
+            onClick={() => setModal({ show: true })}
+          >
+            Write Review
+          </Button>
+        </Space>
+        <div className="flex md:gap-24 gap-10">
+          <Space className="block w-40 text-center">
+            <Text className="lg:text-6xl text-4xl font-bold my-4 font-sans">
+              {totalRatings ? totalRatings.toFixed(1) : "0.0"}
             </Text>
-            <Button
-              type="text"
-              className="bg-gray-200 font-semibold font-sans"
-              onClick={() => setModal({ show: true })}
-            >
-              Write Review
-            </Button>
+            <ApRatingStar
+              value={totalRatings}
+              size={30}
+              className="justify-center my-2"
+            />
+            <Text className="text-gray-300 my-3 font-sans">{`${reviews?.length} Product Ratings`}</Text>
           </Space>
-          <div className="flex md:gap-24 gap-10">
-            <Space className="block w-40 text-center">
-              <Text className="lg:text-6xl text-4xl font-bold my-4 font-sans">
-                {totalRatings ? totalRatings.toFixed(1) : "0.0"}
-              </Text>
-              <ApRatingStar
-                value={totalRatings}
-                size={30}
-                className="justify-center my-2"
-              />
-              <Text className="text-gray-300 my-3 font-sans">{`${reviews?.length} Product Ratings`}</Text>
-            </Space>
-            <Space className="block">
-              {/* {reviews?.map((r) => (
+          <Space className="block">
+            {/* {reviews?.map((r) => (
                 <RateStreakListItem review={r} key={r?._id} />
               ))} */}
-              {ratingsData.map((data) => (
-                <RateStreakListItem
-                  key={data.rating}
-                  rating={data.rating}
-                  count={data.count}
-                  totalRatings={totalRatings}
-                />
-              ))}
-            </Space>
-          </div>
-
-          <Space className="block mt-4">
-            <Text className="text-2xl font-sans font-bold">Reviews</Text>
+            {ratingsData.map((data) => (
+              <RateStreakListItem
+                key={data.rating}
+                rating={data.rating}
+                count={data.count}
+                totalRatings={totalRatings}
+              />
+            ))}
           </Space>
-          {reviews?.map((r) => (
-            <ReviewListItem review={r} key={r?._id} />
-          ))}
         </div>
+
+        <Space className="block mt-4">
+          <Text className="text-2xl font-sans font-bold">Reviews</Text>
+        </Space>
+        {reviews?.map((r) => (
+          <ReviewListItem review={r} key={r?._id} />
+        ))}
       </div>
 
+      <Footer />
       <ApModal show={modal?.show} onDimiss={() => setModal({ show: false })}>
         <Review review={modal.data} productId={product} />
       </ApModal>
