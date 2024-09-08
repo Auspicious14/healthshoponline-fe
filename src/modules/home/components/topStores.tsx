@@ -9,7 +9,7 @@ export const TopStores = () => {
   const { stores } = useStoreState();
 
   return (
-    <div className="grid gap-4 xl:lg:md:grid-cols-6 sm:grid-cols-3 grid-cols-2 align-middle">
+    <div className="grid gap-4 xl:lg:md:grid-cols-4 sm:grid-cols-3 grid-cols-2 align-middle">
       {stores?.map((store: IStore) => (
         <div key={store?._id}>
           <div className="bg-white md:w-auto w-full shadow-md rounded-md transition-transform hover:shadow-lg hover:scale-105 flex flex-col justify-between h-full">
