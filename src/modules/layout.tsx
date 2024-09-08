@@ -10,9 +10,9 @@ interface IProps {
 export const MainLayout = ({ home, children, storeId }: IProps) => {
   return (
     <div>
-      <div className="fixed top-0 w-full z-50">
-        <Headernav />
-        {home ? <SubNav /> : <StoreNav storeId={storeId as string} />}
+      <div className="fixed top-0 w-full z-[5000]">
+        <Headernav storeId={storeId} />
+        {/* {home ? "" : <StoreNav storeId={storeId as string} />} */}
       </div>
       {children}
     </div>
