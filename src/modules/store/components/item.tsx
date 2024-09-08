@@ -22,7 +22,7 @@ export const StoreListItem: React.FC<IProps> = ({ store }) => {
               />
             </div>
             <div className="mt-4 mx-4">
-              <h3 className=" text-gray-700 font-bold">
+              <h3 className=" text-gray-700 text-sm font-bold">
                 {store?.storeName?.length > 15
                   ? `${store?.storeName?.substring(0, 15)}...`
                   : store?.storeName}

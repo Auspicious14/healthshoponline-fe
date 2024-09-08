@@ -7,6 +7,7 @@ interface IStoreState {
   loading: boolean;
   product: IStore;
   stores: IStore[];
+  newStores: IStore[];
   getStores: (storeName?: string) => Promise<void>;
   getOneStore: (storeId: string) => Promise<any>;
   createStore: (payload: IStore) => Promise<any>;
@@ -18,12 +19,15 @@ interface IStoreState {
     remark: string
   ) => Promise<void>;
   acceptStore: (storeId: string) => Promise<any>;
+  setStores: (stores: IStore[]) => void;
+  setnewStores: (stores: IStore[]) => void;
 }
 
 const StoreContext = React.createContext<IStoreState>({
   loading: false,
   product: {} as any,
   stores: [],
+  newStores: [],
   getStores() {
     return null as any;
   },
@@ -45,6 +49,8 @@ const StoreContext = React.createContext<IStoreState>({
   async rejectStore(storeId, email, remark) {
     return;
   },
+  setStores(stores) {},
+  setnewStores(stores) {},
 });
 
 export const useStoreState = () => {
@@ -62,6 +68,7 @@ interface IProps {
 export const StoreContextProvider: React.FC<IProps> = ({ children }) => {
   const [product, setProduct] = useState<IStore>() as any;
   const [stores, setStores] = useState<IStore[]>([]);
+  const [newStores, setnewStores] = useState<IStore[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const getStores = async (storeName?: string) => {
@@ -232,6 +239,7 @@ export const StoreContextProvider: React.FC<IProps> = ({ children }) => {
       value={{
         loading,
         stores,
+        newStores,
         product,
         getStores,
         getOneStore,
@@ -240,6 +248,8 @@ export const StoreContextProvider: React.FC<IProps> = ({ children }) => {
         deleteStore,
         acceptStore,
         rejectStore,
+        setStores,
+        setnewStores,
       }}
     >
       {children}
