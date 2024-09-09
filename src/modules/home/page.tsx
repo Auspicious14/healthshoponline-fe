@@ -11,7 +11,7 @@ import {
   useTransform,
   useViewportScroll,
 } from "framer-motion";
-import { CategoryPage } from "../category/page";
+import { CategorySideBar } from "../category/sidebar";
 import { Category } from "./components/category";
 
 const { Text } = Typography;
@@ -96,7 +96,7 @@ export const HomePage = () => {
           animate={{ x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <CategoryPage />
+          <CategorySideBar />
         </motion.div>
 
         <div className="w-full">
@@ -167,30 +167,5 @@ export const HomePage = () => {
         <Category />
       </motion.div> */}
     </motion.div>
-  );
-};
-
-const CategoryToggle = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <>
-      {/* Hamburger Button for Mobile */}
-      <div className="lg:hidden fixed overflow-auto top-20 left-4 z-20">
-        <button
-          className="bg-primary p-2 rounded-md text-white"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? "Close" : "Categories"}
-        </button>
-      </div>
-
-      {/* Sidebar for Mobile */}
-      {isOpen && (
-        <div className="lg:hidden fixed top-24 left-0 h-[calc(100vh-6rem)] w-[60%] bg-white shadow-lg z-10">
-          <CategoryPage />
-        </div>
-      )}
-    </>
   );
 };

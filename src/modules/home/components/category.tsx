@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useCategorystate } from "../../category/context";
 import { ApImage } from "../../../components";
 import { Button } from "antd";
@@ -6,14 +6,19 @@ import Categories from "../../../../public/images/Frame 1000005044 (2).png";
 import Link from "next/link";
 
 export const Category = () => {
-  const { categories } = useCategorystate();
+  const { categories, getCategories } = useCategorystate();
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
   return (
     <div className="grid gap-4 grid-cols-3 align-middle">
       {categories?.map((c) => (
         <div key={c?._id} className="w-full h-full">
           <div className="bg-white md:w-auto w-full shadow-md rounded-md transition-transform hover:shadow-lg hover:scale-105 flex flex-col justify-between h-full">
             <div>
-              <Link href={`/products`} className="">
+              <Link href={`/collections/${c?.slug}`} className="">
                 <div className="group relative">
                   <div className="min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-52">
                     <ApImage

@@ -8,9 +8,11 @@ interface IProductState {
   totalRatings: number;
   product: IProduct;
   products: IProduct[];
+  collections: IProduct[];
   newArrivals: IProduct[];
   reviews: IReview[];
   setNewArrivals: (newArrivals: IProduct[]) => void;
+  setCollections: (products: IProduct[]) => void;
   getProducts: (filter?: any) => Promise<void>;
   getReviews: (productId: string) => Promise<void>;
   createReview: (payload: IReview) => Promise<void>;
@@ -23,6 +25,7 @@ const ProductContext = React.createContext<IProductState>({
   product: {} as any,
   products: [],
   newArrivals: [],
+  collections: [],
   reviews: [],
   setNewArrivals(newArrivals) {},
   getProducts() {
@@ -37,6 +40,7 @@ const ProductContext = React.createContext<IProductState>({
   updateReview(payload, productId) {
     return null as any;
   },
+  setCollections(products) {},
 });
 
 export const useProductState = () => {
@@ -57,6 +61,7 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
   const [reviews, setReviews] = useState<IReview[]>([]);
   const [totalRatings, setTotalRatings] = useState<number>(0);
   const [newArrivals, setNewArrivals] = useState<IProduct[]>([]);
+  const [collections, setCollections] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const getProducts = async (filter?: IProductFilter) => {
@@ -142,6 +147,7 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
       value={{
         loading,
         products,
+        collections,
         newArrivals,
         reviews,
         totalRatings,
@@ -151,6 +157,7 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
         getReviews,
         createReview,
         updateReview,
+        setCollections,
       }}
     >
       {children}

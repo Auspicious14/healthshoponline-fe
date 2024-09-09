@@ -8,7 +8,6 @@ interface IProps {
   user: { id: string | null; isAdmin: boolean };
 }
 const Product: React.FC<IProps> = ({ user }) => {
-  console.log(user, "userrr");
   return (
     <MainLayout home>
       <ProductPage userId={user?.id} />
