@@ -58,30 +58,16 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
   };
 
   return (
-    <div className="relative mt-16 z-50 bg-white">
+    <div className="relative z-50">
       <div className="md:mx-20 px-4 md:p-0">
-        <div className="fixed top-[64px] left-0 w-full z-[200] bg-white shadow-md">
-          {/* <div className="w-full px-4 py-2 md:py-4">
-            <Search
-              placeholder="search product"
-              allowClear
-              enterButton="Search"
-              size="large"
-              className="bg-blue-600 rounded-md"
-              onSearch={handleSearch}
-              onChange={(e) => handleSearch(e.target.value)}
-            />
-          </div> */}
-        </div>
-
-        <div className="md:flex gap-10 w-full mt-[9rem]">
-          <div className="hidden md:block md:w-[30%] mt-4">
-            <div className="fixed w-[25%] h-[70%] overflow-auto">
+        <div className="md:flex gap-10 w-full px-4">
+          <div className="hidden md:block md:w-[30%]">
+            <div className="fixed w-[25%] overflow-auto">
               <FilterProduct setFilter={setFilter} />
             </div>
           </div>
 
-          <div className="md:w-[70%]">
+          <div className="md:w-[70%] h-full bg-white">
             <div className="flex justify-between items-center my-4">
               <Text code>{`Products: ${products?.length}`}</Text>
               <MenuFoldOutlined
@@ -134,24 +120,12 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
         </div>
       )}
 
-      {/* Product Banner */}
-      <ApImage
-        src={Woman.src}
-        alt="image"
-        className="w-full md:h-[500px] m-auto mt-6 sm:object-cover object-contain"
-      />
-
-      {/* Footer */}
-      <Footer />
-
-      {/* Modal for Mobile Filter */}
       {modal.type === "filter" && modal.show && (
         <ApModal show={modal.show} onDimiss={() => setModal({ show: false })}>
           <FilterProduct setFilter={setFilter} />
         </ApModal>
       )}
 
-      {/* Chat Modal */}
       {modal.type === "chat" && modal.show && (
         <ChatPage
           storeId={storeId as string}

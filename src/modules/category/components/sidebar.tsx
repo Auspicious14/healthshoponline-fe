@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useCategorystate } from "./context";
+import { useCategorystate } from "../context";
 import Link from "next/link";
 
 export const CategorySideBar = () => {

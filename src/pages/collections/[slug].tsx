@@ -5,14 +5,16 @@ import jwt from "jsonwebtoken";
 import { apiReqHandler } from "../../components";
 import { useProductState } from "../../modules/product/context";
 import { IProduct } from "../../modules/product/model";
+import { ICategory } from "../../modules/category/model";
 
 const tokenSecret = process.env.JWT_SECRET;
 
 interface IProps {
   user: { id: string; isAdmin: boolean };
   products: IProduct[];
+  category: ICategory;
 }
-const CategorySlug: React.FC<IProps> = ({ products }) => {
+const CategorySlug: React.FC<IProps> = ({ products, category }) => {
   const { setCollections } = useProductState();
 
   useEffect(() => {
@@ -21,7 +23,7 @@ const CategorySlug: React.FC<IProps> = ({ products }) => {
 
   return (
     <MainLayout>
-      <CategoryPage />
+      <CategoryPage category={category} />
     </MainLayout>
   );
 };
@@ -64,10 +66,20 @@ export const getServerSideProps = async ({
   const products = data?.res?.data?.data;
   if (!products) return new Error("Network Error");
 
+  const cat = await apiReqHandler({
+    endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/category/${slug}`,
+    method: "GET",
+  });
+
+  const category = cat?.res?.data?.data;
+  if (!category) return new Error("Network Error");
+
   return {
     props: {
       user: token || null,
       products: products || null,
+      category: category || null,
+      slug: slug || null,
     },
   };
 };

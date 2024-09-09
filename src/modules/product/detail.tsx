@@ -133,7 +133,7 @@ export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
                 {product.name}
               </h1>
               <p className="text-lg font-bold tracking-tight text-primary">
-                {`$${product.price}`}
+                {`$N{product.price}`}
               </p>
             </div>
             <div className="flex gap-4 items-center mb-4">

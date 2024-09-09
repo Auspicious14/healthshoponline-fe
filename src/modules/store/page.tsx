@@ -35,7 +35,7 @@ export const StorePage = () => {
           <Spin size="large" className="flex justify-center items-center" />
         )}
         {!loading && stores?.length > 0 ? (
-          <div className="grid md:grid-cols-3 xl:grid-cols-4 grid-cols-2 gap-4 my-2 p-4 align-middle rounded-lg">
+          <div className="bg-white grid md:grid-cols-4 xl:grid-cols-6 grid-cols-2 gap-4 my-2 p-4 align-middle rounded-lg">
             {stores?.map((s) => (
               <StoreListItem store={s} key={s?._id} />
             ))}
@@ -43,9 +43,6 @@ export const StorePage = () => {
         ) : (
           !loading && stores?.length === 0 && <div>No stores...</div>
         )}
-      </div>
-      <div className="mt-20">
-        <Footer />
       </div>
     </div>
   );

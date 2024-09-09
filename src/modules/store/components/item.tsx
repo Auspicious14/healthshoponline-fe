@@ -8,7 +8,7 @@ interface IProps {
 }
 export const StoreListItem: React.FC<IProps> = ({ store }) => {
   return (
-    <div className="bg-white md:w-auto w-full shadow-md md:mx-8 rounded-md">
+    <div className="bg-white md:w-auto w-full shadow-md rounded-md transition-transform hover:shadow-lg hover:scale-105 flex flex-col justify-between h-full">
       <div>
         <Link href={`/stores/${store?._id}/products`}>
           <div className="group relative">

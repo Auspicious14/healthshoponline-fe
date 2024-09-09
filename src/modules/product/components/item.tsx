@@ -39,11 +39,10 @@ export const ProductListItem: React.FC<IProps> = ({ product, userId }) => {
                 src={product?.images[0]?.uri}
                 alt={product?.images[0]?.name}
                 className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                unoptimized
               />
             </div>
             <div className="mt-4 mx-4">
-              <h3 className="text-gray-700 text-sm font-bold line-clamp-2 max-h-12 overflow-hidden">
+              <h3 className="text-gray text-sm line-clamp-2 max-h-12 overflow-hidden">
                 {product?.name}
               </h3>
               <ApRatingStar

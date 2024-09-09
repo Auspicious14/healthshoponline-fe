@@ -11,7 +11,7 @@ import {
   useTransform,
   useViewportScroll,
 } from "framer-motion";
-import { CategorySideBar } from "../category/sidebar";
+import { CategorySideBar } from "../category/components/sidebar";
 import { Category } from "./components/category";
 
 const { Text } = Typography;
@@ -52,10 +52,10 @@ export const HomePage = () => {
         transition={{ duration: 1 }}
         style={{ scale }}
       >
-        <div className="flex flex-col md:flex-row items-center justify-center gap-12 px-6 lg:px-16 py-8 bg-primary text-white">
+        <div className="md:w-[90%] mx-0 md:m-auto flex flex-col md:flex-row items-center justify-center gap-12 px-6 lg:px-16 py-8 bg-primary text-white">
           <div className="w-full text-center md:mt-0 font-sans">
             <motion.h1
-              className="text-4xl lg:text-7xl font-bold"
+              className="text-3xl lg:text-7xl font-bold"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1 }}
@@ -63,7 +63,7 @@ export const HomePage = () => {
               Discover Thousands of Products from Multiple Vendors
             </motion.h1>
             <motion.p
-              className="pt-3 md:w-1/2 m-auto font-normal text-gray-600"
+              className="pt-3 md:w-1/2 hidden md:block m-auto font-normal text-gray-600"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.2 }}
@@ -153,19 +153,6 @@ export const HomePage = () => {
           </motion.div>
         </div>
       </div>
-      <Footer />
-      {/* <motion.div
-        className="text-center xl:px-16 lg:px-16 md:px-16 px-6 py-2"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-        style={{ scale }}
-      >
-        <h1 className="font-bold md:text-2xl text-xl mb-6 bg-primary text-white">
-          Categories
-        </h1>
-        <Category />
-      </motion.div> */}
     </motion.div>
   );
 };
