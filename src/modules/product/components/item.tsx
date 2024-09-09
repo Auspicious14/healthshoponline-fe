@@ -43,12 +43,14 @@ export const ProductListItem: React.FC<IProps> = ({ product, userId }) => {
               />
             </div>
             <div className="mt-4 mx-4">
-              {/* Product Name */}
               <h3 className="text-gray-700 text-sm font-bold line-clamp-2 max-h-12 overflow-hidden">
                 {product?.name}
               </h3>
+              <ApRatingStar
+                value={product?.rating as number}
+                className="my-2"
+              />
 
-              {/* Price */}
               <p className="font-bold text-gray-900">
                 {helper.toCurrency(parseFloat(product?.price))}
               </p>
