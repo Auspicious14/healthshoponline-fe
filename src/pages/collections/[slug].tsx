@@ -22,7 +22,7 @@ const CategorySlug: React.FC<IProps> = ({ products, category }) => {
   }, []);
 
   return (
-    <MainLayout>
+    <MainLayout className="px-0">
       <CategoryPage category={category} />
     </MainLayout>
   );

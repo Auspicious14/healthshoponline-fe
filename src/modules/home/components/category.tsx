@@ -13,10 +13,10 @@ export const Category = () => {
   }, []);
 
   return (
-    <div className="grid gap-4 grid-cols-3 align-middle">
+    <div className="grid gap-4 md:grid-cols-6 grid-cols-3 align-middle">
       {categories?.map((c) => (
         <div key={c?._id} className="w-full h-full">
-          <div className="bg-white md:w-auto w-full shadow-md rounded-md transition-transform hover:shadow-lg hover:scale-105 flex flex-col justify-between h-full">
+          <div className=" md:w-auto w-full rounded-md transition-transform hover:shadow-lg hover:scale-105 flex flex-col justify-between h-full">
             <div>
               <Link href={`/collections/${c?.slug}`} className="">
                 <div className="group relative">

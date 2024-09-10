@@ -24,7 +24,7 @@ export default function Home({ data }: IProps) {
     }
   }, [data]);
   return (
-    <MainLayout home>
+    <MainLayout className="px-0">
       <HomePage />
     </MainLayout>
   );

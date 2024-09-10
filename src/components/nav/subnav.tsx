@@ -1,12 +1,31 @@
-import React, { useState } from "react";
-import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
-import { Input } from "antd";
-import { MenuOutlined } from "@ant-design/icons";
+import { Menu, Dropdown } from "antd";
+import { DownOutlined } from "@ant-design/icons";
 import Link from "next/link";
-import { useCartState } from "../../modules/cart/context";
+import { useCategorystate } from "../../modules/category/context";
+import { useEffect, useState } from "react";
+import type { MenuProps } from "antd";
+import classNames from "classnames";
 
 export const SubNav = () => {
-  const [toggle, setToggle] = useState<boolean>(false);
+  const { categories, getCategories } = useCategorystate();
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  const categoryItems = categories.map((category) => ({
+    key: category._id,
+    label: <Link href={`/collections/${category.slug}`}>{category.name}</Link>,
+  }));
+
+  const animatedMenuClass = classNames(
+    "p-4 grid grid-cols-2 transform transition ease-in-out duration-300",
+    {
+      "opacity-0 translate-y-[-10px]": !isVisible,
+      "opacity-100 translate-y-0": isVisible,
+    }
+  );
 
   return (
     <div className="bg-primary">
@@ -18,9 +37,22 @@ export const SubNav = () => {
               <Link href="/stores" className="text-sm font-medium">
                 Stores
               </Link>
-              <Link href="/products" className="text-sm font-medium">
-                Collections
-              </Link>
+
+              <Dropdown
+                menu={{
+                  items: categoryItems,
+                  className: animatedMenuClass,
+                }}
+                onOpenChange={(visible) => setIsVisible(visible)}
+              >
+                <div
+                  className="ant-dropdown-link text-sm font-medium cursor-pointer"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  Collections
+                </div>
+              </Dropdown>
+
               <Link href="/orders" className="text-sm font-medium">
                 Order
               </Link>
