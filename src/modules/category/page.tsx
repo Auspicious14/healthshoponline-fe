@@ -53,8 +53,11 @@ export const CategoryPage: React.FC<IProps> = ({ category }) => {
                     fade
                   >
                     {!!category?.images && category?.images?.length > 0 ? (
-                      category?.images.map((c) => (
-                        <div className="relative  m-auto flex justify-center items-center">
+                      category?.images.map((c, index) => (
+                        <div
+                          key={index}
+                          className="relative  m-auto flex justify-center items-center"
+                        >
                           <div className="absolute inset-0 bg-black opacity-50"></div>
                           <ApImage
                             src={c.uri}
