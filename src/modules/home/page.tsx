@@ -101,7 +101,7 @@ export const HomePage = () => {
 
         <div className="w-full">
           <motion.div
-            className=" lg:hidden bg-white shadow-lg"
+            className=" lg:hidden lg:bg-transparent lg:shadow-none bg-white shadow-lg"
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}
             transition={{ duration: 0.5 }}

@@ -9,12 +9,17 @@ const { Text } = Typography;
 
 interface IProps {
   blog: IBlog;
+  store?: boolean;
 }
 
-export const BlogPreview: React.FC<IProps> = ({ blog }) => {
+export const BlogPreview: React.FC<IProps> = ({ blog, store }) => {
   return (
     <Link
-      href={`/stores/${blog?.author?._id}/blog/${blog?._id}`}
+      href={
+        store
+          ? `/stores/${blog?.author?._id}/blog/${blog?._id}`
+          : `/blog/${blog?._id}`
+      }
       className="cursor-pointer border border-gray-200 rounded-lg shadow-sm transition-transform hover:shadow-lg hover:scale-105"
     >
       {blog?.images?.length > 0 ? (

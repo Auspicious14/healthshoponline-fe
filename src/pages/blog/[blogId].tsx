@@ -1,11 +1,9 @@
 import React from "react";
-
 import jwt from "jsonwebtoken";
-import { MainLayout } from "../../../../modules/layout";
-import { apiReqHandler } from "../../../../components";
-import { IBlog } from "../../../../modules/blog/model";
-import { useBlogState } from "../../../../modules/blog/context";
-import { BlogDetailPage } from "../../../../modules/blog/detail";
+import { apiReqHandler } from "../../components";
+import { BlogDetailPage } from "../../modules/blog/detail";
+import { IBlog } from "../../modules/blog/model";
+import { MainLayout } from "../../modules/layout";
 
 const tokenSecret = process.env.JWT_SECRET;
 interface IProps {
@@ -14,15 +12,15 @@ interface IProps {
   storeId: string;
 }
 
-const StoreBlogDetail: React.FC<IProps> = ({ blog, user, storeId }) => {
+const BlogDetail: React.FC<IProps> = ({ blog, user }) => {
   return (
-    <MainLayout storeId={storeId}>
+    <MainLayout>
       <BlogDetailPage blog={blog} />
     </MainLayout>
   );
 };
 
-export default StoreBlogDetail;
+export default BlogDetail;
 
 export const getServerSideProps = async ({
   req,
@@ -51,7 +49,7 @@ export const getServerSideProps = async ({
     };
   }
 
-  const { blogId, _id } = query;
+  const { blogId } = query;
 
   const data = await apiReqHandler({
     endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/blog/${blogId}`,
@@ -65,7 +63,6 @@ export const getServerSideProps = async ({
     props: {
       user: token || null,
       blog: blog || null,
-      storeId: _id || null,
     },
   };
 };

@@ -11,7 +11,7 @@ interface IProps {
   blog: IBlog;
 }
 
-const BlogDetail: React.FC<IProps> = ({ blog }) => {
+export const BlogDetailPage: React.FC<IProps> = ({ blog }) => {
   return (
     <div className="max-w-4xl mx-auto p-6 mt-10 md:mt-28 bg-white shadow-lg rounded-lg">
       <h1 className="text-4xl font-bold text-gray-800 mb-4">{blog?.title}</h1>
@@ -65,5 +65,3 @@ const BlogDetail: React.FC<IProps> = ({ blog }) => {
     </div>
   );
 };
-
-export default BlogDetail;
