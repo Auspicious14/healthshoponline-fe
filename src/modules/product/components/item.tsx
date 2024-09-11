@@ -11,10 +11,15 @@ import { useRouter } from "next/router";
 
 const { Text } = Typography;
 interface IProps {
+  page?: boolean;
   product: IProduct;
   userId?: string | null;
 }
-export const ProductListItem: React.FC<IProps> = ({ product, userId }) => {
+export const ProductListItem: React.FC<IProps> = ({
+  product,
+  userId,
+  page,
+}) => {
   const { addToCart, loading } = useCartState();
   const router = useRouter();
   const handleAddToCart = async (values: any) => {
@@ -59,17 +64,19 @@ export const ProductListItem: React.FC<IProps> = ({ product, userId }) => {
       </div>
 
       {/* Add to Cart Button */}
-      <div className="mt-4">
-        <Button
-          size="large"
-          loading={loading}
-          disabled={loading}
-          onClick={handleAddToCart}
-          className="text-white font-bold w-full text-center bg-[#1D2939] rounded-md"
-        >
-          + Add to Cart
-        </Button>
-      </div>
+      {page && (
+        <div className="mt-4">
+          <Button
+            size="large"
+            loading={loading}
+            disabled={loading}
+            onClick={handleAddToCart}
+            className="text-white font-bold w-full text-center bg-[#1D2939] rounded-md"
+          >
+            + Add to Cart
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

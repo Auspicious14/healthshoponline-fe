@@ -28,6 +28,7 @@ import { CategoryListItem } from "./components/category";
 import { motion } from "framer-motion";
 import { CarouselRef } from "antd/es/carousel";
 import { ProductCarousel, ProductThumbnail } from "./components/carousel";
+import { RelatedProducts } from "./components/related";
 
 const { Text } = Typography;
 interface IProps {
@@ -174,10 +175,10 @@ export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
           <div className="md:w-[50%] text-sm">
             <div className="flex justify-between mt-2 md:my-0 md:block">
               <h1 className="pb-4 capitalize text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-                {product.name}
+                {product?.name}
               </h1>
               <p className="text-lg font-bold tracking-tight text-primary">
-                {`N${product.price}`}
+                {`N${product?.price}`}
               </p>
             </div>
             <div className="flex gap-4 items-center mb-4">
@@ -294,7 +295,9 @@ export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
           </div>
         </div>
       </div>
-      {/* <CategoryListItem /> */}
+      <div className="lg:mx-12">
+        <RelatedProducts />
+      </div>
 
       <ApModal show={modal?.show} onDimiss={() => setModal({ show: false })}>
         <Review review={modal.data} productId={product} />

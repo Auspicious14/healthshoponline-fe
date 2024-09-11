@@ -1,3 +1,5 @@
+import { ICategory } from "../category/model";
+
 export interface IProduct {
   _id: string;
   name: string;
@@ -5,7 +7,7 @@ export interface IProduct {
   images: IProductImage[];
   price: string;
   size: string;
-  categories: [string];
+  categories: ICategory[];
   color: string;
   quantity: number;
   rating: string | number;
@@ -20,12 +22,13 @@ export interface IProductImage {
 
 export interface IProductFilter {
   brand?: string;
-  category?: string;
+  categories?: [string];
   color?: string;
   size?: string;
   newArrival?: string;
   name?: string;
   storeId?: string;
+  limit: number;
 }
 
 export interface ICategoryFilterProps {

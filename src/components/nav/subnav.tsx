@@ -14,9 +14,11 @@ export const SubNav = () => {
     getCategories();
   }, []);
 
-  const categoryItems = categories.map((category) => ({
-    key: category._id,
-    label: <Link href={`/collections/${category.slug}`}>{category.name}</Link>,
+  const categoryItems = categories?.map((category) => ({
+    key: category?._id,
+    label: (
+      <Link href={`/collections/${category?.slug}`}>{category?.name}</Link>
+    ),
   }));
 
   const animatedMenuClass = classNames(

@@ -23,7 +23,7 @@ interface IProps {
 export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
   const { products, getProducts, loading } = useProductState();
   const { users, getUsersWhoMessageStore } = useChatState();
-  const [filter, setFilter] = useState<IProductFilter>({});
+  const [filter, setFilter] = useState<IProductFilter>({ limit: 50 });
   const [unreadMessage, setUnreadMessage] = useState<number>(0);
   const [modal, setModal] = useState<{
     show: boolean;
@@ -35,7 +35,6 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
       setFilter({ ...filter, storeId });
     }
   }, [storeId]);
-  console.log(userId, "userrrr");
 
   useEffect(() => {
     getProducts(filter);
@@ -82,7 +81,12 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
             {!loading && products?.length > 0 ? (
               <div className="grid md:grid-cols-3 grid-cols-2 gap-4 my-2 py-4 align-middle border-gray-200 border rounded-lg">
                 {products?.map((p) => (
-                  <ProductListItem product={p} key={p?._id} userId={userId} />
+                  <ProductListItem
+                    product={p}
+                    key={p?._id}
+                    userId={userId}
+                    page
+                  />
                 ))}
               </div>
             ) : (
@@ -95,7 +99,7 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
               total={products?.length}
               responsive
               onChange={(page: number, pageSize: number) =>
-                setFilter({ ...filter })
+                setFilter({ ...filter, limit: page })
               }
             />
           </div>
