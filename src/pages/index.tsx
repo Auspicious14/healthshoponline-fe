@@ -17,7 +17,7 @@ export default function Home({ data }: IProps) {
 
   useEffect(() => {
     if (data) {
-      setCategories(data?.data);
+      setCategories(data?.categories);
       setNewArrivals(data?.newArrival);
       setStores(data.topStores);
       setnewStores(data.newStores);
@@ -57,7 +57,6 @@ export const getServerSideProps = async () => {
     const topStores = topStoresRes?.res?.data?.data || null;
     const newStores = newStoresRes?.res?.data?.data || null;
 
-    // Check if all necessary data is present
     if (!categories || !newArrival || !topStores || !newStores) {
       throw new Error("Failed to fetch all required data");
     }
@@ -75,7 +74,6 @@ export const getServerSideProps = async () => {
   } catch (error: any) {
     console.error("Error fetching data for homepage:", error.message);
 
-    // Return fallback data or error status
     return {
       props: {
         data: {
