@@ -77,6 +77,7 @@ export const HomePage = () => {
                 >
                   {bannerImages.map((b) => (
                     <div className="w-full h-full" key={b.id}>
+                      <div className="absolute inset-0 bg-black opacity-50"></div>
                       <ApImage
                         src={b.uri.src}
                         alt={b.name}
