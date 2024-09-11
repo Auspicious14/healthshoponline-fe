@@ -31,25 +31,33 @@ export async function getServerSideProps({
 
   let token;
   if (cookie) {
-    token = jwt.verify(cookie, tokenSecret as string, {
-      // algorithms: ["HS256", "RS256"],
-    });
+    token = jwt.verify(cookie, tokenSecret as string, {});
   }
 
   const { _id } = query;
+  try {
+    const data = await apiReqHandler({
+      endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/product/${_id}`,
+      method: "GET",
+    });
 
-  const data = await apiReqHandler({
-    endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/product/${_id}`,
-    method: "GET",
-  });
+    const product = data?.res?.data?.data;
+    if (!product) throw new Error("Failed to fetch all required data");
 
-  const product = data?.res?.data?.data;
-  if (!product) return new Error("Network Error");
+    return {
+      props: {
+        product: product || null,
+        user: token || null,
+      },
+    };
+  } catch (error: any) {
+    console.log(error.message);
 
-  return {
-    props: {
-      product: product || null,
-      user: token || null,
-    },
-  };
+    return {
+      props: {
+        product: null,
+        user: token || null,
+      },
+    };
+  }
 }

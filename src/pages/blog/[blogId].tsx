@@ -51,18 +51,28 @@ export const getServerSideProps = async ({
 
   const { blogId } = query;
 
-  const data = await apiReqHandler({
-    endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/blog/${blogId}`,
-    method: "GET",
-  });
+  try {
+    const data = await apiReqHandler({
+      endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/blog/${blogId}`,
+      method: "GET",
+    });
 
-  const blog = data?.res?.data?.data;
-  if (!blog) return new Error("Network Error");
+    const blog = data?.res?.data?.data;
+    if (!blog) throw new Error("Error fetching blog");
 
-  return {
-    props: {
-      user: token || null,
-      blog: blog || null,
-    },
-  };
+    return {
+      props: {
+        user: token || null,
+        blog: blog || null,
+      },
+    };
+  } catch (error: any) {
+    console.log(error.message, "Failed to fetch");
+    return {
+      props: {
+        user: token || null,
+        blog: null,
+      },
+    };
+  }
 };

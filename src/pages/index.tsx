@@ -31,34 +31,61 @@ export default function Home({ data }: IProps) {
 }
 
 export const getServerSideProps = async () => {
-  const res = await apiReqHandler({
-    endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/category`,
-    method: "GET",
-  });
+  try {
+    const [categoriesRes, newArrivalRes, topStoresRes, newStoresRes] =
+      await Promise.all([
+        apiReqHandler({
+          endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/category`,
+          method: "GET",
+        }),
+        apiReqHandler({
+          endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/products?newArrival=newArrival`,
+          method: "GET",
+        }),
+        apiReqHandler({
+          endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/stores/top`,
+          method: "GET",
+        }),
+        apiReqHandler({
+          endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/stores/new`,
+          method: "GET",
+        }),
+      ]);
 
-  const data = await res?.res?.data?.data;
+    const categories = categoriesRes?.res?.data?.data || null;
+    const newArrival = newArrivalRes?.res?.data?.data || null;
+    const topStores = topStoresRes?.res?.data?.data || null;
+    const newStores = newStoresRes?.res?.data?.data || null;
 
-  const response = await apiReqHandler({
-    endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/products?newArrival=newArrival`,
-    method: "GET",
-  });
-  const newArrival = await response?.res?.data?.data;
+    // Check if all necessary data is present
+    if (!categories || !newArrival || !topStores || !newStores) {
+      throw new Error("Failed to fetch all required data");
+    }
 
-  const topStoresRes = await apiReqHandler({
-    endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/stores/top`,
-    method: "GET",
-  });
-  const topStores = await topStoresRes?.res?.data?.data;
+    return {
+      props: {
+        data: {
+          categories,
+          newArrival,
+          topStores,
+          newStores,
+        },
+      },
+    };
+  } catch (error: any) {
+    console.error("Error fetching data for homepage:", error.message);
 
-  const newStoresRes = await apiReqHandler({
-    endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/stores/new`,
-    method: "GET",
-  });
-  const newStores = await newStoresRes?.res?.data?.data;
-
-  return {
-    props: {
-      data: { data, newArrival, topStores, newStores } || null,
-    },
-  };
+    // Return fallback data or error status
+    return {
+      props: {
+        data: {
+          categories: null,
+          newArrival: null,
+          topStores: null,
+          newStores: null,
+        },
+        error: error.message || "An error occurred while fetching data",
+      },
+    };
+  }
 };

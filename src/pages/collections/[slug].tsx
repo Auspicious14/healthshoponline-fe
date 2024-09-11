@@ -58,28 +58,38 @@ export const getServerSideProps = async ({
 
   const { slug } = query;
 
-  const data = await apiReqHandler({
-    endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/products/${slug}`,
-    method: "GET",
-  });
+  try {
+    const [productsRes, categoryRes] = await Promise.all([
+      await apiReqHandler({
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/products/${slug}`,
+        method: "GET",
+      }),
+      await apiReqHandler({
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/category/${slug}`,
+        method: "GET",
+      }),
+    ]);
 
-  const products = data?.res?.data?.data;
-  if (!products) return new Error("Network Error");
+    const category = categoryRes?.res?.data?.data || null;
+    const products = productsRes?.res?.data?.data || null;
 
-  const cat = await apiReqHandler({
-    endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/category/${slug}`,
-    method: "GET",
-  });
-
-  const category = cat?.res?.data?.data;
-  if (!category) return new Error("Network Error");
-
-  return {
-    props: {
-      user: token || null,
-      products: products || null,
-      category: category || null,
-      slug: slug || null,
-    },
-  };
+    return {
+      props: {
+        user: token || null,
+        slug: slug || null,
+        products,
+        category,
+      },
+    };
+  } catch (error: any) {
+    console.log(error.message, "failed to fetch");
+    return {
+      props: {
+        user: token || null,
+        slug: slug || null,
+        products: null,
+        category: null,
+      },
+    };
+  }
 };

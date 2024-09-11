@@ -5,12 +5,7 @@ import { NewArrivals } from "./components/newArrivals";
 import Link from "next/link";
 import { TopStores } from "./components/topStores";
 import { NewStores } from "./components/newStores";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useViewportScroll,
-} from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { CategorySideBar } from "../category/components/sidebar";
 import { Category } from "./components/category";
 import Banner1 from "../../../public/images/banner1 (1).jpeg";
@@ -25,8 +20,8 @@ const bannerImages = [
   { id: 1, uri: Banner1, name: "banner1" },
   { id: 2, uri: Banner2, name: "banner2" },
   { id: 3, uri: Banner3, name: "banner3" },
-  { id: 4, uri: Banner4, name: "banner" },
-  { id: 5, uri: Banner4, name: "banner1" },
+  { id: 4, uri: Banner4, name: "banner4" },
+  { id: 5, uri: Banner5, name: "banner5" },
 ];
 
 export const HomePage = () => {
