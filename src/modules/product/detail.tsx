@@ -10,7 +10,7 @@ import {
 import { useProductState } from "./context";
 import { IProduct } from "./model";
 import { Form, Formik, FormikProps } from "formik";
-import { Button, Space, Typography } from "antd";
+import { Button, Carousel, Space, Typography } from "antd";
 import { getCookie } from "../../helper";
 import { useCartState } from "../cart/context";
 import { useRouter } from "next/router";
@@ -24,6 +24,10 @@ import {
 } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import { ArrowLeftCircleIcon } from "@heroicons/react/20/solid";
+import { CategoryListItem } from "./components/category";
+import { motion } from "framer-motion";
+import { CarouselRef } from "antd/es/carousel";
+import { ProductCarousel, ProductThumbnail } from "./components/carousel";
 
 const { Text } = Typography;
 interface IProps {
@@ -37,7 +41,8 @@ export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
   const formRef = useRef<FormikProps<any>>();
   const [qty, setQty] = useState<any>(1);
   const router = useRouter();
-  const [selectedImage, setSelectedImage] = useState(product?.images[0]?.uri);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const carouselRef = useRef<CarouselRef>(null);
   const [modal, setModal] = useState<{
     show: boolean;
     data?: any;
@@ -78,53 +83,92 @@ export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
     { rating: 1, count: 1 },
   ];
 
-  return (
-    <div className="">
-      {/* <div className="lg:hidden">
-        <ArrowLeftCircleIcon
-          className="w-8 h-8"
-          onClick={() => router.back()}
-        />
-      </div> */}
-      <div className="bg-white mt-20 md:mx-12 md:p-4 px-4 mx-4 rounded-lg">
-        <div className="md:flex gap-8 w-full pt-6">
-          {/* Image gallery */}
-          <div className="md:w-[50%] w-full bg-gray py-4 border rounded-lg">
-            {/* Main Image */}
-            <div className="w-full h-[400px] flex items-center justify-center m-auto">
-              <ApImage
-                src={selectedImage}
-                alt="Product Image"
-                className="h-full w-full object-cover object-center"
-                priority
-              />
-            </div>
+  const handleImageChange = (index: number) => {
+    if (carouselRef.current) {
+      setSelectedImageIndex(index);
+      carouselRef.current.goTo(index);
+    }
+  };
 
-            {/* Thumbnails */}
-            <div className="mx-auto mt-6 sm:px-6 w-full grid grid-cols-4 gap-4 items-center lg:px-8">
-              {product?.images?.map((p) => (
-                <div
-                  key={p._id}
-                  className={`w-[80px] h-[80px] bg-slate-300 rounded-md border cursor-pointer ${
-                    selectedImage === p.uri
-                      ? "border-blue-600"
-                      : "border-gray-200"
-                  }`}
-                  onClick={() => setSelectedImage(p.uri)}
-                >
-                  <ApImage
-                    key={p._id}
-                    src={p.uri}
-                    alt={p.name}
-                    className="h-full w-full rounded-lg object-cover object-center"
-                    width={80}
-                    height={80}
-                    unoptimized
-                    priority
-                  />
+  return (
+    <div>
+      <div className="bg-white mt-20 lg:mx-12 md:p-4 px-4 my-4 rounded-lg">
+        <div className="md:flex gap-8 w-full pt-6">
+          <div className="md:w-[50%] w-full bg-gray py-4 border rounded-lg">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            >
+              <div className="relative w-full flex flex-col items-center justify-center">
+                <div className="w-full relative font-sans">
+                  <motion.div
+                    className="w-full"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1 }}
+                  >
+                    <div className="relative w-full h-[300px] sm:h-[300px] md:h-[400px] lg:h-[500px] overflow-hidden">
+                      <Carousel
+                        ref={carouselRef}
+                        className="w-full h-full"
+                        draggable
+                        dots={false}
+                        autoplay={true}
+                        arrows
+                        fade
+                        afterChange={(index) => setSelectedImageIndex(index)}
+                      >
+                        {!!product?.images && product?.images?.length > 0 ? (
+                          product?.images.map((image, index) => (
+                            <div
+                              key={index}
+                              className="relative m-auto flex justify-center items-center"
+                            >
+                              <ApImage
+                                src={image.uri}
+                                alt={image.name}
+                                className="w-full h-[300px] sm:h-[300px] md:h-[400px] lg:h-[500px] object-cover object-center"
+                              />
+                            </div>
+                          ))
+                        ) : (
+                          <div className="w-full md:h-[300px] bg-primary flex justify-center items-center">
+                            <h1 className="text-4xl font-semibold">
+                              {product?.name}
+                            </h1>
+                          </div>
+                        )}
+                      </Carousel>
+
+                      {/* Thumbnails */}
+                      <div className="absolute bottom-4 w-full flex justify-center">
+                        <div className="flex gap-2">
+                          {!!product?.images &&
+                            product?.images.map((image, index) => (
+                              <div
+                                key={index}
+                                className={`cursor-pointer border-2 rounded-lg ${
+                                  selectedImageIndex === index
+                                    ? "border-primary"
+                                    : "border-transparent"
+                                }`}
+                                onClick={() => handleImageChange(index)}
+                              >
+                                <ApImage
+                                  src={image.uri}
+                                  alt={image.name}
+                                  className="w-16 h-16 object-cover rounded-lg"
+                                />
+                              </div>
+                            ))}
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
                 </div>
-              ))}
-            </div>
+              </div>
+            </motion.div>
           </div>
 
           <div className="md:w-[50%] text-sm">
@@ -133,7 +177,7 @@ export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
                 {product.name}
               </h1>
               <p className="text-lg font-bold tracking-tight text-primary">
-                {`$N{product.price}`}
+                {`N${product.price}`}
               </p>
             </div>
             <div className="flex gap-4 items-center mb-4">
@@ -192,55 +236,66 @@ export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
           </div>
         </div>
       </div>
-      <div className="md:m-12 rounded-lg bg-white m-4 p-4">
-        <Space className="lg:my-4 flex justify-between mt-8 my-4">
+      <div className="lg:m-12 rounded-lg bg-white my-4 lg:py-4 px-4">
+        <div className="flex justify-between items-center lg:block lg:my-4">
           <Text className="lg:text-3xl text-xl font-bold font-sans">
             Ratings and Review
           </Text>
-          <Button
-            type="text"
-            className="bg-gray-200 font-semibold font-sans"
-            onClick={() => setModal({ show: true })}
-          >
-            Write Review
-          </Button>
-        </Space>
-        <div className="flex md:gap-24 gap-10">
-          <Space className="block w-40 text-center">
-            <Text className="lg:text-6xl text-4xl font-bold my-4 font-sans">
-              {totalRatings ? totalRatings.toFixed(1) : "0.0"}
-            </Text>
-            <ApRatingStar
-              value={totalRatings}
-              size={30}
-              className="justify-center my-2"
-            />
-            <Text className="text-gray-300 my-3 font-sans">{`${reviews?.length} Product Ratings`}</Text>
-          </Space>
-          <Space className="block">
-            {/* {reviews?.map((r) => (
-                <RateStreakListItem review={r} key={r?._id} />
-              ))} */}
-            {ratingsData.map((data) => (
-              <RateStreakListItem
-                key={data.rating}
-                rating={data.rating}
-                count={data.count}
-                totalRatings={totalRatings}
-              />
-            ))}
+          <Space className="lg:hidden lg:my-4 flex justify-between my-4">
+            <Button
+              type="text"
+              className="bg-gray-200 font-semibold font-sans"
+              onClick={() => setModal({ show: true })}
+            >
+              Write Review
+            </Button>
           </Space>
         </div>
+        <div className="lg:flex">
+          <div className=" lg:w-1/2">
+            <div className="flex lg:gap-24 gap-10">
+              <Space className="block w-40 text-center">
+                <Text className="lg:text-6xl text-4xl font-bold my-4 font-sans">
+                  {totalRatings ? totalRatings.toFixed(1) : "0.0"}
+                </Text>
+                <ApRatingStar
+                  value={totalRatings}
+                  size={30}
+                  className="justify-center my-2"
+                />
+                <Text className="text-gray-300 my-3 font-sans">{`${reviews?.length} Product Ratings`}</Text>
+              </Space>
+              <Space className="block md:w-[50%] w-full">
+                {ratingsData.map((data) => (
+                  <RateStreakListItem
+                    key={data.rating}
+                    rating={data.rating}
+                    count={data.count}
+                    totalRatings={totalRatings}
+                  />
+                ))}
+              </Space>
+            </div>
 
-        <Space className="block mt-4">
-          <Text className="text-2xl font-sans font-bold">Reviews</Text>
-        </Space>
-        {reviews?.map((r) => (
-          <ReviewListItem review={r} key={r?._id} />
-        ))}
+            <Space className="block mt-4">
+              <Text className="text-2xl font-sans font-bold">Reviews</Text>
+            </Space>
+            {reviews?.map((r) => (
+              <ReviewListItem review={r} key={r?._id} />
+            ))}
+            {reviews?.length === 0 && (
+              <div className="flex justify-center m-auto items-center">
+                No reviews
+              </div>
+            )}
+          </div>
+          <div className="lg:w-1/2 hidden lg:block">
+            <Review review={modal.data} productId={product} />
+          </div>
+        </div>
       </div>
+      {/* <CategoryListItem /> */}
 
-      <Footer />
       <ApModal show={modal?.show} onDimiss={() => setModal({ show: false })}>
         <Review review={modal.data} productId={product} />
       </ApModal>

@@ -132,11 +132,16 @@ export const RateStreakListItem: React.FC<IRateProps> = ({
       {/* Star Rating */}
       <div className="flex gap-4 items-center w-[15%]">
         <StarFilled className="text-yellow-500" />
+        <div className="">{rating}</div>
       </div>
-      <div className="">{rating}</div>
 
       <div className="w-[100%]">
-        <Progress percent={percentage} showInfo={false} strokeColor="#007bff" />
+        <Progress
+          percent={percentage}
+          showInfo={false}
+          className="block w-full bg0"
+          strokeColor="#007bff"
+        />
       </div>
 
       <div className="w-[10%] text-right">

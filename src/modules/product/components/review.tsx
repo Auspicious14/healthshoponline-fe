@@ -45,7 +45,8 @@ export const Review: React.FC<IProps> = ({ productId, review }) => {
         <Form>
           <div className="w-full flex justify-center items-center">
             <div className="w-full">
-              <Card className="m-3">
+              <Card className="m-3 md:m-0">
+                <h1 className="font-sans font-bold">Write Review</h1>
                 <div className="my-3">
                   <Text>Rate</Text>
                   <ApRatingStar
