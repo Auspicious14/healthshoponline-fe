@@ -18,9 +18,9 @@ export default function Home({ data }: IProps) {
   useEffect(() => {
     if (data) {
       setCategories(data?.categories);
-      setNewArrivals(data?.newArrival);
-      setStores(data.topStores);
-      setnewStores(data.newStores);
+      setNewArrivals(data?.newArrivals);
+      setStores(data?.topStores);
+      setnewStores(data?.newStores);
     }
   }, [data]);
   return (
@@ -32,32 +32,32 @@ export default function Home({ data }: IProps) {
 
 export const getServerSideProps = async () => {
   try {
-    const [categoriesRes, newArrivalRes, topStoresRes, newStoresRes] =
-      await Promise.all([
-        apiReqHandler({
-          endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/category`,
-          method: "GET",
-        }),
-        apiReqHandler({
-          endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/products?newArrival=newArrival`,
-          method: "GET",
-        }),
-        apiReqHandler({
-          endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/stores/top`,
-          method: "GET",
-        }),
-        apiReqHandler({
-          endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/stores/new`,
-          method: "GET",
-        }),
-      ]);
+    const [categoriesRes, topStoresRes, newStoresRes] = await Promise.all([
+      apiReqHandler({
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/category`,
+        method: "GET",
+      }),
+      apiReqHandler({
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/stores/top`,
+        method: "GET",
+      }),
+      apiReqHandler({
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/stores/new`,
+        method: "GET",
+      }),
+    ]);
+
+    const newArrivalRes = await apiReqHandler({
+      endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/products?newArrival=true`,
+      method: "GET",
+    });
 
     const categories = categoriesRes?.res?.data?.data || null;
-    const newArrival = newArrivalRes?.res?.data?.data || null;
+    const newArrivals = newArrivalRes?.res?.data?.data || null;
     const topStores = topStoresRes?.res?.data?.data || null;
     const newStores = newStoresRes?.res?.data?.data || null;
 
-    if (!categories || !newArrival || !topStores || !newStores) {
+    if (!categories || !newArrivals || !topStores || !newStores) {
       throw new Error("Failed to fetch all required data");
     }
 
@@ -65,7 +65,7 @@ export const getServerSideProps = async () => {
       props: {
         data: {
           categories,
-          newArrival,
+          newArrivals,
           topStores,
           newStores,
         },

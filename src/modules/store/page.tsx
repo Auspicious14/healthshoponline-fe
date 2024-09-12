@@ -21,7 +21,7 @@ export const StorePage = () => {
 
   return (
     <div className="mt-24">
-      <div className="md:mx-20 px-4 md:p-0 ">
+      <div className="md:mx-20 md:p-0 ">
         <Search
           placeholder="Search store"
           allowClear
@@ -32,7 +32,10 @@ export const StorePage = () => {
           onChange={(e) => handleSearch(e.target.value)}
         />
         {loading && (
-          <Spin size="large" className="flex justify-center items-center" />
+          <Spin
+            size="large"
+            className="flex justify-center items-center my-auto"
+          />
         )}
         {!loading && stores?.length > 0 ? (
           <div className="bg-white grid md:grid-cols-4 xl:grid-cols-6 grid-cols-2 gap-4 my-2 p-4 align-middle rounded-lg">

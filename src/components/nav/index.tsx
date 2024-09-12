@@ -91,7 +91,9 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
                 <Bars3Icon className="h-6 w-6" aria-hidden="true" />
               )}
             </button>
-            <ApImage src={Logo} alt="logo" className="object-cover w-40" />
+            <Link href={"/"}>
+              <ApImage src={Logo} alt="logo" className="object-cover w-40" />
+            </Link>
           </div>
           <Link href="/cart" className="relative items-center p-2">
             <ShoppingCartOutlined
