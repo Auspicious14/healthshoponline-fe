@@ -16,6 +16,7 @@ interface IProductState {
   setCollections: (products: IProduct[]) => void;
   setRelatedProducts: (products: IProduct[]) => void;
   getProducts: (filter?: any) => Promise<void>;
+  getNewArrivals: () => Promise<void>;
   getReviews: (productId: string) => Promise<void>;
   createReview: (payload: IReview) => Promise<void>;
   updateReview: (payload: IReview, productId: string) => Promise<void>;
@@ -32,6 +33,9 @@ const ProductContext = React.createContext<IProductState>({
   reviews: [],
   setNewArrivals(newArrivals) {},
   getProducts() {
+    return null as any;
+  },
+  getNewArrivals() {
     return null as any;
   },
   getReviews(productId) {
@@ -81,6 +85,25 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
       setLoading(false);
       const { data } = await res.res?.data;
       setProducts(data);
+    } catch (error: any) {
+      toast.error(error);
+    }
+  };
+
+  const getNewArrivals = async () => {
+    setLoading(true);
+    try {
+      const res = await apiReqHandler({
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/products?newArrival=true`,
+        method: "GET",
+      });
+
+      setLoading(false);
+      const { data } = await res.res?.data;
+      setNewArrivals(data);
+      if (data.success === false) {
+        toast.error(data.message);
+      }
     } catch (error: any) {
       toast.error(error);
     }
@@ -160,6 +183,7 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
         product,
         setNewArrivals,
         getProducts,
+        getNewArrivals,
         getReviews,
         createReview,
         updateReview,

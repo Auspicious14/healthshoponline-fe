@@ -12,13 +12,11 @@ interface IProps {
 }
 export default function Home({ data }: IProps) {
   const { setCategories } = useCategorystate();
-  const { setNewArrivals } = useProductState();
   const { setStores, setnewStores } = useStoreState();
 
   useEffect(() => {
     if (data) {
       setCategories(data?.categories);
-      setNewArrivals(data?.newArrivals);
       setStores(data?.topStores);
       setnewStores(data?.newStores);
     }
@@ -47,17 +45,11 @@ export const getServerSideProps = async () => {
       }),
     ]);
 
-    // const newArrivalRes = await apiReqHandler({
-    //   endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/products?newArrival=true`,
-    //   method: "GET",
-    // });
-
     const categories = categoriesRes?.res?.data?.data || null;
-    const newArrivals = [] || null;
     const topStores = topStoresRes?.res?.data?.data || null;
     const newStores = newStoresRes?.res?.data?.data || null;
 
-    if (!categories || !newArrivals || !topStores || !newStores) {
+    if (!categories || !topStores || !newStores) {
       throw new Error("Failed to fetch all required data");
     }
 
@@ -65,7 +57,6 @@ export const getServerSideProps = async () => {
       props: {
         data: {
           categories,
-          newArrivals,
           topStores,
           newStores,
         },
@@ -78,7 +69,6 @@ export const getServerSideProps = async () => {
       props: {
         data: {
           categories: null,
-          newArrival: null,
           topStores: null,
           newStores: null,
         },
