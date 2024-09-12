@@ -1,4 +1,4 @@
-import { Carousel, Typography } from "antd";
+import { Carousel } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { ApImage, Footer } from "../../components";
 import { NewArrivals } from "./components/newArrivals";
@@ -13,8 +13,6 @@ import Banner2 from "../../../public/images/banner1 (2).jpeg";
 import Banner3 from "../../../public/images/banner1 (3).jpeg";
 import Banner4 from "../../../public/images/banner1 (4).jpeg";
 import Banner5 from "../../../public/images/banner1 (5).jpeg";
-
-const { Text } = Typography;
 
 const bannerImages = [
   { id: 1, uri: Banner1, name: "banner1" },

@@ -9,9 +9,9 @@ import { Spin } from "antd";
 export const NewArrivals = () => {
   const { newArrivals, getNewArrivals, loading } = useProductState();
 
-  useEffect(() => {
-    getNewArrivals();
-  }, []);
+  // useEffect(() => {
+  //   getNewArrivals();
+  // }, []);
 
   return (
     <>
@@ -20,7 +20,7 @@ export const NewArrivals = () => {
       )}
       <div className=" grid gap-4 xl:lg:md:grid-cols-4 sm:grid-cols-3 grid-cols-2 align-middle">
         {!loading &&
-          newArrivals.length > 0 &&
+          newArrivals?.length > 0 &&
           newArrivals?.map((product: IProduct) => (
             <div key={product?._id}>
               <div className="bg-white md:w-auto w-full shadow-md rounded-md transition-transform hover:shadow-lg hover:scale-105 flex flex-col justify-between h-full">
