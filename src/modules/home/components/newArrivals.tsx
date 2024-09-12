@@ -26,7 +26,7 @@ export const NewArrivals = () => {
               <div className="bg-white md:w-auto w-full shadow-md rounded-md transition-transform hover:shadow-lg hover:scale-105 flex flex-col justify-between h-full">
                 <div>
                   <Link href={`/products/${product?._id}`} className="">
-                    <div className="group relative">
+                    <div className=" relative">
                       <div className="min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-52">
                         <ApImage
                           key={product?.images[0]?._id}
@@ -36,7 +36,7 @@ export const NewArrivals = () => {
                           unoptimized
                         />
                       </div>
-                      <div className="mt-4">
+                      <div className="mt-4 mb-2 text-left px-4">
                         <h3 className="text-gray text-sm line-clamp-2 max-h-12 overflow-hidden">
                           {product?.name}
                         </h3>

@@ -104,7 +104,7 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
 
       setLoading(false);
       const { data } = await res.res?.data;
-      setNewArrivals(data);
+      setNewArrivals(data.data);
       if (data.success === false) {
         toast.error(data.message);
       }

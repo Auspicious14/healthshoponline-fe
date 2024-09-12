@@ -25,7 +25,7 @@ export const NewStores = () => {
                       unoptimized
                     />
                   </div>
-                  <div className="mt-4 mx-4">
+                  <div className="mt-4 mx-4 text-left mb-2">
                     {/* Product Name */}
                     <h3 className="text-gray-700 text-sm font-bold line-clamp-2 max-h-12 overflow-hidden">
                       {store?.storeName}
