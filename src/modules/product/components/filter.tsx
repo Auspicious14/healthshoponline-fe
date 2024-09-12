@@ -41,18 +41,18 @@ export const FilterProduct: React.FC<IProps> = ({ setFilter }) => {
         options: categories?.map((c) => c.name),
       };
 
-      setFilterCategories((prev) => {
-        const existingCategory = prev.find(
-          (cat) => cat.category === "category"
-        );
-        if (existingCategory) {
-          return prev.map((cat) =>
-            cat.category === "category" ? catFlt : cat
-          );
-        } else {
-          return [...prev, catFlt];
-        }
-      });
+      // setFilterCategories((prev) => {
+      //   const existingCategory = prev.find(
+      //     (cat) => cat.category === "category"
+      //   );
+      //   if (existingCategory) {
+      //     return prev.map((cat) =>
+      //       cat.category === "category" ? catFlt : cat
+      //     );
+      //   } else {
+      //     return [...prev, catFlt];
+      //   }
+      // });
     }
   }, [categories]);
 
@@ -65,41 +65,41 @@ export const FilterProduct: React.FC<IProps> = ({ setFilter }) => {
     setFilter(newFilters);
   };
 
-  const handleToggle = (category: keyof IProductFilter) => {
-    setToggle((prev) => ({ ...prev, [category]: !prev[category] }));
+  const handleToggle = (category: string) => {
+    // setToggle((prev) => ({ ...prev, [category]: !prev[category] }));
   };
 
   return (
     <div className="p-4 border border-gray-300 rounded-md w-full max-w-xs bg-white">
-      {filterCategories.map(({ category, options }) => (
-        <div key={category} className="mb-4">
+      {/* {categories.map(({ name }) => (
+        <div key={name} className="mb-4">
           <div className="flex justify-between items-center border-b border-gray-200 pb-2">
             <h3 className="font-bold text-sm text-gray-700 uppercase tracking-wide">
-              {category}
+              {name}
             </h3>
             <button
               className="focus:outline-none"
-              onClick={() => handleToggle(category)}
+              onClick={() => handleToggle(name)}
             >
-              {toggle[category] ? (
+              {toggle[name] ? (
                 <MinusIcon className="h-5 w-5 text-gray-600" />
               ) : (
                 <PlusIcon className="h-5 w-5 text-gray-600" />
               )}
             </button>
           </div>
-          {toggle[category] && (
+          {toggle[name] && (
             <div className="mt-3 space-y-2 transition-all duration-200 ease-in-out">
               {options.map((option) => (
                 <div key={option} className="flex items-center py-2">
                   <input
                     type="radio"
-                    name={category}
+                    name={name}
                     value={option}
-                    checked={localFilters?.[category] === option}
+                    checked={localFilters?.[name] === option}
                     onChange={(e) =>
                       handleFilterChange(
-                        category as keyof IProductFilter,
+                        name as keyof IProductFilter,
                         e.target.value
                       )
                     }
@@ -111,7 +111,7 @@ export const FilterProduct: React.FC<IProps> = ({ setFilter }) => {
             </div>
           )}
         </div>
-      ))}
+      ))} */}
       {/* Add a clear filter button if needed */}
       <div className="pt-4 border-t border-gray-200 mt-4">
         <button

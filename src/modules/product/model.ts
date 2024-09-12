@@ -22,13 +22,13 @@ export interface IProductImage {
 
 export interface IProductFilter {
   brand?: string;
-  categories?: [string];
+  categories?: ICategory;
   color?: string;
   size?: string;
   newArrival?: string;
   name?: string;
   storeId?: string;
-  limit: number;
+  limit?: number;
 }
 
 export interface ICategoryFilterProps {

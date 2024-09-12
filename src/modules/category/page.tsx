@@ -19,7 +19,7 @@ interface IProps {
 }
 export const CategoryPage: React.FC<IProps> = ({ category }) => {
   const { collections } = useProductState();
-  const [filter, setFilter] = useState<IProductFilter>({});
+  const [filter, setFilter] = useState<IProductFilter>({ limit: 50 });
 
   const [modal, setModal] = useState<{
     show: boolean;
@@ -109,7 +109,7 @@ export const CategoryPage: React.FC<IProps> = ({ category }) => {
                   total={collections?.length}
                   responsive
                   onChange={(page: number, pageSize: number) =>
-                    setFilter({ ...filter })
+                    setFilter({ ...filter, limit: pageSize / page })
                   }
                 />
               </div>

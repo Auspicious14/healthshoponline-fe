@@ -10,6 +10,7 @@ import { FilterProduct } from "./components/filter";
 import { MenuFoldOutlined, MessageOutlined } from "@ant-design/icons";
 import { ChatPage } from "../chat/page";
 import { useChatState } from "../chat/context";
+import { CategorySideBar } from "../category/components/sidebar";
 
 const { Text } = Typography;
 const { Search } = Input;
@@ -62,7 +63,7 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
         <div className="md:flex gap-10 w-full px-4">
           <div className="hidden md:block md:w-[30%]">
             <div className="fixed w-[25%] overflow-auto">
-              <FilterProduct setFilter={setFilter} />
+              <CategorySideBar />
             </div>
           </div>
 
@@ -126,7 +127,7 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
 
       {modal.type === "filter" && modal.show && (
         <ApModal show={modal.show} onDimiss={() => setModal({ show: false })}>
-          <FilterProduct setFilter={setFilter} />
+          <CategorySideBar />
         </ApModal>
       )}
 
