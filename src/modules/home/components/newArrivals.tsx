@@ -7,10 +7,10 @@ import { useProductState } from "../../product/context";
 import { Spin } from "antd";
 
 export const NewArrivals = () => {
-  const { products, getProducts, loading } = useProductState();
+  const { newArrivals, getNewArrivals, loading } = useProductState();
 
   useEffect(() => {
-    getProducts({ newArrival: "true" });
+    getNewArrivals();
   }, []);
 
   return (
@@ -20,8 +20,8 @@ export const NewArrivals = () => {
       )}
       <div className=" grid gap-4 xl:lg:md:grid-cols-4 sm:grid-cols-3 grid-cols-2 align-middle">
         {!loading &&
-          products.length > 0 &&
-          products?.map((product: IProduct) => (
+          newArrivals.length > 0 &&
+          newArrivals?.map((product: IProduct) => (
             <div key={product?._id}>
               <div className="bg-white md:w-auto w-full shadow-md rounded-md transition-transform hover:shadow-lg hover:scale-105 flex flex-col justify-between h-full">
                 <div>
