@@ -47,13 +47,13 @@ export const getServerSideProps = async () => {
       }),
     ]);
 
-    const newArrivalRes = await apiReqHandler({
-      endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/products?newArrival=true`,
-      method: "GET",
-    });
+    // const newArrivalRes = await apiReqHandler({
+    //   endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/products?newArrival=true`,
+    //   method: "GET",
+    // });
 
     const categories = categoriesRes?.res?.data?.data || null;
-    const newArrivals = newArrivalRes?.res?.data?.data || null;
+    const newArrivals = null;
     const topStores = topStoresRes?.res?.data?.data || null;
     const newStores = newStoresRes?.res?.data?.data || null;
 
