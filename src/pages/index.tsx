@@ -53,7 +53,7 @@ export const getServerSideProps = async () => {
     // });
 
     const categories = categoriesRes?.res?.data?.data || null;
-    const newArrivals = null;
+    const newArrivals = [] || null;
     const topStores = topStoresRes?.res?.data?.data || null;
     const newStores = newStoresRes?.res?.data?.data || null;
 
