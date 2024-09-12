@@ -18,7 +18,6 @@ const ProductDetail: React.FC<IProps> = ({
   relatedProducts,
 }) => {
   const { setRelatedProducts } = useProductState();
-
   useEffect(() => {
     setRelatedProducts(relatedProducts);
   }, []);
@@ -46,13 +45,13 @@ export async function getServerSideProps({
     token = jwt.verify(cookie, tokenSecret as string, {});
   }
 
-  const { _id } = query;
+  const { slug } = query;
   try {
     let relatedProducts: IProduct[] = [];
     let product: IProduct;
 
     const productRes = await apiReqHandler({
-      endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/product/${_id}`,
+      endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/product/${slug}`,
       method: "GET",
     });
 
@@ -70,7 +69,7 @@ export async function getServerSideProps({
         method: "GET",
       });
 
-      relatedProducts = relatedProductsRes?.res?.data?.data || [];
+      relatedProducts = relatedProductsRes?.res?.data?.data?.data || [];
     } catch (error: any) {
       console.warn("Failed to fetch related products:", error.message);
     }

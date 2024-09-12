@@ -52,7 +52,7 @@ export const getServerSideProps = async ({
 
     const category = categoryRes?.res?.data?.data || null;
     const products = productsRes?.res?.data?.data || null;
-
+    console.log(products, "slug products");
     return {
       props: {
         slug: slug || null,

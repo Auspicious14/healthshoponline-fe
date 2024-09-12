@@ -10,6 +10,7 @@ export interface IProduct {
   categories: ICategory[];
   color: string;
   quantity: number;
+  slug: string;
   rating: string | number;
 }
 
