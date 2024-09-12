@@ -65,7 +65,7 @@ export async function getServerSideProps({
       const relatedProductsRes = await apiReqHandler({
         endPoint: `${
           process.env.NEXT_PUBLIC_API_ROUTE
-        }/products?categories=${categories}&limit=${20}`,
+        }/products?categories=${categories}&page=${1}&pageSize=${20}`,
         method: "GET",
       });
 
