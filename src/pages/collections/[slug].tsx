@@ -10,7 +10,6 @@ import { ICategory } from "../../modules/category/model";
 const tokenSecret = process.env.JWT_SECRET;
 
 interface IProps {
-  user: { id: string; isAdmin: boolean };
   products: IProduct[];
   category: ICategory;
 }
@@ -37,25 +36,6 @@ export const getServerSideProps = async ({
   req: any;
   query: any;
 }) => {
-  const cookie = req?.cookies?.token;
-  if (!cookie) {
-    return {
-      redirect: {
-        destination: "/auth/login",
-        permenant: false,
-      },
-    };
-  }
-  const token: any = jwt.verify(cookie, tokenSecret as string);
-  if (token?.isAdmin) {
-    return {
-      redirect: {
-        destination: "/auth/login",
-        permenant: false,
-      },
-    };
-  }
-
   const { slug } = query;
 
   try {
@@ -75,7 +55,6 @@ export const getServerSideProps = async ({
 
     return {
       props: {
-        user: token || null,
         slug: slug || null,
         products,
         category,
@@ -85,7 +64,6 @@ export const getServerSideProps = async ({
     console.log(error.message, "failed to fetch");
     return {
       props: {
-        user: token || null,
         slug: slug || null,
         products: null,
         category: null,

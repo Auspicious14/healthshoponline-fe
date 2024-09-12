@@ -18,17 +18,15 @@ interface IProps {
   category: ICategory;
 }
 export const CategoryPage: React.FC<IProps> = ({ category }) => {
-  const { collections } = useProductState();
-  const [filter, setFilter] = useState<IProductFilter>({ limit: 50 });
-
-  const [modal, setModal] = useState<{
-    show: boolean;
-    type?: "chat" | "detail" | "filter";
-  }>({ show: false, type: "detail" });
+  const { collections, getProducts } = useProductState();
+  const [filter, setFilter] = useState<IProductFilter>({
+    page: 1,
+    pageSize: 50,
+  });
 
   return (
     <div>
-      <div className="w-[90%] m-auto relative mt-16 z-50 mb-4">
+      <div className="m-auto relative mt-16 z-50 mb-4">
         <Breadcrumb label="Category" category={category} />
         <motion.div
           initial={{ opacity: 0 }}
@@ -102,16 +100,6 @@ export const CategoryPage: React.FC<IProps> = ({ category }) => {
                 ) : (
                   collections?.length === 0 && <div>No products...</div>
                 )}
-
-                <Pagination
-                  className="text-center"
-                  defaultCurrent={1}
-                  total={collections?.length}
-                  responsive
-                  onChange={(page: number, pageSize: number) =>
-                    setFilter({ ...filter, limit: pageSize / page })
-                  }
-                />
               </div>
             </div>
           </div>

@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 interface IProductState {
   loading: boolean;
   totalRatings: number;
+  totalRecords: number;
   product: IProduct;
   products: IProduct[];
   collections: IProduct[];
@@ -25,6 +26,7 @@ interface IProductState {
 const ProductContext = React.createContext<IProductState>({
   loading: false,
   totalRatings: 0,
+  totalRecords: 0,
   product: {} as any,
   products: [],
   newArrivals: [],
@@ -71,6 +73,7 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
   const [newArrivals, setNewArrivals] = useState<IProduct[]>([]);
   const [collections, setCollections] = useState<IProduct[]>([]);
   const [relatedProducts, setRelatedProducts] = useState<IProduct[]>([]);
+  const [totalRecords, setTotalRecords] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
 
   const getProducts = async (filter?: IProductFilter) => {
@@ -84,7 +87,8 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
       });
       setLoading(false);
       const { data } = await res.res?.data;
-      setProducts(data);
+      setProducts(data.data);
+      setTotalRecords(data.totalRecords);
     } catch (error: any) {
       toast.error(error);
     }
@@ -174,6 +178,7 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
     <ProductContext.Provider
       value={{
         loading,
+        totalRecords,
         products,
         collections,
         newArrivals,

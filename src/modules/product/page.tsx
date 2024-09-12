@@ -22,9 +22,12 @@ interface IProps {
 }
 
 export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
-  const { products, getProducts, loading } = useProductState();
+  const { products, getProducts, loading, totalRecords } = useProductState();
   const { users, getUsersWhoMessageStore } = useChatState();
-  const [filter, setFilter] = useState<IProductFilter>({ limit: 50 });
+  const [filter, setFilter] = useState<IProductFilter>({
+    page: 1,
+    pageSize: 50,
+  });
   const [unreadMessage, setUnreadMessage] = useState<number>(0);
   const [modal, setModal] = useState<{
     show: boolean;
@@ -59,15 +62,15 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
 
   return (
     <div className="relative z-50">
-      <div className="md:mx-20 px-4 md:p-0">
-        <div className="md:flex gap-10 w-full px-4">
+      <div className="md:mx-20 md:p-0">
+        <div className="md:flex gap-10 w-full">
           <div className="hidden md:block md:w-[30%]">
             <div className="fixed w-[25%] overflow-auto">
               <CategorySideBar />
             </div>
           </div>
 
-          <div className="md:w-[70%] h-full bg-white">
+          <div className="md:w-[70%] h-full bg-white px-4">
             <div className="flex justify-between items-center my-4">
               <Text code>{`Products: ${products?.length}`}</Text>
               <MenuFoldOutlined
@@ -80,7 +83,7 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
               <Spin size="large" className="flex justify-center items-center" />
             )}
             {!loading && products?.length > 0 ? (
-              <div className="grid md:grid-cols-3 grid-cols-2 gap-4 my-2 py-4 align-middle border-gray-200 border rounded-lg">
+              <div className="grid md:grid-cols-3 grid-cols-2 gap-4 my-2 py-4 align-middle rounded-lg">
                 {products?.map((p) => (
                   <ProductListItem
                     product={p}
@@ -96,12 +99,14 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
 
             <Pagination
               className="text-center"
-              defaultCurrent={1}
-              total={products?.length}
               responsive
-              onChange={(page: number, pageSize: number) =>
-                setFilter({ ...filter, limit: page })
-              }
+              defaultCurrent={1}
+              total={totalRecords}
+              current={filter.page}
+              pageSize={filter.pageSize}
+              onChange={(page: number, pageSize: number) => {
+                setFilter({ ...filter, page, pageSize });
+              }}
             />
           </div>
         </div>

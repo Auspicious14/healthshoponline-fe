@@ -28,7 +28,8 @@ export interface IProductFilter {
   newArrival?: string;
   name?: string;
   storeId?: string;
-  limit?: number;
+  page?: number;
+  pageSize?: number;
 }
 
 export interface ICategoryFilterProps {
