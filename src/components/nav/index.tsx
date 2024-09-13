@@ -83,7 +83,6 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
               placeholder={"Search Product"}
               value={value}
               onChange={(e) => {
-                console.log(e, "selecttt");
                 handleChange(e);
               }}
             >
@@ -137,7 +136,6 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
               placeholder={"Search Product"}
               value={value}
               onChange={(e) => {
-                console.log(e, "selecttt");
                 handleChange(e);
               }}
             >
@@ -171,7 +169,6 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
             value={value}
             placeholder={"Search Product"}
             onChange={(e) => {
-              console.log(e, "selecttt");
               handleChange(e);
             }}
           >
