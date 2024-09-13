@@ -30,13 +30,13 @@ export const SignInPage = () => {
 
   return (
     <div className="md:flex gap-20">
-      <div className="w-1/2 mx-20">
-        <div className=" flex justify-center md:block mt-24">
+      <div className="md:w-1/2 w-full md:mx-8">
+        <div className=" block mt-24">
           <div className="my-6 mx-4 text-left">
             <h2 className=" text-3xl text-center font-bold tracking-tight text-gray-900">
               Welcome Back
             </h2>
-            <p className="text-[#475467] my-2">
+            <p className="text-[#475467] text-center text-sm my-2">
               Discover a World of Convenient Shopping. Please log in to access
               your account.
             </p>
@@ -95,7 +95,7 @@ export const SignInPage = () => {
                 >
                   Sign in
                 </Button>
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center text-sm">
                   <span>{"Don't have an account?"}</span>
                   <Button type="link" href={"/auth/signup"}>
                     Sign up
@@ -106,7 +106,7 @@ export const SignInPage = () => {
           </Formik>
         </div>
       </div>
-      <Card className="h-screen flex items-center justify-center p-8 text-center text-white bg-blue-800 bg-opacity-90">
+      <Card className="hidden h-screen md:w-1/2 md:flex items-center justify-center p-8 text-center text-white bg-blue-800 bg-opacity-90">
         <p className="capitalize text-4xl font-bold mb-4">
           Your Personalized shopping experience awaits
         </p>
