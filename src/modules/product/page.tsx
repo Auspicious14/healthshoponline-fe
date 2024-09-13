@@ -62,10 +62,10 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
 
   return (
     <div className="relative z-50">
-      <div className="md:mx-20 md:p-0">
+      <div className="xl:mx-20 md:p-0">
         <div className="md:flex gap-10 w-full">
           <div className="hidden md:block md:w-[30%]">
-            <div className="fixed w-[25%] overflow-auto">
+            <div className=" overflow-auto h-[80%]">
               <CategorySideBar />
             </div>
           </div>
@@ -83,7 +83,7 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
               <Spin size="large" className="flex justify-center items-center" />
             )}
             {!loading && products?.length > 0 ? (
-              <div className="grid md:grid-cols-3 grid-cols-2 gap-4 my-2 py-4 align-middle rounded-lg">
+              <div className="grid sm:grid-cols-3 grid-cols-2 gap-4 my-2 py-4 align-middle rounded-lg">
                 {products?.map((p) => (
                   <ProductListItem
                     product={p}

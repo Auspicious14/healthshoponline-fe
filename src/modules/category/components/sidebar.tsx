@@ -16,13 +16,13 @@ export const CategorySideBar = ({ isNav }: { isNav?: boolean }) => {
         </h1>
       )}
       <div className="space-y-4 text-sm ">
-        {categories.map((category) => (
+        {categories?.map((category) => (
           <Link
             href={`/collections/${category?.slug}`}
-            key={category._id}
+            key={category?._id}
             className="hover:text-primary cursor-pointer block"
           >
-            {category.name}
+            {category?.name}
           </Link>
         ))}
       </div>

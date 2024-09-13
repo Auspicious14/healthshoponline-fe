@@ -50,7 +50,7 @@ export const HomePage = () => {
   }, []);
 
   return (
-    <motion.div className="xl:px-16 lg:px-16 md:px-16">
+    <motion.div className="xl:px-16">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Input, MenuProps, Tabs, TabsProps } from "antd";
+import { Input, MenuProps, Select, Tabs, TabsProps } from "antd";
 import Link from "next/link";
 import { useCartState } from "../../modules/cart/context";
 import { getCookie } from "../../helper";
@@ -18,6 +18,7 @@ import {
 } from "@ant-design/icons";
 import { useCategorystate } from "../../modules/category/context";
 import { CategorySideBar } from "../../modules/category/components/sidebar";
+import { IProductFilter } from "../../modules/product/model";
 
 const { Search } = Input;
 interface IProps {
@@ -27,7 +28,9 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
   const [toggle, setToggle] = useState<boolean>(false);
   const { carts, getCart } = useCartState();
   const { products, getProducts } = useProductState();
+  const [filter, setFilter] = useState<IProductFilter>({ pageSize: 100 });
   const { categories, getCategories } = useCategorystate();
+  const [value, setValue] = useState<string>("");
 
   useEffect(() => {
     const id = getCookie("user_id");
@@ -36,8 +39,8 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
 
   useEffect(() => {
     // getCategories()
-    getProducts();
-  }, []);
+    getProducts(filter);
+  }, [filter]);
 
   const items: TabsProps["items"] = [
     {
@@ -52,19 +55,45 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
     },
   ];
 
+  const handleSearch = (name: string) => {
+    setFilter({ ...filter, name });
+  };
+
+  const handleChange = (val: string) => {
+    if (val) {
+      setValue(val);
+    }
+  };
+
   return (
     <header className="relative bg-white">
       <nav aria-label="Top" className="max-w-7xl mx-auto lg:px-8">
-        <div className="hidden xl:flex justify-between items-center h-16">
+        <div className="hidden lg:flex justify-between items-center h-16">
           <Link href={"/"} className="flex items-center">
             <ApImage src={Logo} alt="logo" className="object-cover w-auto" />
           </Link>
-          <input
-            type="search"
-            placeholder="Search Products"
-            className="w-1/2 border rounded-md outline-none px-4 mx-4 py-2"
-            onChange={() => {}}
-          />
+          <div className="w-1/3">
+            <Select
+              className="w-full"
+              showSearch
+              defaultActiveFirstOption={false}
+              suffixIcon={null}
+              filterOption={false}
+              notFoundContent={null}
+              placeholder={"Search Product"}
+              value={value}
+              onChange={(e) => {
+                console.log(e, "selecttt");
+                handleChange(e);
+              }}
+            >
+              {products.map((p) => (
+                <Select.Option value={p.name.toLowerCase()}>
+                  <Link href={`/products/${p.slug}`}>{p.name}</Link>
+                </Select.Option>
+              ))}
+            </Select>
+          </div>
           <Link href="/cart" className="relative items-center p-2">
             <ShoppingCartOutlined
               size={30}
@@ -79,21 +108,45 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
         </div>
 
         <div className="flex lg:hidden justify-between items-center h-16">
-          <div className="flex gap-3 items-center">
-            <button
-              type="button"
-              className="rounded-md p-2 text-gray-400"
-              onClick={() => setToggle(!toggle)}
-            >
-              {toggle ? (
-                <CloseCircleFilled className="h-6 w-6" aria-hidden="true" />
-              ) : (
-                <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-              )}
-            </button>
+          <div className="flex gap-3 md:p-2 items-center">
+            <div className="md:hidden">
+              <button
+                type="button"
+                className="rounded-md p-2 text-gray-400"
+                onClick={() => setToggle(!toggle)}
+              >
+                {toggle ? (
+                  <CloseCircleFilled className="h-6 w-6" aria-hidden="true" />
+                ) : (
+                  <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+                )}
+              </button>
+            </div>
             <Link href={"/"}>
               <ApImage src={Logo} alt="logo" className="object-cover w-40" />
             </Link>
+          </div>
+          <div className="md:block hidden w-1/3">
+            <Select
+              className="w-full"
+              showSearch
+              defaultActiveFirstOption={false}
+              suffixIcon={null}
+              filterOption={false}
+              notFoundContent={null}
+              placeholder={"Search Product"}
+              value={value}
+              onChange={(e) => {
+                console.log(e, "selecttt");
+                handleChange(e);
+              }}
+            >
+              {products.map((p) => (
+                <Select.Option value={p.name.toLowerCase()}>
+                  <Link href={`/products/${p.slug}`}>{p.name}</Link>
+                </Select.Option>
+              ))}
+            </Select>
           </div>
           <Link href="/cart" className="relative items-center p-2">
             <ShoppingCartOutlined
@@ -106,6 +159,28 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
               </div>
             )}
           </Link>
+        </div>
+        <div className="md:hidden w-full flex justify-center items-center pb-4">
+          <Select
+            className="w-[90%]"
+            showSearch
+            defaultActiveFirstOption={false}
+            suffixIcon={null}
+            filterOption={false}
+            notFoundContent={null}
+            value={value}
+            placeholder={"Search Product"}
+            onChange={(e) => {
+              console.log(e, "selecttt");
+              handleChange(e);
+            }}
+          >
+            {products.map((p) => (
+              <Select.Option value={p.name.toLowerCase()}>
+                <Link href={`/products/${p.slug}`}>{p.name}</Link>
+              </Select.Option>
+            ))}
+          </Select>
         </div>
 
         <div
