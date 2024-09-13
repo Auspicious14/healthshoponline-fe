@@ -88,7 +88,7 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
               }}
             >
               {products.map((p) => (
-                <Select.Option value={p.name.toLowerCase()}>
+                <Select.Option key={p._id} value={p.name.toLowerCase()}>
                   <Link href={`/products/${p.slug}`}>{p.name}</Link>
                 </Select.Option>
               ))}
