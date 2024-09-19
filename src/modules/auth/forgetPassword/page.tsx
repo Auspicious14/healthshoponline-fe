@@ -1,16 +1,14 @@
 import { Form, Formik, FormikProps } from "formik";
 import { useRouter } from "next/router";
-import { signIn } from "next-auth/react";
-import React, { useEffect } from "react";
+import React from "react";
 import * as Yup from "yup";
-import { ApBackgroundImage, ApTextInput } from "../../../components";
+import { ApTextInput } from "../../../components";
 import { useForgetPasswordState } from "./context";
 import { Button } from "antd";
-import Vector from "../../../../public/images/unsplash_MU70DTGr7d0.png";
 import { toast } from "react-toastify";
 
 const FormSchema = Yup.object().shape({
-  email: Yup.string().required("email is required").email(),
+  email: Yup.string().required("Email is required").email(),
 });
 
 export const ForgetPasswordPage = () => {
@@ -25,7 +23,7 @@ export const ForgetPasswordPage = () => {
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center items-center my-32">
       <div>
         <div className="my-6 mx-4 text-left">
           <h2 className=" text-3xl font-bold tracking-tight text-gray-900">

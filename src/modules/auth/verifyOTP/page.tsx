@@ -21,11 +21,11 @@ export const VerifyOTPPage = () => {
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center my-32">
       <div>
         <div className="my-6 mx-4 text-left">
           <h2 className=" text-3xl font-bold tracking-tight text-gray-900">
-            Check your email
+            Verify OTP{" "}
           </h2>
           <p className="text-[#475467] my-2">
             {"We've sent verification code to your mail"}
