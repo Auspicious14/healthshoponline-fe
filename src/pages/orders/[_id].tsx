@@ -3,6 +3,7 @@ import { OrderDetailPage } from "../../modules/order/detail";
 import { IOrder } from "../../modules/order/model";
 import { apiReqHandler } from "../../components";
 import jwt from "jsonwebtoken";
+import { MainLayout } from "../../modules/layout";
 
 const tokenSecret = process.env.JWT_SECRET;
 interface IProps {
@@ -10,9 +11,9 @@ interface IProps {
 }
 const OrderDetail: React.FC<IProps> = ({ order }) => {
   return (
-    <>
+    <MainLayout>
       <OrderDetailPage order={order} />
-    </>
+    </MainLayout>
   );
 };
 

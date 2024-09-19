@@ -18,6 +18,9 @@ module.exports = {
         offWhite: "#E9EFFF",
         gray: "#475467",
       },
+      borderColor: {
+        primary: "#2158E8",
+      },
       fontFamily: {
         sans: ["Ubuntu, sans-serif"],
       },

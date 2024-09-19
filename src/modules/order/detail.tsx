@@ -44,7 +44,7 @@ export const OrderDetailPage: React.FC<IProps> = ({ order }) => {
 
   return (
     <div>
-      <div className=" lg:m-20 m-8">
+      <div className=" lg:m-20 my-4">
         <div className="md:flex w-full gap-10">
           <Card className="w-full md:w-[60%] border rounded-lg shadow-lg">
             <Text className="font-bold text-lg mb-4">Order Details</Text>

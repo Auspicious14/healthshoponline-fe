@@ -60,8 +60,9 @@ export const OrderItem: React.FC<IProps> = ({ items }) => {
         columns={columns}
         dataSource={items}
         rowKey={(c) => c?._id}
-        className="lg:w-[60%] min-w-full"
+        // className="lg:w-[60%] min-w-full"
         rootClassName="w-auto"
+        scroll={{ x: 1000 }}
       />
     </>
   );

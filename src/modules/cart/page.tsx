@@ -1,5 +1,22 @@
-import { DeleteFilled } from "@ant-design/icons";
-import { Button, Card, Form, Popconfirm, Table, Typography } from "antd";
+import {
+  DeleteFilled,
+  DeleteOutlined,
+  MinusOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
+import {
+  Button,
+  Card,
+  Checkbox,
+  Col,
+  Form,
+  Image,
+  InputNumber,
+  Popconfirm,
+  Row,
+  Table,
+  Typography,
+} from "antd";
 import { ColumnsType } from "antd/es/table";
 import { Formik } from "formik";
 import React, { useEffect, useState } from "react";
@@ -10,6 +27,7 @@ import { useCartState } from "./context";
 import { ICart } from "./model";
 import { ArrowLeftCircleIcon } from "@heroicons/react/20/solid";
 import { useRouter } from "next/router";
+import { IProduct } from "../product/model";
 
 const { Text } = Typography;
 interface IProps {
@@ -121,18 +139,22 @@ export const CartPage: React.FC<IProps> = ({ userId }) => {
     },
   ];
 
+  const handleQuantityChange = async (val: number, cartItem: ICart) => {
+    setQty(val);
+    if (val !== qty) {
+      const res: any = await updateCartItem(
+        { productId: cartItem?.product?._id, quantity: val },
+        cartItem?._id
+      );
+      if (res) toast.success("Quantity updated");
+    }
+  };
   return (
     <div>
-      {/* <div className="lg:hidden shadow-sm bg-white w-full py-2">
-        <ArrowLeftCircleIcon
-          className="w-8 h-8"
-          onClick={() => router.back()}
-        />
-      </div> */}
-      <div className="lg:mx-20 ">
+      <div className="lg:mx-20">
         <h1 className="text-3xl my-8 font-semibold">Cart</h1>
         <div className="lg:flex lg:justify-between gap-4">
-          <div className="sm:overflow-x-scroll md:overflow-auto">
+          <div className="sm:overflow-x-scroll md:overflow-auto md:block hidden">
             <Table
               rowSelection={rowSelection}
               columns={columns}
@@ -143,7 +165,42 @@ export const CartPage: React.FC<IProps> = ({ userId }) => {
               scroll={{ x: 1000 }}
             />
           </div>
+          <div className="md:hidden">
+            <h2>Cart ({carts?.length})</h2>
+            {carts?.map((cartItem) => (
+              <Card key={cartItem._id} className="mb-4">
+                <div className="flex gap-4">
+                  <Image
+                    width={80}
+                    height={80}
+                    src={cartItem?.product?.images[0]?.uri}
+                    alt={cartItem?.product?.name}
+                    preview={true}
+                  />
+                  <div className="flex gap-4 justify-between">
+                    <p>{cartItem.product?.name}</p>
+                    <span className="text-lg font-semibold text-primary">
+                      N{cartItem.product?.price}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center mt-2">
+                  <ApPlusMinusChange
+                    currentQty={qty}
+                    onQuantityChange={(val) =>
+                      handleQuantityChange(val, cartItem)
+                    }
+                  />
 
+                  <Button
+                    icon={<DeleteOutlined />}
+                    className=" text-red-500"
+                    onClick={() => deleteCartItem(cartItem._id)}
+                  />
+                </div>
+              </Card>
+            ))}
+          </div>
           <Card
             title={"ORDER SUMMARY"}
             type="inner"
@@ -175,6 +232,42 @@ export const CartPage: React.FC<IProps> = ({ userId }) => {
           </Card>
         </div>
       </div>
+    </div>
+  );
+};
+
+const ApPlusMinusChange = ({
+  currentQty,
+  onQuantityChange,
+}: {
+  currentQty: number;
+  onQuantityChange: (qty: number) => void;
+}) => {
+  const handleIncrease = () => {
+    const newQty = currentQty + 1;
+    onQuantityChange(newQty);
+  };
+
+  const handleDecrease = () => {
+    if (currentQty > 1) {
+      const newQty = currentQty - 1;
+      onQuantityChange(newQty);
+    }
+  };
+  return (
+    <div className="flex items-center">
+      <Button
+        icon={<MinusOutlined />}
+        disabled={currentQty <= 1}
+        onClick={handleDecrease}
+        className="flex justify-center items-center w-8 h-8"
+      />
+      <div className="mx-2 text-base font-semibold">{currentQty}</div>
+      <Button
+        icon={<PlusOutlined />}
+        onClick={handleIncrease}
+        className="flex justify-center items-center w-8 h-8"
+      />
     </div>
   );
 };

@@ -35,14 +35,18 @@ export const OrderPage: React.FC<IProps> = ({ userId }) => {
       title: "Image",
       key: "image",
       render: (_, { cart }) => (
-        <ApImage
-          className="w-12 h-12"
-          src={cart[0]?.product?.images[0]?.uri}
-          alt={cart[0]?.product?.images[0]?.uri}
-        />
+        <div className="flex flex-col gap-4">
+          {cart?.slice(0, 2)?.map((c) => (
+            <ApImage
+              key={c._id}
+              className="w-12 h-12"
+              src={c?.product?.images[0]?.uri}
+              alt={c?.product?.images[0]?.uri}
+            />
+          ))}
+        </div>
       ),
     },
-
     {
       title: "Product Name",
       key: "name",
@@ -54,14 +58,13 @@ export const OrderPage: React.FC<IProps> = ({ userId }) => {
         </Text>
       ),
     },
-
     {
       title: "Price",
       key: "price",
       render: (_, { cart }) => (
         <div className="flex flex-col gap-4">
           {cart?.slice(0, 2)?.map((c) => (
-            <Text key={c?._id}>{c.product?.price}</Text>
+            <Text key={c._id}>{c.product?.price}</Text>
           ))}
         </div>
       ),
@@ -72,7 +75,7 @@ export const OrderPage: React.FC<IProps> = ({ userId }) => {
       render: (_, { cart }) => (
         <div className="flex flex-col gap-4">
           {cart?.slice(0, 2)?.map((c) => (
-            <Text key={c?._id}>{c.quantity}</Text>
+            <Text key={c._id}>{c.quantity}</Text>
           ))}
         </div>
       ),
@@ -104,38 +107,41 @@ export const OrderPage: React.FC<IProps> = ({ userId }) => {
     <div>
       <div className="lg:mx-20 mx-4">
         <h1 className="text-3xl my-8 font-semibold">Orders</h1>
-        <div className="lg:flex  lg:justify-between gap-4 ">
-          <Table
-            rowSelection={rowSelection}
-            columns={columns}
-            dataSource={orders}
-            rowKey={(c) => c?._id}
-            className="lg:w-[60%] min-w-full"
-            rootClassName="w-auto"
-            loading={loading}
-            // expandable={{
-            //   expandedRowRender: (record) => {
-            //     if (record?.cart.length > 1) {
-            //       return (
-            //         <div className="flex flex-col gap-4">
-            //           {record?.cart?.map((c) => (
-            //             <div key={c?._id} className=" flex gap-20 items-center">
-            //               <Text></Text>
-            //               <Text>{c?.product?.name}</Text>
-            //               <Text>{c?.product?.price}</Text>
-            //               <Text>{c?.quantity}</Text>
-            //               <Text key={record?._id}>{record.status}</Text>
-            //             </div>
-            //           ))}
-            //         </div>
-            //       );
-            //     }
-            //   },
-            //   //   rowExpandable: (record) => {
-            //   //     return record?.cart ? record?.cart : [];
-            //   //   },
-            // }}
-          />
+        <div className=" ">
+          <div className="overflow-x-scroll md:overflow-auto">
+            <Table
+              rowSelection={rowSelection}
+              columns={columns}
+              dataSource={orders}
+              rowKey={(c) => c?._id}
+              rootClassName="w-auto"
+              loading={loading}
+              scroll={{ x: 1000 }} // Ensures horizontal scroll on smaller screens
+
+              // expandable={{
+              //   expandedRowRender: (record) => {
+              //     if (record?.cart.length > 1) {
+              //       return (
+              //         <div className="flex flex-col gap-4">
+              //           {record?.cart?.map((c) => (
+              //             <div key={c?._id} className=" flex gap-20 items-center">
+              //               <Text></Text>
+              //               <Text>{c?.product?.name}</Text>
+              //               <Text>{c?.product?.price}</Text>
+              //               <Text>{c?.quantity}</Text>
+              //               <Text key={record?._id}>{record.status}</Text>
+              //             </div>
+              //           ))}
+              //         </div>
+              //       );
+              //     }
+              //   },
+              //   //   rowExpandable: (record) => {
+              //   //     return record?.cart ? record?.cart : [];
+              //   //   },
+              // }}
+            />
+          </div>
         </div>
       </div>
     </div>

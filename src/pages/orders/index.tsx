@@ -2,6 +2,7 @@ import React from "react";
 import { OrderPage } from "../../modules/order/page";
 
 import jwt from "jsonwebtoken";
+import { MainLayout } from "../../modules/layout";
 
 const tokenSecret = process.env.JWT_SECRET;
 interface IProps {
@@ -9,7 +10,11 @@ interface IProps {
 }
 
 const Order: React.FC<IProps> = ({ user }) => {
-  return <OrderPage userId={user?.id} />;
+  return (
+    <MainLayout>
+      <OrderPage userId={user?.id} />
+    </MainLayout>
+  );
 };
 
 export default Order;
