@@ -3,6 +3,7 @@ import {
   ApModal,
   ApPlusMinusInput,
   ApTextInput,
+  Footer,
   Headernav,
 } from "../../components";
 import { Button, Card, Space, Typography } from "antd";
@@ -71,14 +72,7 @@ export const CheckoutPage: React.FC<IProps> = ({ userId }) => {
 
   return (
     <div>
-      <Headernav />
-      <div className="lg:hidden">
-        <ArrowLeftCircleIcon
-          className="w-8 h-8"
-          onClick={() => router.back()}
-        />
-      </div>
-      <div className="lg:mx-20 mx-4">
+      <div className="lg:mx-20 ">
         <h1 className="text-3xl my-8 font-semibold">Checkout</h1>
         <div className="lg:flex lg:justify-between w-full gap-4">
           <Card className="lg:w-[60%] w-full">
@@ -97,7 +91,7 @@ export const CheckoutPage: React.FC<IProps> = ({ userId }) => {
               onSubmit={handleSubmit}
             >
               {({ values, setFieldValue }) => (
-                <Form className=" Form card px-4 ">
+                <Form className=" Form card lg:px-4 ">
                   <ApTextInput
                     className="relative bg-stone-50 flex-col block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                     label="Full name"
@@ -106,7 +100,7 @@ export const CheckoutPage: React.FC<IProps> = ({ userId }) => {
                     placeHolder="name"
                     containerClass="flex-col"
                   />
-                  <Space className="flex justify-between items-center gap-4 w-full">
+                  <Space className="lg:flex lg:justify-between block items-center gap-4 w-full">
                     <ApTextInput
                       className="relative bg-stone-50 flex-col block w-full rounded-md border-0 py-1.5 px-2 outline-blue-500 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                       label="Phone Number"

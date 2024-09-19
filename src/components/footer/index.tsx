@@ -13,7 +13,7 @@ export const Footer = () => {
 
   return (
     <div>
-      <Space className="block md:p-20 p-6 bg-gray">
+      <Space className="block lg:p-20 p-6 bg-gray">
         <Space className="sm:flex sm:justify-between block">
           <Text className="font-bold text-2xl block font-sans">
             Get our emails for info on new <br /> items, sales and more
@@ -31,7 +31,7 @@ export const Footer = () => {
             </Text>
           </Space>
         </Space>
-        <Space className="md:flex md:justify-between block items-start mt-8 pb-8 border-b">
+        <Space className="md:flex md:justify-between md:gap-10 block items-start mt-8 pb-8 border-b">
           <Space className="block">
             <Space className="block">
               <Link href={"/"}>

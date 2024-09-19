@@ -3,6 +3,7 @@ import { CartContextProvider } from "../modules/cart/context";
 import { CheckoutPage } from "../modules/cart/checkout";
 import { OrderContextProvider } from "../modules/order/context";
 import jwt from "jsonwebtoken";
+import { MainLayout } from "../modules/layout";
 
 const tokenSecret: string | undefined = process.env.JWT_SECRET;
 interface IProps {
@@ -11,11 +12,13 @@ interface IProps {
 
 const CheckOut: React.FC<IProps> = ({ user }) => {
   return (
-    <CartContextProvider>
-      <OrderContextProvider>
-        <CheckoutPage userId={user.id} />
-      </OrderContextProvider>
-    </CartContextProvider>
+    <MainLayout>
+      <CartContextProvider>
+        <OrderContextProvider>
+          <CheckoutPage userId={user.id} />
+        </OrderContextProvider>
+      </CartContextProvider>
+    </MainLayout>
   );
 };
 
