@@ -52,13 +52,11 @@ export const CartPage: React.FC<IProps> = ({ userId }) => {
           />
         ),
     },
-
     {
       title: "Product Name",
       key: "name",
       render: (_, { product }) => <Text>{product?.name}</Text>,
     },
-
     {
       title: "Price",
       key: "price",
@@ -69,9 +67,7 @@ export const CartPage: React.FC<IProps> = ({ userId }) => {
       key: "quantity",
       render: (_, { _id, quantity, product }) => (
         <Formik
-          initialValues={{
-            quantity: quantity || "",
-          }}
+          initialValues={{ quantity: quantity || "" }}
           onSubmit={() => {}}
         >
           {({ values }) => (
@@ -79,8 +75,8 @@ export const CartPage: React.FC<IProps> = ({ userId }) => {
               <div>
                 <ApPlusMinusInput
                   name="quantity"
-                  btnClassName=" h-7 font-bold text-base"
-                  inputClassName=" h-8 py-2 px-10 bg-white font-extrabold"
+                  btnClassName="h-7 font-bold text-base"
+                  inputClassName="h-8 py-2 px-10 bg-white font-extrabold"
                   onChange={async (val) => {
                     setQty(val);
                     if (val !== quantity) {
@@ -106,10 +102,11 @@ export const CartPage: React.FC<IProps> = ({ userId }) => {
         <Text className="font-semibold">{amount}</Text>
       ),
     },
-
     {
       title: "",
       key: "action",
+      fixed: "right",
+      width: 100,
       render: (_, { _id }) => (
         <Popconfirm
           title="Sure to delete?"
@@ -126,22 +123,27 @@ export const CartPage: React.FC<IProps> = ({ userId }) => {
 
   return (
     <div>
-      <div className="lg:hidden shadow-sm bg-white w-full py-2">
+      {/* <div className="lg:hidden shadow-sm bg-white w-full py-2">
         <ArrowLeftCircleIcon
           className="w-8 h-8"
           onClick={() => router.back()}
         />
-      </div>
-      <div className="lg:mx-20 mx-4">
+      </div> */}
+      <div className="lg:mx-20 ">
         <h1 className="text-3xl my-8 font-semibold">Cart</h1>
-        <div className="lg:flex  lg:justify-between gap-4 ">
-          <Table
-            rowSelection={rowSelection}
-            columns={columns}
-            dataSource={carts?.length > 0 ? carts : []}
-            rowKey={(c) => c?._id}
-            rootClassName="w-auto lg:w-full"
-          />
+        <div className="lg:flex lg:justify-between gap-4">
+          <div className="sm:overflow-x-scroll md:overflow-auto">
+            <Table
+              rowSelection={rowSelection}
+              columns={columns}
+              dataSource={carts?.length > 0 ? carts : []}
+              rowKey={(c) => c?._id}
+              rootClassName="lg:w-full"
+              tableLayout="fixed"
+              scroll={{ x: 1000 }}
+            />
+          </div>
+
           <Card
             title={"ORDER SUMMARY"}
             type="inner"
