@@ -242,7 +242,10 @@ export const CartPage: React.FC<IProps> = ({ userId }) => {
                   {helper.toCurrency(subTotal)}
                 </Text>
               </div>
-              <Button className="w-full" type="primary" href={"/checkout"}>
+              <Button
+                className="w-full bg-primary text-white"
+                href={"/checkout"}
+              >
                 Proceed to Checkout
               </Button>
             </div>

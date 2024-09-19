@@ -55,7 +55,7 @@ export const ProductListItem: React.FC<IProps> = ({
                 className="my-2"
               />
 
-              <p className="font-bold text-gray-900">
+              <p className="font-bold text-primary">
                 {helper.toCurrency(parseFloat(product?.price))}
               </p>
             </div>
@@ -71,7 +71,7 @@ export const ProductListItem: React.FC<IProps> = ({
             loading={loading}
             disabled={loading}
             onClick={handleAddToCart}
-            className="text-white font-bold w-full text-center bg-[#1D2939] rounded-md"
+            className="text-white font-bold w-full text-center bg-primary rounded-md"
           >
             + Add to Cart
           </Button>
