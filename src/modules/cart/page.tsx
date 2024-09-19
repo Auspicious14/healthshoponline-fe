@@ -3,6 +3,7 @@ import {
   DeleteOutlined,
   MinusOutlined,
   PlusOutlined,
+  ShoppingCartOutlined,
 } from "@ant-design/icons";
 import {
   Button,
@@ -28,6 +29,8 @@ import { ICart } from "./model";
 import { ArrowLeftCircleIcon } from "@heroicons/react/20/solid";
 import { useRouter } from "next/router";
 import { IProduct } from "../product/model";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 const { Text } = Typography;
 interface IProps {
@@ -167,39 +170,53 @@ export const CartPage: React.FC<IProps> = ({ userId }) => {
           </div>
           <div className="md:hidden">
             <h2>Cart ({carts?.length})</h2>
-            {carts?.map((cartItem) => (
-              <Card key={cartItem._id} className="mb-4">
-                <div className="flex gap-4">
-                  <Image
-                    width={80}
-                    height={80}
-                    src={cartItem?.product?.images[0]?.uri}
-                    alt={cartItem?.product?.name}
-                    preview={true}
-                  />
-                  <div className="flex gap-4 justify-between">
-                    <p>{cartItem.product?.name}</p>
-                    <span className="text-lg font-semibold text-primary">
-                      N{cartItem.product?.price}
-                    </span>
+            {carts?.length > 0 ? (
+              carts?.map((cartItem) => (
+                <Card key={cartItem._id} className="mb-4">
+                  <div className="flex gap-4">
+                    <Image
+                      width={80}
+                      height={80}
+                      src={cartItem?.product?.images[0]?.uri}
+                      alt={cartItem?.product?.name}
+                      preview={true}
+                    />
+                    <div className="flex gap-4 justify-between">
+                      <p>{cartItem.product?.name}</p>
+                      <span className="text-lg font-semibold text-primary">
+                        N{cartItem.product?.price}
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <div className="flex justify-between items-center mt-2">
-                  <ApPlusMinusChange
-                    currentQty={qty}
-                    onQuantityChange={(val) =>
-                      handleQuantityChange(val, cartItem)
-                    }
-                  />
+                  <div className="flex justify-between items-center mt-2">
+                    <ApPlusMinusChange
+                      currentQty={qty}
+                      onQuantityChange={(val) =>
+                        handleQuantityChange(val, cartItem)
+                      }
+                    />
 
-                  <Button
-                    icon={<DeleteOutlined />}
-                    className=" text-red-500"
-                    onClick={() => deleteCartItem(cartItem._id)}
-                  />
+                    <Button
+                      icon={<DeleteOutlined />}
+                      className=" text-red-500"
+                      onClick={() => deleteCartItem(cartItem._id)}
+                    />
+                  </div>
+                </Card>
+              ))
+            ) : (
+              <div className="mx-auto my-8 w-full flex flex-col justify-center text-center">
+                <div className="w-28 h-28 bg-white rounded-full flex justify-center mx-auto items-center ">
+                  <ShoppingCartIcon className="text-primary w-auto h-auto object-cover" />
                 </div>
-              </Card>
-            ))}
+                <p className="my-8">No product added yet</p>
+                <Link href={`/products`}>
+                  <p className=" border border-primary rounded-lg p-4 text-center text-primary ">
+                    Continue Shopping
+                  </p>
+                </Link>
+              </div>
+            )}
           </div>
           <Card
             title={"ORDER SUMMARY"}
