@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { Progress } from "antd"; // Assuming you're using Ant Design for the progress bar
 import { IProduct, IReview } from "../model";
 import { Button, Space, Typography } from "antd";
 import { ApImage, ApRatingStar } from "../../../components";
 import { getCookie, helper } from "../../../helper";
-import { StarFilled } from "@ant-design/icons";
+import {
+  HeartFilled,
+  HeartOutlined,
+  HeartTwoTone,
+  StarFilled,
+} from "@ant-design/icons";
 import { useCartState } from "../../cart/context";
 import { useRouter } from "next/router";
+import { IFavorite, IFavoriteQuery } from "../../favorite/model";
+import { useFavoriteState } from "../../favorite/context";
 
 const { Text } = Typography;
 interface IProps {
@@ -21,7 +28,12 @@ export const ProductListItem: React.FC<IProps> = ({
   page,
 }) => {
   const { addToCart, loading } = useCartState();
+  const { _favorite, product: favProduct } = useFavoriteState();
   const router = useRouter();
+  const [addedToFavorite, setAddedToFavorite] = useState<boolean>(
+    product?.addedToFavorite || (favProduct?.addedToFavorite as boolean)
+  );
+
   const handleAddToCart = async (values: any) => {
     if (!userId) return router.push("/auth/login");
 
@@ -33,10 +45,16 @@ export const ProductListItem: React.FC<IProps> = ({
     const res: any = await addToCart(payload);
     if (res) router.push("/cart");
   };
+
+  const handleUpdateFavorite = (payload: IFavoriteQuery) => {
+    setAddedToFavorite(payload.addToFavorite);
+    _favorite(payload);
+  };
+
   return (
     <div className="bg-white md:w-auto w-full shadow-md rounded-md transition-transform hover:shadow-lg hover:scale-105 flex flex-col justify-between h-full">
       <div>
-        <Link href={`/products/${product?.slug}`} className="">
+        <div className="">
           <div className="group relative">
             <div className="min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-52">
               <ApImage
@@ -45,6 +63,21 @@ export const ProductListItem: React.FC<IProps> = ({
                 alt={product?.images[0]?.name}
                 className="h-full w-full object-cover object-center lg:h-full lg:w-full"
               />
+            </div>
+            <div
+              onClick={() =>
+                handleUpdateFavorite({
+                  addToFavorite: !addedToFavorite,
+                  productId: product?._id,
+                })
+              }
+              className="absolute top-2 right-2 z-[1000] bg-white rounded-full p-2 flex justify-center items-center"
+            >
+              {addedToFavorite ? (
+                <HeartFilled className="text-2xl text-orange-500" />
+              ) : (
+                <HeartTwoTone className={`text-2xl`} />
+              )}
             </div>
             <div className="mt-4 mx-4">
               <h3 className="text-gray text-sm line-clamp-2 max-h-12 overflow-hidden">
@@ -60,7 +93,7 @@ export const ProductListItem: React.FC<IProps> = ({
               </p>
             </div>
           </div>
-        </Link>
+        </div>
       </div>
 
       {/* Add to Cart Button */}
