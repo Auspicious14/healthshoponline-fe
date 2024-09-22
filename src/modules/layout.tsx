@@ -2,6 +2,7 @@ import React from "react";
 import { Footer, Headernav, SubNav } from "../components";
 import { StoreNav } from "./store/layout";
 import { HeaderNav } from "../components/nav/header";
+import { MobileTab } from "../components/footer/tab";
 
 interface IProps {
   home?: boolean;
@@ -25,6 +26,9 @@ export const MainLayout = ({ className, home, children, storeId }: IProps) => {
       <footer>
         <Footer />
       </footer>
+      <div className="md:hidden fixed  bottom-0 w-full bg-white shadow-md z-[5000]">
+        <MobileTab />
+      </div>
     </div>
   );
 };
