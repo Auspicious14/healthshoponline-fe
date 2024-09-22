@@ -5,10 +5,13 @@ import jwt from "jsonwebtoken";
 
 const tokenSecret = process.env.JWT_SECRET;
 
-const Favorite = () => {
+interface IProps {
+  user: { id: string; isAdmin: boolean };
+}
+const Favorite: React.FC<IProps> = ({ user }) => {
   return (
     <MainLayout>
-      <FavoritePage />
+      <FavoritePage userId={user?.id} />
     </MainLayout>
   );
 };
@@ -42,6 +45,8 @@ export const getServerSideProps = async ({
     };
   }
   return {
-    props: {},
+    props: {
+      user: token,
+    },
   };
 };

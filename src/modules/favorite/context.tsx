@@ -10,6 +10,7 @@ interface IFavoriteState {
   favorites: IFavorite[];
   getFavorites: () => Promise<void>;
   saveFavorite: (payload: IFavoriteQuery) => Promise<void>;
+  deleteFavorite: (_id: string) => Promise<void>;
 }
 
 const FavoriteContext = React.createContext<IFavoriteState>({
@@ -20,6 +21,9 @@ const FavoriteContext = React.createContext<IFavoriteState>({
     return null as any;
   },
   saveFavorite(payload) {
+    return null as never;
+  },
+  deleteFavorite(_id) {
     return null as never;
   },
 });
@@ -49,12 +53,13 @@ export const FavoriteContextProvider: React.FC<IProps> = ({ children }) => {
         endPoint: url,
         method: "GET",
       });
-      setLoading(false);
       const { data } = await res.res?.data;
       setFavorites(data);
     } catch (error: any) {
       console.log("Error fetching favorites:", error);
       toast.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -92,6 +97,30 @@ export const FavoriteContextProvider: React.FC<IProps> = ({ children }) => {
     }
   };
 
+  const deleteFavorite = async (_id: string) => {
+    setLoading(true);
+    try {
+      const res = await apiReqHandler({
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/favorite/${_id}`,
+        method: "DELETE",
+      });
+      const data = await res.res?.data;
+
+      if (data.success === false) {
+        toast.error(data.message);
+        return;
+      }
+
+      toast.success(data.message);
+      setFavorites(favorites.filter((f) => f._id !== _id));
+    } catch (error) {
+      console.error("Error adding to favorites:", error);
+      toast.error("Failed to remove product from wishlist.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <FavoriteContext.Provider
       value={{
@@ -100,6 +129,7 @@ export const FavoriteContextProvider: React.FC<IProps> = ({ children }) => {
         product,
         getFavorites,
         saveFavorite,
+        deleteFavorite,
       }}
     >
       {children}

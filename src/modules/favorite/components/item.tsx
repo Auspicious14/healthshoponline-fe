@@ -5,6 +5,7 @@ import { IProduct } from "../../product/model";
 import { IFavorite } from "../model";
 import { useCartState } from "../../cart/context";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 interface IProps {
   favorite: IFavorite;
@@ -34,8 +35,11 @@ export const FavoriteListItem: React.FC<IProps> = ({
 
   return (
     <div className="border rounded-md bg-white ">
-      <div className="  flex lg:flex-col gap-x-4  lg:gap-0 flex-row">
-        <div className="w-44 md:w-auto h-full">
+      <Link
+        href={`/products/${favorite?.product?.slug}`}
+        className="  flex lg:flex-col gap-x-4  lg:gap-0 flex-row"
+      >
+        <div className="w-32 md:w-auto h-full">
           <Image
             src={favorite?.product?.images[0]?.uri}
             alt={favorite?.product?.images[0]?.name}
@@ -44,13 +48,13 @@ export const FavoriteListItem: React.FC<IProps> = ({
         </div>
         <div className=" lg:px-2 flex lg:flex-row  flex-col gap-4 lg:justify-between lg:my-4">
           <div>
-            <h2 className="text-base font-medium">{favorite?.product?.name}</h2>
-            <p className="text-primary font-semibold text-base py-2">
+            <h2 className="text-lg font-medium">{favorite?.product?.name}</h2>
+            <p className="text-primary  font-semibold text-base py-2">
               ${favorite?.product?.price}
             </p>
           </div>
         </div>
-      </div>
+      </Link>
       <div className="flex justify-between lg:items-end p-2">
         <Button
           type="primary"

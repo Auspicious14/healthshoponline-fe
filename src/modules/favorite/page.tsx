@@ -1,27 +1,29 @@
-// pages/FavoritePage.tsx
 import React, { useEffect, useState } from "react";
-import { List, message } from "antd";
+import { List } from "antd";
 import { FavoriteListItem } from "./components/item";
 import { useFavoriteState } from "./context";
 import { IFavoriteQuery } from "./model";
 
-export const FavoritePage: React.FC = () => {
-  const { favorites, getFavorites } = useFavoriteState();
+interface IProps {
+  userId: string;
+}
+export const FavoritePage: React.FC<IProps> = ({ userId }) => {
+  const { loading, favorites, getFavorites, deleteFavorite } =
+    useFavoriteState();
 
   useEffect(() => {
     getFavorites();
   }, []);
 
-  const removeFavorite = (payload: IFavoriteQuery, id: string) => {
-    // updateFavorite(payload, id);
-    // message.success("Product removed from favorites");
+  const removeFavorite = (id: string) => {
+    deleteFavorite(id);
   };
 
   return (
     <div className=" py-6 mt-28 xl:mx-20 md:p-0">
       <h1 className="lg:text-2xl text-xl font-semibold mb-4">My Wishlist</h1>
 
-      {favorites?.length ? (
+      {!loading && favorites?.length > 0 ? (
         <List
           grid={{
             gutter: 12,
@@ -37,12 +39,8 @@ export const FavoritePage: React.FC = () => {
             <List.Item key={f._id}>
               <FavoriteListItem
                 favorite={f}
-                onRemove={(id) =>
-                  removeFavorite(
-                    { addToFavorite: true, productId: f.product._id },
-                    id
-                  )
-                }
+                onRemove={(id) => removeFavorite(f._id)}
+                userId={userId}
               />
             </List.Item>
           )}
