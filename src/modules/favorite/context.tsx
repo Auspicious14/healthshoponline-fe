@@ -51,9 +51,9 @@ export const FavoriteContextProvider: React.FC<IProps> = ({ children }) => {
       });
       setLoading(false);
       const { data } = await res.res?.data;
-      console.log(data, "ddd");
-      setFavorites(data.data);
+      setFavorites(data);
     } catch (error: any) {
+      console.log("Error fetching favorites:", error);
       toast.error(error);
     }
   };

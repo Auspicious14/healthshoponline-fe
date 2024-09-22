@@ -18,13 +18,13 @@ export const FavoritePage: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-6">
-      <h1 className="text-2xl font-semibold mb-4">Your Favorite Products</h1>
+    <div className=" py-6 mt-28 xl:mx-20 md:p-0">
+      <h1 className="lg:text-2xl text-xl font-semibold mb-4">My Wishlist</h1>
 
-      {favorites.length ? (
+      {favorites?.length ? (
         <List
           grid={{
-            gutter: 16,
+            gutter: 12,
             xs: 1,
             sm: 2,
             md: 3,
