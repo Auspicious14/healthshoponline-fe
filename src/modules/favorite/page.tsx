@@ -6,15 +6,15 @@ import { useFavoriteState } from "./context";
 import { IFavoriteQuery } from "./model";
 
 export const FavoritePage: React.FC = () => {
-  const { favorites, getFavorites, updateFavorite } = useFavoriteState();
+  const { favorites, getFavorites } = useFavoriteState();
 
   useEffect(() => {
     getFavorites();
   }, []);
 
   const removeFavorite = (payload: IFavoriteQuery, id: string) => {
-    updateFavorite(payload, id);
-    message.success("Product removed from favorites");
+    // updateFavorite(payload, id);
+    // message.success("Product removed from favorites");
   };
 
   return (

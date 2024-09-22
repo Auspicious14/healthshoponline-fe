@@ -9,9 +9,7 @@ interface IFavoriteState {
   product: Partial<IProduct>;
   favorites: IFavorite[];
   getFavorites: () => Promise<void>;
-  addToFavorite: (payload: IFavoriteQuery) => Promise<void>;
-  updateFavorite: (payload: IFavoriteQuery, Id: string) => Promise<void>;
-  _favorite: (payload: IFavoriteQuery, id?: string) => Promise<void>;
+  saveFavorite: (payload: IFavoriteQuery) => Promise<void>;
 }
 
 const FavoriteContext = React.createContext<IFavoriteState>({
@@ -21,13 +19,7 @@ const FavoriteContext = React.createContext<IFavoriteState>({
   getFavorites() {
     return null as any;
   },
-  addToFavorite(payload) {
-    return null as any;
-  },
-  updateFavorite(payload, productId) {
-    return null as any;
-  },
-  _favorite(payload, id) {
+  saveFavorite(payload) {
     return null as never;
   },
 });
@@ -66,53 +58,9 @@ export const FavoriteContextProvider: React.FC<IProps> = ({ children }) => {
     }
   };
 
-  const addToFavorite = async (payload: IFavoriteQuery) => {
-    setLoading(true);
-    try {
-      const res = await apiReqHandler({
-        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/favorite/add`,
-        method: "POST",
-        payload: JSON.stringify(payload),
-      });
-      setLoading(false);
-      const data = await res.res?.data;
-      if (data.success === false) {
-        toast.error(data.message);
-      }
-      setFavorites([...favorites, data.data]);
-      toast.success(data.message);
-      return data.data;
-    } catch (error: any) {
-      toast.error(error);
-    }
-  };
-
-  const updateFavorite = async (payload: IFavoriteQuery, id: string) => {
-    setLoading(true);
-    try {
-      const res = await apiReqHandler({
-        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/favorite/${id}`,
-        method: "PUT",
-        payload: JSON.stringify(payload),
-      });
-      setLoading(false);
-      const data = await res.res?.data;
-
-      setFavorites(
-        favorites?.map((f) => (f?._id == data?.data?._id ? data.data : f))
-      );
-      toast.success("Product added to wishlist");
-      return data.data;
-    } catch (error: any) {
-      toast.error(error);
-    }
-  };
-
-  const _favorite = async (payload: IFavoriteQuery, id?: string) => {
-    const endPoint = `${process.env.NEXT_PUBLIC_API_ROUTE}/favorite/${
-      id ? id : "add"
-    }`;
-    const method = id ? "PUT" : "POST";
+  const saveFavorite = async (payload: IFavoriteQuery) => {
+    const endPoint = `${process.env.NEXT_PUBLIC_API_ROUTE}/favorite/save`;
+    const method = "PUT";
 
     try {
       const res = await apiReqHandler({
@@ -127,15 +75,14 @@ export const FavoriteContextProvider: React.FC<IProps> = ({ children }) => {
         return;
       }
 
-      toast.success("Product added to wishlist");
-      const updatedFavorites = id
-        ? favorites?.map((f) => (f?._id === data?.data?._id ? data.data : f))
-        : [...favorites, data.data];
+      toast.success(data.message);
 
       const updatedProduct: IProduct =
         payload.productId === data.product._id ? data.data.product : product;
 
-      setFavorites(updatedFavorites);
+      setFavorites(
+        favorites?.map((f) => (f?._id === data?.data?._id ? data.data : f))
+      );
       setProduct(updatedProduct);
     } catch (error: any) {
       console.error("Error adding to favorites:", error);
@@ -152,9 +99,7 @@ export const FavoriteContextProvider: React.FC<IProps> = ({ children }) => {
         favorites,
         product,
         getFavorites,
-        addToFavorite,
-        updateFavorite,
-        _favorite,
+        saveFavorite,
       }}
     >
       {children}

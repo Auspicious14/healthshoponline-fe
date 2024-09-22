@@ -28,7 +28,7 @@ export const ProductListItem: React.FC<IProps> = ({
   page,
 }) => {
   const { addToCart, loading } = useCartState();
-  const { _favorite, product: favProduct } = useFavoriteState();
+  const { saveFavorite, product: favProduct } = useFavoriteState();
   const router = useRouter();
   const [addedToFavorite, setAddedToFavorite] = useState<boolean>(
     product?.addedToFavorite || (favProduct?.addedToFavorite as boolean)
@@ -48,7 +48,7 @@ export const ProductListItem: React.FC<IProps> = ({
 
   const handleUpdateFavorite = (payload: IFavoriteQuery) => {
     setAddedToFavorite(payload.addToFavorite);
-    _favorite(payload);
+    saveFavorite(payload);
   };
 
   return (
