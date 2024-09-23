@@ -9,13 +9,13 @@ export const CategorySideBar = ({ isNav }: { isNav?: boolean }) => {
   }, []);
 
   return (
-    <div className={`bg-white ${!isNav ? "p-4" : ""}`}>
+    <div className={`bg-white ${!isNav ? "p-4" : ""} `}>
       {!isNav && (
         <h1 className="text-lg font-semibold mb-4 uppercase font-sans">
           Categories
         </h1>
       )}
-      <div className="space-y-4 text-sm ">
+      <div className="space-y-4 text-sm">
         {categories?.map((category) => (
           <Link
             href={`/collections/${category?.slug}`}

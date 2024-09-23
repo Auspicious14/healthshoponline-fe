@@ -51,7 +51,11 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
     {
       key: "2",
       label: "Collections",
-      children: <CategorySideBar isNav />,
+      children: (
+        <div className="overflow-scroll h-[500px] bg-red-400">
+          <CategorySideBar isNav />
+        </div>
+      ),
     },
   ];
 
@@ -181,18 +185,14 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
         </div>
 
         <div
-          className={`fixed inset-0 z-50 transition-transform transform ${
+          className={`fixed inset-0 z-[50] transition-transform transform ${
             toggle ? "translate-x-0" : "-translate-x-full"
           } lg:hidden bg-white w-3/4 max-w-xs`}
         >
           <div className="p-4">
             <div className="flex justify-between items-center">
               <Link href={"/"}>
-                <ApImage
-                  src={Logo}
-                  alt="logo"
-                  className="object-cover w-auto"
-                />
+                <ApImage src={Logo} alt="logo" className="object-cover w-40" />
               </Link>
 
               <button
@@ -200,17 +200,13 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
                 className="text-gray-400"
                 onClick={() => setToggle(false)}
               >
-                <CloseCircleOutlined
-                  size={30}
-                  className="h-10 w-10"
-                  aria-hidden="true"
-                />
+                <CloseCircleOutlined size={40} aria-hidden="true" />
               </button>
             </div>
 
             <Tabs
               defaultActiveKey="1"
-              className="h-full font-sans"
+              className="h-full font-sans z-[50000]"
               items={items}
             />
           </div>
@@ -228,7 +224,7 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
 };
 
 const mobileTabNav = (storeId: string) => (
-  <nav className="md:mt-6">
+  <nav className="md:mt-6 ">
     <Link href="/stores" className="block py-2 text-sm font-medium">
       Stores
     </Link>
@@ -238,11 +234,14 @@ const mobileTabNav = (storeId: string) => (
     >
       Collections
     </Link>
+    <Link href={"/favorites"} className="block py-2 text-sm font-medium">
+      Wishlist
+    </Link>
     <Link href="/orders" className="block py-2 text-sm font-medium">
       Order
     </Link>
     <Link
-      href={storeId ? "/store/${storeId}/blog" : "/blog"}
+      href={storeId ? "/store/${storeId}/blogs" : "/blogs"}
       className="block py-2 text-sm font-medium"
     >
       Blog

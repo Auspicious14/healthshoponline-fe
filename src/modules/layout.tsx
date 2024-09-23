@@ -17,7 +17,7 @@ export const MainLayout = ({ className, home, children, storeId }: IProps) => {
       <div className="fixed top-0 left-0 w-full z-[5000]">
         <Headernav storeId={storeId} />
         <div className="hidden md:block">
-          <SubNav />
+          <SubNav storeId={storeId} />
         </div>
       </div>
       <div className={` bg-gray md:mt-32 mt-20 mb-4 px-4 ${className}`}>

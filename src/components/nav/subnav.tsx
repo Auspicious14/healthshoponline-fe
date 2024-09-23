@@ -6,7 +6,10 @@ import { useEffect, useState } from "react";
 import type { MenuProps } from "antd";
 import classNames from "classnames";
 
-export const SubNav = () => {
+interface IProps {
+  storeId?: string;
+}
+export const SubNav: React.FC<IProps> = ({ storeId }) => {
   const { categories, getCategories } = useCategorystate();
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
@@ -55,15 +58,21 @@ export const SubNav = () => {
                 </div>
               </Dropdown>
 
+              <Link href="/favorites" className="text-sm font-medium">
+                My Wishlist
+              </Link>
               <Link href="/orders" className="text-sm font-medium">
-                Order
+                My Orders
               </Link>
-              <Link href="/blogs" className="text-sm font-medium">
-                Blog
+              <Link
+                href={storeId ? `/stores/${storeId}/blogs` : "/blogs"}
+                className="text-sm font-medium"
+              >
+                Blogs
               </Link>
-              <Link href="#" className="text-sm font-medium">
+              {/* <Link href="#" className="text-sm font-medium">
                 Contact us
-              </Link>
+              </Link> */}
             </div>
           </div>
 
@@ -75,15 +84,18 @@ export const SubNav = () => {
             <Link href="/products" className="text-sm font-medium">
               Collections
             </Link>
+            <Link href="/favorites" className="text-sm font-medium">
+              My Wishlist
+            </Link>
             <Link href="/orders" className="text-sm font-medium">
-              Order
+              My Orders
             </Link>
             <Link href="/blogs" className="text-sm font-medium">
-              Blog
+              Blogs
             </Link>
-            <Link href="#" className="text-sm font-medium">
+            {/* <Link href="#" className="text-sm font-medium">
               Contact us
-            </Link>
+            </Link> */}
           </div>
         </nav>
       </header>

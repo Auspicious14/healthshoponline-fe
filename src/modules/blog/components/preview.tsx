@@ -17,8 +17,8 @@ export const BlogPreview: React.FC<IProps> = ({ blog, store }) => {
     <Link
       href={
         store
-          ? `/stores/${blog?.author?._id}/blog/${blog?._id}`
-          : `/blog/${blog?._id}`
+          ? `/stores/${blog?.author?._id}/blogs/${blog?._id}`
+          : `/blogs/${blog?._id}`
       }
       className="cursor-pointer border border-gray-200 rounded-lg shadow-sm transition-transform hover:shadow-lg hover:scale-105"
     >

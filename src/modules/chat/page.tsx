@@ -111,7 +111,7 @@ export const ChatPage: React.FC<IProps> = ({ storeId, userId, onDissmiss }) => {
   };
 
   return (
-    <div className="fixed top-20 bottom-0 right-0 w-full sm:w-1/2 lg:w-1/3 rounded-2xl bg-white p-4 shadow-lg flex flex-col justify-between z-50">
+    <div className="fixed top-32 bottom-0 right-0 w-full sm:w-1/2 lg:w-1/3 rounded-2xl bg-white p-4 shadow-lg flex flex-col justify-between z-[50000]">
       <div className="flex justify-end">
         <button
           className="flex justify-center items-center bg-blue-500 text-white p-3 rounded-full"
