@@ -11,6 +11,7 @@ import { useCartState } from "../../modules/cart/context";
 import { useProductState } from "../../modules/product/context";
 import { ApImage } from "../image";
 import Logo from "../../../public/images/vendify logo white.jpg";
+import { IProductImage } from "../../modules/product/model";
 
 interface IProps {
   storeId: string;

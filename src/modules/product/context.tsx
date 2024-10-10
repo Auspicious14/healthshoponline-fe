@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { apiReqHandler } from "../../components";
-import { IProduct, IProductFilter, IReview } from "./model";
+import { IProduct, IProductFilter, IProductImage, IReview } from "./model";
 import { toast } from "react-toastify";
 
 interface IProductState {
@@ -21,6 +21,7 @@ interface IProductState {
   getReviews: (productId: string) => Promise<void>;
   createReview: (payload: IReview) => Promise<void>;
   updateReview: (payload: IReview, productId: string) => Promise<void>;
+  getProductsByImage: (file: IProductImage) => Promise<any>;
 }
 
 const ProductContext = React.createContext<IProductState>({
@@ -41,7 +42,10 @@ const ProductContext = React.createContext<IProductState>({
     return null as any;
   },
   getReviews(productId) {
-    return {} as any;
+    return null as any;
+  },
+  getProductsByImage(file) {
+    return null as any;
   },
   createReview(payload) {
     return null as any;
@@ -85,12 +89,14 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
         endPoint: url,
         method: "GET",
       });
-      setLoading(false);
+
       const { data } = await res.res?.data;
       setProducts(data.data);
       setTotalRecords(data.totalRecords);
     } catch (error: any) {
       toast.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -113,6 +119,27 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
     }
   };
 
+  const getProductsByImage = async (file: IProductImage) => {
+    setLoading(true);
+    const { name, uri, type } = file;
+    try {
+      const res = await apiReqHandler({
+        endPoint: `${process.env.NEXT_PUBLIC_API_ROUTE}/products/search-by-image`,
+        method: "POST",
+        payload: JSON.stringify({ file: { name, uri, type } }),
+      });
+
+      const { data } = await res.res?.data;
+      setProducts(data.data);
+      setTotalRecords(data.totalRecords);
+      return data.data;
+    } catch (error: any) {
+      toast.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const createReview = async (payload: IReview) => {
     setLoading(true);
     try {
@@ -131,6 +158,8 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
       return data.data;
     } catch (error: any) {
       toast.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -174,6 +203,7 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
       toast.error(error);
     }
   };
+
   return (
     <ProductContext.Provider
       value={{
@@ -188,6 +218,7 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
         product,
         setNewArrivals,
         getProducts,
+        getProductsByImage,
         getNewArrivals,
         getReviews,
         createReview,

@@ -16,7 +16,7 @@ export interface IProduct {
 }
 
 export interface IProductImage {
-  _id: string;
+  _id?: string;
   uri: string;
   name: string;
   type: string;

@@ -22,7 +22,8 @@ interface IProps {
 }
 
 export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
-  const { products, getProducts, loading, totalRecords } = useProductState();
+  const { products, getProducts, loading, totalRecords, getProductsByImage } =
+    useProductState();
   const { users, getUsersWhoMessageStore } = useChatState();
   const [filter, setFilter] = useState<IProductFilter>({
     page: 1,
@@ -33,6 +34,11 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
     show: boolean;
     type?: "chat" | "detail" | "filter";
   }>({ show: false, type: "detail" });
+  const [image, setImage] = useState<{
+    name: string;
+    uri: string;
+    type: string;
+  }>({ name: "", uri: "", type: "" });
 
   useEffect(() => {
     if (storeId) {
@@ -42,7 +48,11 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
 
   useEffect(() => {
     getProducts(filter);
-  }, [filter]);
+  }, [filter, image]);
+
+  useEffect(() => {
+    getProductsByImage(image);
+  }, [image]);
 
   useEffect(() => {
     getUsersWhoMessageStore(storeId as string);
@@ -50,7 +60,7 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
 
   useEffect(() => {
     setUnreadMessage(
-      users.find((user) => user._id === userId)
+      users?.find((user) => user?._id === userId)
         ?.unreadMessagesFromStore as number
     );
   }, [users]);
@@ -58,6 +68,10 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
   const handleSearch = (val: string) => {
     if (val === undefined) return;
     setFilter({ ...filter, name: val });
+  };
+
+  const handleSearchByImage = (image: any) => {
+    setImage(image);
   };
 
   return (

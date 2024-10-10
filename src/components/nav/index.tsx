@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Input, MenuProps, Select, Tabs, TabsProps } from "antd";
+import {
+  Button,
+  Input,
+  MenuProps,
+  Select,
+  Tabs,
+  TabsProps,
+  Tooltip,
+  Upload,
+} from "antd";
 import Link from "next/link";
 import { useCartState } from "../../modules/cart/context";
 import { getCookie } from "../../helper";
@@ -11,25 +20,31 @@ import {
   ShoppingCartIcon,
   XMarkIcon,
 } from "@heroicons/react/20/solid";
-import {
+import Icon, {
+  CameraOutlined,
   CloseCircleFilled,
   CloseCircleOutlined,
+  FileImageOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 import { useCategorystate } from "../../modules/category/context";
 import { CategorySideBar } from "../../modules/category/components/sidebar";
 import { IProductFilter } from "../../modules/product/model";
+import { UploadChangeParam, UploadFile } from "antd/es/upload";
+import { fileSvc } from "../../file";
+import { useRouter } from "next/router";
 
 const { Search } = Input;
 interface IProps {
   storeId?: string;
 }
 export const Headernav: React.FC<IProps> = ({ storeId }) => {
-  const [toggle, setToggle] = useState<boolean>(false);
+  const router = useRouter();
   const { carts, getCart } = useCartState();
-  const { products, getProducts } = useProductState();
-  const [filter, setFilter] = useState<IProductFilter>({ pageSize: 100 });
+  const { products, getProducts, getProductsByImage } = useProductState();
   const { categories, getCategories } = useCategorystate();
+  const [toggle, setToggle] = useState<boolean>(false);
+  const [filter, setFilter] = useState<IProductFilter>({ pageSize: 100 });
   const [value, setValue] = useState<string>("");
 
   useEffect(() => {
@@ -69,6 +84,19 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
     }
   };
 
+  const handleImageUpload = async (file: UploadFile<any>) => {
+    const { name, type }: any = file;
+
+    const uri = await fileSvc.fileToBase64(file.originFileObj as any);
+
+    getProductsByImage({ name, uri, type }).then((res) => {
+      console.log({ res });
+      // if (res) {
+      //   router.push("/products", { query: JSON.stringify(products) });
+      // }
+    });
+  };
+
   return (
     <header className="relative bg-white">
       <nav aria-label="Top" className="max-w-7xl mx-auto lg:px-8">
@@ -76,16 +104,16 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
           <Link href={"/"} className="flex items-center">
             <ApImage src={Logo} alt="logo" className="object-cover w-auto" />
           </Link>
-          <div className="w-1/3">
+          <div className="w-1/3 flex gap-4">
             <Select
               className="w-full"
               showSearch
               defaultActiveFirstOption={false}
               suffixIcon={null}
-              filterOption={false}
               notFoundContent={null}
               placeholder={"Search Product"}
               value={value}
+              // onSearch={(e) => handleSearch(e)}
               onChange={(e) => {
                 handleChange(e);
               }}
@@ -96,6 +124,21 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
                 </Select.Option>
               ))}
             </Select>
+            <Tooltip
+              title="Search by Image"
+              placement="bottom"
+              arrow={{ pointAtCenter: false }}
+            >
+              <Upload
+                accept="/*"
+                fileList={[]}
+                className="text-primary text-2xl"
+                onChange={(e) => handleImageUpload(e.file)}
+              >
+                <CameraOutlined />
+                {/* <h1>Text here</h1> */}
+              </Upload>
+            </Tooltip>
           </div>
           <Link href="/cart" className="relative items-center p-2">
             <ShoppingCartOutlined
@@ -150,6 +193,14 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
               ))}
             </Select>
           </div>
+          <Upload
+            accept="/*"
+            fileList={[]}
+            className="bg-primary"
+            onChange={(e) => handleImageUpload(e.file)}
+          >
+            <Icon name="image" />
+          </Upload>
           <Link href="/cart" className="relative items-center p-2">
             <ShoppingCartOutlined
               size={30}
@@ -162,9 +213,9 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
             )}
           </Link>
         </div>
-        <div className="md:hidden w-full flex justify-center items-center pb-4">
+        <div className="md:hidden w-full flex justify-center gap-4 items-center pb-4">
           <Select
-            className="w-[90%]"
+            className="w-[80%]"
             showSearch
             defaultActiveFirstOption={false}
             suffixIcon={null}
@@ -182,6 +233,21 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
               </Select.Option>
             ))}
           </Select>
+          <Tooltip
+            title="Search by Image"
+            placement="bottom"
+            arrow={{ pointAtCenter: false }}
+          >
+            <Upload
+              accept="/*"
+              fileList={[]}
+              className="text-primary text-2xl"
+              onChange={(e) => handleImageUpload(e.file)}
+            >
+              <CameraOutlined />
+              {/* <h1>Text here</h1> */}
+            </Upload>
+          </Tooltip>
         </div>
 
         <div
