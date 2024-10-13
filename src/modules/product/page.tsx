@@ -51,10 +51,6 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
   }, [filter, image]);
 
   useEffect(() => {
-    getProductsByImage(image);
-  }, [image]);
-
-  useEffect(() => {
     getUsersWhoMessageStore(storeId as string);
   }, []);
 

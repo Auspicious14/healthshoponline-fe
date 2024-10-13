@@ -118,11 +118,12 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
                 handleChange(e);
               }}
             >
-              {products.map((p) => (
-                <Select.Option key={p._id} value={p.name.toLowerCase()}>
-                  <Link href={`/products/${p.slug}`}>{p.name}</Link>
-                </Select.Option>
-              ))}
+              {products?.length > 0 &&
+                products?.map((p) => (
+                  <Select.Option key={p._id} value={p.name.toLowerCase()}>
+                    <Link href={`/products/${p.slug}`}>{p.name}</Link>
+                  </Select.Option>
+                ))}
             </Select>
             <Tooltip
               title="Search by Image"
