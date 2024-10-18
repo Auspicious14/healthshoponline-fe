@@ -130,9 +130,9 @@ export const ProductContextProvider: React.FC<IProps> = ({ children }) => {
       });
 
       const { data } = await res.res?.data;
-      setProducts(data.data);
+      setProducts(data);
       setTotalRecords(data.totalRecords);
-      return data.data;
+      return data;
     } catch (error: any) {
       toast.error(error);
     } finally {

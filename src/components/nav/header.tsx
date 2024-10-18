@@ -26,9 +26,9 @@ export const HeaderNav: React.FC<IProps> = ({ storeId }) => {
     getCart(id);
   }, []);
 
-  useEffect(() => {
-    getProducts();
-  }, []);
+  // useEffect(() => {
+  //   getProducts();
+  // }, []);
 
   return (
     <header className="relative bg-white">

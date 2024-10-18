@@ -52,10 +52,10 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
     getCart(id);
   }, []);
 
-  useEffect(() => {
-    // getCategories()
-    getProducts(filter);
-  }, [filter]);
+  // useEffect(() => {
+  //   // getCategories()
+  //   getProducts(filter);
+  // }, [filter]);
 
   const items: TabsProps["items"] = [
     {
@@ -84,6 +84,8 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
     }
   };
 
+  console.log({ products });
+
   const handleImageUpload = async (file: UploadFile<any>) => {
     const { name, type }: any = file;
 
@@ -91,9 +93,12 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
 
     getProductsByImage({ name, uri, type }).then((res) => {
       console.log({ res });
-      // if (res) {
-      //   router.push("/products", { query: JSON.stringify(products) });
-      // }
+      if (res?.length > 0) {
+        router.push({
+          pathname: "/products",
+          query: { products: JSON.stringify(res) },
+        });
+      }
     });
   };
 
@@ -187,11 +192,12 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
                 handleChange(e);
               }}
             >
-              {products.map((p) => (
-                <Select.Option key={p._id} value={p.name.toLowerCase()}>
-                  <Link href={`/products/${p.slug}`}>{p.name}</Link>
-                </Select.Option>
-              ))}
+              {products?.length > 0 &&
+                products?.map((p) => (
+                  <Select.Option key={p._id} value={p.name.toLowerCase()}>
+                    <Link href={`/products/${p.slug}`}>{p.name}</Link>
+                  </Select.Option>
+                ))}
             </Select>
           </div>
           <Upload
@@ -200,7 +206,7 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
             className="bg-primary"
             onChange={(e) => handleImageUpload(e.file)}
           >
-            <Icon name="image" />
+            <Icon name="image" children />
           </Upload>
           <Link href="/cart" className="relative items-center p-2">
             <ShoppingCartOutlined
@@ -228,11 +234,12 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
               handleChange(e);
             }}
           >
-            {products.map((p) => (
-              <Select.Option key={p._id} value={p.name.toLowerCase()}>
-                <Link href={`/products/${p.slug}`}>{p.name}</Link>
-              </Select.Option>
-            ))}
+            {products?.length > 0 &&
+              products.map((p) => (
+                <Select.Option key={p._id} value={p.name.toLowerCase()}>
+                  <Link href={`/products/${p.slug}`}>{p.name}</Link>
+                </Select.Option>
+              ))}
           </Select>
           <Tooltip
             title="Search by Image"

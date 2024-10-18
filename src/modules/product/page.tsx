@@ -11,6 +11,7 @@ import { MenuFoldOutlined, MessageOutlined } from "@ant-design/icons";
 import { ChatPage } from "../chat/page";
 import { useChatState } from "../chat/context";
 import { CategorySideBar } from "../category/components/sidebar";
+import { useSearchParams } from "next/navigation";
 
 const { Text } = Typography;
 const { Search } = Input;
@@ -40,6 +41,10 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
     type: string;
   }>({ name: "", uri: "", type: "" });
 
+  const queryParams = useSearchParams().get("products");
+  const searchedProducts = JSON.parse(queryParams as any);
+  // console.log(JSON.parse(queryParams as any), "queryyy");
+
   useEffect(() => {
     if (storeId) {
       setFilter({ ...filter, storeId });
@@ -47,7 +52,10 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
   }, [storeId]);
 
   useEffect(() => {
-    getProducts(filter);
+    if (!searchedProducts || searchedProducts?.length === 0) {
+      getProducts(filter);
+      return;
+    }
   }, [filter, image]);
 
   useEffect(() => {
@@ -70,6 +78,7 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
     setImage(image);
   };
 
+  console.log({ products });
   return (
     <div className="relative z-50">
       <div className="xl:mx-20 md:p-0">
@@ -92,7 +101,8 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
             {loading && (
               <Spin size="large" className="flex justify-center items-center" />
             )}
-            {!loading && products?.length > 0 ? (
+            {!loading &&
+            (products?.length > 0 || searchedProducts?.length > 0) ? (
               <div className="grid sm:grid-cols-3 grid-cols-2 gap-4 my-2 py-4 align-middle rounded-lg">
                 {products?.map((p) => (
                   <ProductListItem
@@ -104,7 +114,10 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
                 ))}
               </div>
             ) : (
-              !loading && products?.length === 0 && <div>No products...</div>
+              !loading &&
+              (products?.length === 0 || searchedProducts?.length === 0) && (
+                <div>No products...</div>
+              )
             )}
 
             <Pagination
