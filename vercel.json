@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "http://vendify-load-balancer-1879614014.us-east-1.elb.amazonaws.com/api/$1"
+    }
+  ]
+}
