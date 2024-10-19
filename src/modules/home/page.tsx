@@ -13,6 +13,7 @@ import Banner2 from "../../../public/images/banner1 (2).jpeg";
 import Banner3 from "../../../public/images/banner1 (3).jpeg";
 import Banner4 from "../../../public/images/banner1 (4).jpeg";
 import Banner5 from "../../../public/images/banner1 (5).jpeg";
+import { SearchByImage } from "./components/imageSearch";
 
 const bannerImages = [
   { id: 1, uri: Banner1, name: "banner1" },
@@ -121,6 +122,9 @@ export const HomePage = () => {
             </div>
           </div>
         </div>
+      </motion.div>
+      <motion.div>
+        <SearchByImage />
       </motion.div>
       <div className="flex gap-8 relative  pt-3">
         <motion.div
