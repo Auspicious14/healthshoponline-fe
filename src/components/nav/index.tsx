@@ -42,20 +42,13 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
   const router = useRouter();
   const { carts, getCart } = useCartState();
   const { products, getProducts, getProductsByImage } = useProductState();
-  const { categories, getCategories } = useCategorystate();
   const [toggle, setToggle] = useState<boolean>(false);
   const [filter, setFilter] = useState<IProductFilter>({ pageSize: 100 });
-  const [value, setValue] = useState<string>("");
 
   useEffect(() => {
     const id = getCookie("user_id");
     getCart(id);
   }, []);
-
-  // useEffect(() => {
-  //   // getCategories()
-  //   getProducts(filter);
-  // }, [filter]);
 
   const items: TabsProps["items"] = [
     {
@@ -75,16 +68,10 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
   ];
 
   const handleSearch = (name: string) => {
-    setFilter({ ...filter, name });
-  };
-
-  const handleChange = (val: string) => {
-    if (val) {
-      setValue(val);
+    if (name) {
+      getProducts({ ...filter, name });
     }
   };
-
-  console.log({ products });
 
   const handleImageUpload = async (file: UploadFile<any>) => {
     const { name, type }: any = file;
@@ -92,7 +79,6 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
     const uri = await fileSvc.fileToBase64(file.originFileObj as any);
 
     getProductsByImage({ name, uri, type }).then((res) => {
-      console.log({ res });
       if (res?.length > 0) {
         router.push({
           pathname: "/products",
@@ -117,11 +103,7 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
               suffixIcon={null}
               notFoundContent={null}
               placeholder={"Search Product"}
-              value={value}
-              // onSearch={(e) => handleSearch(e)}
-              onChange={(e) => {
-                handleChange(e);
-              }}
+              onSearch={(e) => handleSearch(e)}
             >
               {products?.length > 0 &&
                 products?.map((p) => (
@@ -138,7 +120,7 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
               <Upload
                 accept="/*"
                 fileList={[]}
-                className="text-primary text-2xl"
+                className="tex text-2xl"
                 onChange={(e) => handleImageUpload(e.file)}
               >
                 <CameraOutlined />
@@ -187,10 +169,7 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
               filterOption={false}
               notFoundContent={null}
               placeholder={"Search Product"}
-              value={value}
-              onChange={(e) => {
-                handleChange(e);
-              }}
+              onSearch={(e) => handleSearch(e)}
             >
               {products?.length > 0 &&
                 products?.map((p) => (
@@ -200,14 +179,7 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
                 ))}
             </Select>
           </div>
-          <Upload
-            accept="/*"
-            fileList={[]}
-            className="bg-primary"
-            onChange={(e) => handleImageUpload(e.file)}
-          >
-            <Icon name="image" children />
-          </Upload>
+
           <Link href="/cart" className="relative items-center p-2">
             <ShoppingCartOutlined
               size={30}
@@ -226,13 +198,12 @@ export const Headernav: React.FC<IProps> = ({ storeId }) => {
             showSearch
             defaultActiveFirstOption={false}
             suffixIcon={null}
-            filterOption={false}
             notFoundContent={null}
-            value={value}
-            placeholder={"Search Product"}
-            onChange={(e) => {
-              handleChange(e);
-            }}
+            placeholder={"Search Products"}
+            onSearch={(e) => handleSearch(e)}
+            // onChange={(e) => {
+            //   handleChange(e);
+            // }}
           >
             {products?.length > 0 &&
               products.map((p) => (

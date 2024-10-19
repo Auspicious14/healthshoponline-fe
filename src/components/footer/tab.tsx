@@ -48,9 +48,9 @@ export const MobileTab = () => {
           animated
           activeKey={tabs.find((t) => t.route === router.pathname)?.key}
           defaultActiveKey="tab1"
-          className="mx-2"
+          className="flex justify-between items-center w-full mx-2"
           items={tabs}
-          //   tabBarGutter={35}
+          // tabBarGutter={35}
         />
       </div>
     </div>
