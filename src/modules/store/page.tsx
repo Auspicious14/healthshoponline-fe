@@ -22,7 +22,7 @@ export const StorePage = () => {
   return (
     <div className="mt-24">
       <div className="md:mx-20 md:p-0 ">
-        <Search
+        {/* <Search
           placeholder="Search store"
           allowClear
           enterButton="Search"
@@ -30,7 +30,7 @@ export const StorePage = () => {
           className="bg-blue-600 rounded-md md:mt-8"
           onSearch={handleSearch}
           onChange={(e) => handleSearch(e.target.value)}
-        />
+        /> */}
         {loading && (
           <Spin
             size="large"

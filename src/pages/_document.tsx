@@ -10,6 +10,10 @@ export default function Document() {
         content="A digital multi-vendor e-commerce platform"
       />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta
+        http-equiv="Content-Security-Policy"
+        content="upgrade-insecure-requests"
+      />
       <link rel="icon" href="/images/vendify logo white.jpg" />
       <link
         rel="preconnect"
