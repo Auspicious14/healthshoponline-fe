@@ -12,7 +12,7 @@ export interface IProduct {
   quantity: number;
   addedToFavorite: boolean;
   slug: string;
-  rating: string | number;
+  rating: number;
 }
 
 export interface IProductImage {

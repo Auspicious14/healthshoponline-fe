@@ -19,7 +19,7 @@ interface IProductState {
   getProducts: (filter?: any) => Promise<void>;
   getNewArrivals: () => Promise<void>;
   getReviews: (productId: string) => Promise<void>;
-  createReview: (payload: IReview) => Promise<void>;
+  createReview: (payload: IReview) => Promise<any>;
   updateReview: (payload: IReview, productId: string) => Promise<void>;
   getProductsByImage: (file: IProductImage) => Promise<any>;
 }

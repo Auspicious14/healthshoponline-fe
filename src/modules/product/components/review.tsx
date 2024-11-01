@@ -21,16 +21,25 @@ export const Review: React.FC<IProps> = ({ productId, review }) => {
   const { createReview, updateReview, loading } = useProductState();
   const [rate, setRate] = useState(review?.rating);
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: any, actions: any) => {
     const userId = getCookie("user_id");
-    let res;
 
-    res = await createReview({
+    const res = await createReview({
       ...values,
       productId: productId?._id,
       userId,
       rating: rate,
     });
+    if (res) {
+      actions.resetForm({
+        values: {
+          address: {
+            title: "",
+            description: "",
+          },
+        },
+      });
+    }
   };
   return (
     <Formik
@@ -57,7 +66,7 @@ export const Review: React.FC<IProps> = ({ productId, review }) => {
                   />
                 </div>
                 <ApTextInput
-                  label="Name"
+                  label="Title"
                   name="title"
                   type="text"
                   placeHolder="Nike Air Max"

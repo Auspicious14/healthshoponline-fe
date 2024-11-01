@@ -76,13 +76,6 @@ export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
   const handleEachRating = () => {
     reviews?.find((r) => r?._id);
   };
-  const ratingsData = [
-    { rating: 5, count: 9 },
-    { rating: 4, count: 21 },
-    { rating: 3, count: 3 },
-    { rating: 2, count: 5 },
-    { rating: 1, count: 1 },
-  ];
 
   const handleImageChange = (index: number) => {
     if (carouselRef.current) {
@@ -182,8 +175,11 @@ export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
               </p>
             </div>
             <div className="flex gap-4 items-center mb-4">
-              <ApRatingStar value={totalRatings} className="text-zinc-200" />
-              <p>{totalRatings?.toFixed(1) || 0} Ratings</p>
+              <ApRatingStar
+                value={Math.floor(Math.round(product?.rating))}
+                className="text-zinc-200"
+              />
+              {/* <p>{totalRatings || 0} Ratings</p> */}
             </div>
 
             <div className="space-y-6 text-justify">
@@ -260,18 +256,18 @@ export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
                   {totalRatings ? totalRatings.toFixed(1) : "0.0"}
                 </Text>
                 <ApRatingStar
-                  value={totalRatings}
-                  size={30}
+                  value={parseFloat(totalRatings.toFixed(0))}
+                  // size={30}
                   className="justify-center my-2"
                 />
                 <Text className="text-gray-300 my-3 font-sans">{`${reviews?.length} Product Ratings`}</Text>
               </Space>
               <Space className="block md:w-[50%] w-full">
-                {ratingsData.map((data) => (
+                {reviews.map((data) => (
                   <RateStreakListItem
                     key={data.rating}
                     rating={data.rating}
-                    count={data.count}
+                    count={reviews.map((r) => r.rating).length}
                     totalRatings={totalRatings}
                   />
                 ))}

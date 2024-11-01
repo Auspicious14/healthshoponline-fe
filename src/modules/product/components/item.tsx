@@ -121,25 +121,24 @@ interface IReviewProps {
 export const ReviewListItem: React.FC<IReviewProps> = ({ review }) => {
   return (
     <>
-      <div className="lg:flex lg:gap-72 my-6">
-        {review?.user ? (
-          <div>
-            <Space className="hidden lg:block">
+      <div className="lg:flex lg:gap-12 my-6">
+        <div>
+          <Space className="hidden lg:block">
+            {review?.user && (
               <h1>{`${review?.user?.firstName} ${review?.user?.lastName}`}</h1>
-              <p className="text-justify font-bold py-2">
-                {review?.createdAt?.substring(0, 10)}
-              </p>
-            </Space>
-            <Space className="flex gap-3 items-center lg:hidden">
-              <ApRatingStar value={review?.rating} />
-              <p className="text-justify font-bold py-2 text-sm">
-                {review?.createdAt?.substring(0, 10)}
-              </p>
-            </Space>
-          </div>
-        ) : (
-          <div></div>
-        )}
+            )}
+            <p className="text-justify font-bold py-2">
+              {review?.createdAt?.substring(0, 10)}
+            </p>
+          </Space>
+          <Space className="flex gap-3 items-center lg:hidden">
+            <ApRatingStar value={review?.rating} />
+            <p className="text-justify font-bold py-2 text-sm">
+              {review?.createdAt?.substring(0, 10)}
+            </p>
+          </Space>
+        </div>
+
         <Space className="block">
           <ApRatingStar value={review?.rating} className="hidden lg:block" />
           <div></div>
@@ -166,27 +165,26 @@ export const RateStreakListItem: React.FC<IRateProps> = ({
   totalRatings,
 }) => {
   const percentage = (count / 100) * 100;
-  console.log(percentage, "percent");
+
   return (
     <div className="flex items-center gap-2 w-full">
-      {/* Star Rating */}
       <div className="flex gap-4 items-center w-[15%]">
-        <StarFilled className="text-yellow-500" />
+        <StarFilled className="text-orange-500" />
         <div className="">{rating}</div>
       </div>
 
       <div className="w-[100%]">
         <Progress
           percent={percentage}
-          showInfo={false}
-          className="block w-full bg0"
+          showInfo={true}
+          className="block w-full"
           strokeColor="#007bff"
         />
       </div>
 
-      <div className="w-[10%] text-right">
+      {/* <div className="w-[10%] text-right">
         <span>{count}</span>
-      </div>
+      </div> */}
     </div>
   );
 };

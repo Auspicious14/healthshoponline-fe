@@ -44,7 +44,7 @@ export const CheckoutPage: React.FC<IProps> = ({ userId }) => {
     amount = subTotal;
     // const id = getCookie("user_id");
     const res: any = await createOrder({ userId, amount, ...otherValues });
-    console.log(res);
+
     if (res?.data) {
       setOrder(res.data);
       const response = await emptyCart(userId);
