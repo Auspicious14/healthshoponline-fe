@@ -216,16 +216,13 @@ export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
                       </Button>
                       <Button
                         type="primary"
+                        htmlType="button"
+                        onClick={handleCopy}
                         className="mt-10 flex w-full p-6 items-center justify-center rounded-md border border-transparent bg-blue-600 text-base font-medium text-white"
                       >
-                        Buy Now
+                        Share to friends
                       </Button>
                     </div>
-                    <ShareAltOutlined
-                      className="my-4"
-                      size={20}
-                      onClick={handleCopy}
-                    />
                   </Form>
                 )}
               </Formik>
