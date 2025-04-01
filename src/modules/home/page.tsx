@@ -50,6 +50,8 @@ export const HomePage = () => {
     };
   }, []);
 
+  
+
   return (
     <motion.div className="xl:px-16">
       <motion.div

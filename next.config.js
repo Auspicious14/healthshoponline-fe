@@ -3,6 +3,8 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     domains: ["res.cloudinary.com", "loremflickr.com"],
+    loader: "imgix",
+    loaderFile: "./imgix-loader.ts",
   },
 };
 

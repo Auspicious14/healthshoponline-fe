@@ -70,8 +70,7 @@ export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
 
   const handleCopy = () => {
     const text = `${process.env.NEXT_PUBLIC_BASE_URL}${router.asPath}`;
-    navigator.clipboard.writeText(text);
-    toast.success("copied");
+    navigator.clipboard.writeText(text).finally(() => toast.success("copied"));
   };
   const handleEachRating = () => {
     reviews?.find((r) => r?._id);
@@ -254,7 +253,6 @@ export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
                 </Text>
                 <ApRatingStar
                   value={parseFloat(totalRatings.toFixed(0))}
-                  // size={30}
                   className="justify-center my-2"
                 />
                 <Text className="text-gray-300 my-3 font-sans">{`${reviews?.length} Product Ratings`}</Text>

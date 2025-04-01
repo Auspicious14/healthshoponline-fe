@@ -25,7 +25,7 @@ export const NewArrivals = () => {
             <div key={product?._id}>
               <div className="bg-white md:w-auto w-full shadow-md rounded-md transition-transform hover:shadow-lg hover:scale-105 flex flex-col justify-between h-full">
                 <div>
-                  <Link href={`/products/${product?._id}`} className="">
+                  <Link href={`/products/${product?.slug}`} className="">
                     <div className=" relative">
                       <div className="min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-52">
                         <ApImage
