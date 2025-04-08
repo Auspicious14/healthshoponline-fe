@@ -78,7 +78,6 @@ export const ProductPage: React.FC<IProps> = ({ storeId, userId, user }) => {
     setImage(image);
   };
 
-  console.log({ products });
   return (
     <div className="relative z-50">
       <div className="xl:mx-20 md:p-0">

@@ -252,13 +252,13 @@ export const ProductDetailPage: React.FC<IProps> = ({ product, userId }) => {
                   {totalRatings ? totalRatings.toFixed(1) : "0.0"}
                 </Text>
                 <ApRatingStar
-                  value={parseFloat(totalRatings.toFixed(0))}
+                  value={parseFloat(totalRatings?.toFixed(0))}
                   className="justify-center my-2"
                 />
                 <Text className="text-gray-300 my-3 font-sans">{`${reviews?.length} Product Ratings`}</Text>
               </Space>
               <Space className="block md:w-[50%] w-full">
-                {reviews.map((data) => (
+                {reviews?.map((data) => (
                   <RateStreakListItem
                     key={data.rating}
                     rating={data.rating}
