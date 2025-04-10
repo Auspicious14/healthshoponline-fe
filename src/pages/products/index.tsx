@@ -9,7 +9,7 @@ interface IProps {
 }
 const Product: React.FC<IProps> = ({ user }) => {
   return (
-    <MainLayout home>
+    <MainLayout>
       <ProductPage userId={user?.id} />
     </MainLayout>
   );

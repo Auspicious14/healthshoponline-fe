@@ -52,64 +52,65 @@ export const ProductListItem: React.FC<IProps> = ({
   };
 
   return (
-    <div className="bg-white md:w-auto w-full shadow-md rounded-md transition-transform hover:shadow-lg hover:scale-105 flex flex-col justify-between h-full">
-      <div>
-        <div>
-          <Link href={`/products/${product?.slug}`} className="group relative">
-            <div className="min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-52">
-              <ApImage
-                key={product?.images[0]?._id}
-                src={product?.images[0]?.uri}
-                alt={product?.images[0]?.name}
-                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-              />
-            </div>
-            <div
-              onClick={() =>
-                handleUpdateFavorite({
-                  addToFavorite: !addedToFavorite,
-                  productId: product?._id,
-                })
-              }
-              className="absolute top-2 right-2 z-[1000] bg-white rounded-full p-2 flex justify-center items-center"
-            >
-              {addedToFavorite ? (
-                <HeartFilled className="text-2xl text-orange-500" />
-              ) : (
-                <HeartTwoTone className={`text-2xl`} />
-              )}
-            </div>
-            <div className="mt-4 mx-4">
-              <h3 className="text-gray text-sm line-clamp-2 max-h-12 overflow-hidden">
-                {product?.name}
-              </h3>
-              <ApRatingStar
-                value={product?.rating as number}
-                className="my-2"
-              />
+    <div className="bg-white shadow-sm rounded-xl transition-all hover:shadow-lg group overflow-hidden">
+      <div className="relative">
+        <Link href={`/products/${product?.slug}`} className="block">
+          <div className="aspect-square bg-gray-100 relative overflow-hidden">
+            <ApImage
+              src={product?.images[0]?.uri}
+              className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+              alt={product?.images[0]?.name}
+            />
+          </div>
+        </Link>
 
-              <p className="font-bold text-primary">
-                {helper.toCurrency(parseFloat(product?.price))}
-              </p>
-            </div>
-          </Link>
-        </div>
+        {/* Favorite Button */}
+        <button
+          onClick={() => handleUpdateFavorite({
+            addToFavorite: !addedToFavorite,
+            productId: product?._id,
+          })}
+          className="absolute top-3 right-3 z-10 bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-sm hover:bg-white transition-colors"
+          aria-label={addedToFavorite ? "Remove from favorites" : "Add to favorites"}
+        >
+          {addedToFavorite ? (
+            <HeartFilled className="text-lg text-red-500" />
+          ) : (
+            <HeartOutlined className="text-lg text-gray-600 hover:text-red-400" />
+          )}
+        </button>
       </div>
 
-      {/* Add to Cart Button */}
-      {page && (
-        <div className="mt-4">
-          <Button
-            size="large"
-            loading={loading}
-            disabled={loading}
-            onClick={handleAddToCart}
-            className="text-white font-bold w-full text-center bg-primary rounded-md"
-          >
-            + Add to Cart
-          </Button>
+      {/* Product Details */}
+      <div className="p-4 space-y-2">
+        <ApRatingStar 
+          value={product?.rating as number} 
+          className="text-sm text-amber-500"
+        />
+        
+        <h3 className="font-medium text-gray-900 line-clamp-2 leading-tight text-base">
+          {product?.name}
+        </h3>
+
+        <div className="flex items-center justify-between">
+          <p className="text-lg font-bold text-primary">
+            {helper.toCurrency(parseFloat(product?.price))}
+          </p>
+          
+          {/* Add to Cart Button */}
+          {page && (
+            <Button
+              shape="round"
+              size="middle"
+              loading={loading}
+              onClick={handleAddToCart}
+              className="bg-primary hover:bg-primary-hover text-white font-medium border-none"
+            >
+              Add to Cart
+            </Button>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };

@@ -33,72 +33,46 @@ export const SubNav: React.FC<IProps> = ({ storeId }) => {
   );
 
   return (
-    <div className="bg-primary">
-      <header className="relative bg-primary text-white">
-        <nav aria-label="Top" className="sm:px-6">
-          {/* Desktop Links */}
-          <div className="hidden md:flex justify-center py-4">
-            <div className="flex space-x-16">
-              <Link href="/stores" className="text-sm font-medium">
-                Stores
-              </Link>
+    <nav className="hidden md:flex justify-center bg-white py-3 shadow-sm">
+      <div className="flex space-x-8 max-w-7xl w-full px-4">
+        <Link
+          href="/stores"
+          className="text-gray-700 hover:text-primary transition-colors"
+        >
+          Stores
+        </Link>
 
-              <Dropdown
-                menu={{
-                  items: categoryItems,
-                  className: animatedMenuClass,
-                }}
-                onOpenChange={(visible) => setIsVisible(visible)}
-              >
-                <div
-                  className="ant-dropdown-link text-sm font-medium cursor-pointer"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Collections
-                </div>
-              </Dropdown>
-
-              <Link href="/favorites" className="text-sm font-medium">
-                My Wishlist
-              </Link>
-              <Link href="/orders" className="text-sm font-medium">
-                My Orders
-              </Link>
-              <Link
-                href={storeId ? `/stores/${storeId}/blogs` : "/blogs"}
-                className="text-sm font-medium"
-              >
-                Blogs
-              </Link>
-              {/* <Link href="#" className="text-sm font-medium">
-                Contact us
-              </Link> */}
-            </div>
+        <Dropdown
+          menu={{
+            items: categoryItems,
+            className: animatedMenuClass,
+          }}
+          onOpenChange={(visible) => setIsVisible(visible)}
+        >
+          <div
+            className="ant-dropdown-link text-sm font-medium cursor-pointer"
+            onClick={(e) => e.preventDefault()}
+          >
+            Collections
           </div>
+        </Dropdown>
 
-          {/* Mobile Links */}
-          <div className="md:hidden flex justify-between py-4 px-12">
-            <Link href="/stores" className="text-sm font-medium">
-              Stores
-            </Link>
-            <Link href="/products" className="text-sm font-medium">
-              Collections
-            </Link>
-            <Link href="/favorites" className="text-sm font-medium">
-              My Wishlist
-            </Link>
-            <Link href="/orders" className="text-sm font-medium">
-              My Orders
-            </Link>
-            <Link href="/blogs" className="text-sm font-medium">
-              Blogs
-            </Link>
-            {/* <Link href="#" className="text-sm font-medium">
-              Contact us
-            </Link> */}
-          </div>
-        </nav>
-      </header>
-    </div>
+        <Link href="/favorites" className="text-sm font-medium">
+          My Wishlist
+        </Link>
+        <Link href="/orders" className="text-sm font-medium">
+          My Orders
+        </Link>
+        <Link
+          href={storeId ? `/stores/${storeId}/blogs` : "/blogs"}
+          className="text-sm font-medium"
+        >
+          Blogs
+        </Link>
+        {/* <Link href="#" className="text-sm font-medium">
+          Contact us
+        </Link> */}
+      </div>
+    </nav>
   );
 };

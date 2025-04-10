@@ -18,7 +18,7 @@ const CategorySlug: React.FC<IProps> = ({ products, category }) => {
 
   useEffect(() => {
     setCollections(products);
-  }, []);
+  }, [products]);
 
   return (
     <MainLayout className="px-0">

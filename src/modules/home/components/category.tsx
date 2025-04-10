@@ -13,55 +13,23 @@ export const Category = () => {
   }, []);
 
   return (
-    <div className="grid gap-4 md:grid-cols-6 grid-cols-3 align-middle">
+    <div className="grid gap-2 md:gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
       {categories?.map((c) => (
-        <div key={c?._id} className="w-full h-full">
-          <div className=" md:w-auto w-full rounded-md transition-transform hover:shadow-lg hover:scale-105 flex flex-col justify-between h-full">
-            <div>
-              <Link href={`/collections/${c?.slug}`} className="">
-                <div className="group relative">
-                  <div className="min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-52">
-                    <ApImage
-                      // key={c?.images[0]?._id}
-                      src={c?.images[0]?.uri}
-                      alt={c?.images[0]?.name}
-                      className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                      unoptimized
-                    />
-                  </div>
-                  <div className="mt-4 mx-4">
-                    <h3 className="text-gray-700 text-sm font-bold line-clamp-2 max-h-12 overflow-hidden">
-                      {c?.name}
-                    </h3>
-                  </div>
-                </div>
-              </Link>
+        <div key={c?._id} className="group relative p-2">
+          <Link href={`/collections/${c?.slug}`} className="block">
+            <div className="aspect-square overflow-hidden rounded-lg bg-gray-100 transition-transform duration-300 group-hover:scale-95">
+              <ApImage
+                src={c?.images[0]?.uri}
+                className="h-full w-full object-cover"
+                alt={c?.images[0]?.name}
+              />
             </div>
-          </div>
+            <h3 className="mt-2 text-xs font-semibold text-gray-700 line-clamp-2 md:text-sm">
+              {c?.name}
+            </h3>
+          </Link>
         </div>
       ))}
     </div>
   );
 };
-
-{
-  /* <div className="grid gap-4 sm:grid-cols-3 grid-cols-2">
-      {categories?.map((c) => (
-        <div key={c?._id} className="relative">
-          {!!c?.images?.length && (
-            <ApImage
-              src={c?.images[0]?.uri}
-              className="w-full h-60 object-cover rounded-lg"
-              alt={c?.images[0]?.name}
-            />
-          )}
-          <Button
-            href={`/products`}
-            className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white border-none font-bold px-4 py-2 text-black"
-          >
-            {c?.name}
-          </Button>
-        </div>
-      ))}
-    </div> */
-}

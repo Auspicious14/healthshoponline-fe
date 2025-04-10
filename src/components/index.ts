@@ -6,3 +6,4 @@ export * from "./image";
 export * from "./footer";
 export * from "./modal";
 export * from "./ratingstar";
+export * from "./footer/tab";

@@ -14,44 +14,28 @@ export const NewArrivals = () => {
   // }, []);
 
   return (
-    <>
-      {loading && (
-        <Spin size="large" className="flex justify-center items-center" />
-      )}
-      <div className=" grid gap-4 xl:lg:md:grid-cols-4 sm:grid-cols-3 grid-cols-2 align-middle">
-        {!loading &&
-          newArrivals?.length > 0 &&
-          newArrivals?.map((product: IProduct) => (
-            <div key={product?._id}>
-              <div className="bg-white md:w-auto w-full shadow-md rounded-md transition-transform hover:shadow-lg hover:scale-105 flex flex-col justify-between h-full">
-                <div>
-                  <Link href={`/products/${product?.slug}`} className="">
-                    <div className=" relative">
-                      <div className="min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-52">
-                        <ApImage
-                          key={product?.images[0]?._id}
-                          src={product?.images[0]?.uri}
-                          alt={product?.images[0]?.name}
-                          className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                          unoptimized
-                        />
-                      </div>
-                      <div className="mt-4 mb-2 text-left px-4">
-                        <h3 className="text-gray text-sm line-clamp-2 max-h-12 overflow-hidden">
-                          {product?.name}
-                        </h3>
-
-                        <p className="font-bold text-gray-900">
-                          {helper.toCurrency(parseFloat(product?.price))}
-                        </p>
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              </div>
+    <div className="grid gap-2 md:gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
+      {newArrivals?.map((product: IProduct) => (
+        <div key={product?._id} className="group relative p-2">
+          <Link href={`/products/${product?.slug}`} className="block">
+            <div className="aspect-square overflow-hidden rounded-lg bg-gray-100 shadow-sm transition-transform duration-300 group-hover:scale-95">
+              <ApImage
+                src={product?.images[0]?.uri}
+                className="h-full w-full object-cover"
+                alt={product?.images[0]?.name}
+              />
             </div>
-          ))}
-      </div>
-    </>
+            <div className="mt-2 space-y-1 px-1">
+              <h3 className="text-xs font-medium text-gray-900 line-clamp-2 md:text-sm">
+                {product?.name}
+              </h3>
+              <p className="text-xs font-semibold text-primary md:text-sm">
+                {helper.toCurrency(parseFloat(product?.price))}
+              </p>
+            </div>
+          </Link>
+        </div>
+      ))}
+    </div>
   );
 };

@@ -15,7 +15,7 @@ export const TopStores = () => {
           <div className="bg-white md:w-auto w-full shadow-md rounded-md transition-transform hover:shadow-lg hover:scale-105 flex flex-col justify-between h-full">
             <div>
               <Link href={`/stores/${store?._id}/products`} className="">
-                <div className="group relative">
+                <div className="">
                   <div className="min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-52">
                     <ApImage
                       //   key={store?.images[0]?._id}

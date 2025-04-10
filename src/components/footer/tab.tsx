@@ -11,48 +11,40 @@ const tabs = [
     key: "tab1",
     label: <Link href={"/stores"}>Stores</Link>,
     route: "/stores",
-    icon: <AppstoreFilled />,
+    icon: <AppstoreFilled className="text-primary" />,
   },
   {
     key: "tab2",
     label: <Link href={"/products"}>Products</Link>,
-    icon: <ProductIcon />,
+    icon: <ProductIcon className="text-primary" />,
     route: "/products",
   },
   {
     key: "tab3",
     label: <Link href={"/favorites"}>Wishlist</Link>,
-    icon: <HeartFilled />,
+    icon: <HeartFilled className="text-primary" />,
     route: "/favorites",
-  },
-  {
-    key: "tab4",
-    label: <Link href={"/orders"}>Orders</Link>,
-    icon: <ShoppingBagIcon />,
-    route: "/orders",
   },
   {
     key: "tab5",
     label: <Link href={"/profile"}>Profile</Link>,
-    icon: <UserCircleIcon />,
+    icon: <UserCircleIcon className="w-6 h-6 text-primary" />,
     route: "/profile",
   },
 ];
 export const MobileTab = () => {
-  const router = useRouter();
-
   return (
-    <div>
-      <div>
-        <Tabs
-          animated
-          activeKey={tabs.find((t) => t.route === router.pathname)?.key}
-          defaultActiveKey="tab1"
-          className="flex justify-between items-center w-full mx-2"
-          items={tabs}
-          // tabBarGutter={35}
-        />
-      </div>
+    <div className="flex justify-around items-center h-16 px-4">
+      {tabs.map((tab) => (
+        <Link
+          key={tab.key}
+          href={tab.route}
+          className="flex flex-col items-center text-gray-600 hover:text-primary transition-colors"
+        >
+          <span className="text-xl">{tab.icon}</span>
+          <span className="text-xs mt-1">{tab.label}</span>
+        </Link>
+      ))}
     </div>
   );
 };

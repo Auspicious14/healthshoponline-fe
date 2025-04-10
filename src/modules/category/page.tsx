@@ -26,7 +26,7 @@ export const CategoryPage: React.FC<IProps> = ({ category }) => {
 
   return (
     <div>
-      <div className="m-auto relative mt-16 z-50 mb-4">
+      <div className="m-auto relative mt-16 z-20 mb-4">
         <Breadcrumb label="Category" category={category} />
         <motion.div
           initial={{ opacity: 0 }}
@@ -82,8 +82,8 @@ export const CategoryPage: React.FC<IProps> = ({ category }) => {
           </div>
         </motion.div>
         <div className="bg-white">
-          <div className="md:mx-20 md:p-0">
-            <div className="fixed top-[64px] left-0 w-full z-[200] shadow-md"></div>
+          <div className=" md:p-0">
+            {/* <div className="fixed top-[64px] left-0 w-full md:z-[200] shadow-md"></div> */}
 
             <div className=" w-full">
               <div className="">
@@ -92,7 +92,7 @@ export const CategoryPage: React.FC<IProps> = ({ category }) => {
                 </div>
 
                 {collections?.length > 0 ? (
-                  <div className="grid md:grid-cols-6 grid-cols-2 gap-4 my-2 py-4 align-middle border-gray-200 border rounded-lg">
+                  <div className="grid md:grid-cols-6 grid-cols-2 gap-4 my-2 align-middle border-gray-200 ">
                     {collections?.map((p) => (
                       <ProductListItem product={p} key={p?._id} />
                     ))}

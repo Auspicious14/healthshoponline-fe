@@ -1,148 +1,143 @@
 import Link from "next/link";
 import React from "react";
 import { ApImage } from "../image";
-import visaCardImage from "../../../public/images/Payment method icon (1).png";
-import masterCardImage from "../../../public/images/Payment method icon.png";
-import skrillCardImage from "../../../public/images/Payment method icon (2).png";
 import Logo from "../../../public/images/vendify_070931.png";
-import { Button, Input, Space, Typography } from "antd";
+import { Button, Input, Space } from "antd";
 import { MessageOutlined, PhoneOutlined } from "@ant-design/icons";
-const { Text } = Typography;
+
 export const Footer = () => {
   const date = new Date().getFullYear();
 
   return (
-    <div>
-      <Space className="block lg:p-20 p-6 bg-gray">
-        <Space className="sm:flex sm:justify-between block">
-          <Text className="font-bold text-2xl block font-sans">
-            Get our emails for info on new <br /> items, sales and more
-          </Text>
-          <Space className="block my-4">
-            <Space.Compact style={{ width: "100%" }}>
-              <Input defaultValue="" placeholder="Enter your email" />
-              <Button type="primary" className="bg-blue-600">
-                Subscribe
-              </Button>
-            </Space.Compact>
-            <Text className="block text-gray mt-2 font-sans">
-              By subscribing, you agree to our terms and conditions, privacy and
-              cookies policy
-            </Text>
-          </Space>
-        </Space>
-        <Space className="md:flex md:justify-between md:gap-10 block items-start mt-8 pb-8 border-b">
-          <Space className="block">
-            <Space className="block">
-              <Link href={"/"}>
-                <ApImage src={Logo} width={100} height={100} alt="logo" />
-              </Link>
-              <Text className="block text-base font-sans">
-                Design amazing digital experiences that create
-              </Text>
-              <Space>
-                <PhoneOutlined rev={undefined} />
-                <Text className="block text-base text-gray font-sans">
-                  +2347010018536
-                </Text>
-              </Space>
-              <Space>
-                <MessageOutlined rev={undefined} />
-                <Text className="block text-base text-gray font-sans">
+    <footer className="bg-gray-50 border-t border-gray-100">
+      <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="space-y-4 lg:pr-8">
+            <Link href="/">
+              <ApImage
+                src={Logo}
+                width={120}
+                height={120}
+                alt="logo"
+                className="hover:opacity-90 transition-opacity"
+              />
+            </Link>
+            <p className="text-sm text-gray-600">
+              Design amazing digital experiences that create lasting impressions
+            </p>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <PhoneOutlined className="text-gray-600" />
+                <span className="text-sm text-gray-600">+2347010018536</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <MessageOutlined className="text-gray-600" />
+                <span className="text-sm text-gray-600 break-all">
                   uthmanabdulganiyu2019@gmail.com
-                </Text>
-              </Space>
-            </Space>
-          </Space>
-          <Space className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
-            <Space className="block my-4 md:my-0">
-              <Text className="block text-base font-bold font-sans">Shop</Text>
-              <Text className="block text-base my-1 text-[#1A45B5] font-semibold font-sans">
-                Collections
-              </Text>
-              <Text className="block text-base my-1 text-[#1A45B5] font-semibold font-sans">
-                Discount
-              </Text>
-              <Text className="block text-base my-1 text-[#1A45B5] font-semibold font-sans">
-                Blogs
-              </Text>
-            </Space>
+                </span>
+              </div>
+            </div>
+          </div>
 
-            <Space className="block my-4 md:my-0">
-              <Text className="block text-base font-bold font-sans">
-                Company
-              </Text>
-              <Text className="block text-base my-1 text-[#1A45B5] font-semibold font-sans">
-                About Us
-              </Text>
-              <Text className="block text-base my-1 text-[#1A45B5] font-semibold font-sans">
-                Contact Us
-              </Text>
-              <Text className="block text-base my-1 text-[#1A45B5] font-semibold font-sans">
-                Support
-              </Text>
-            </Space>
-            <Space className="block my-4 md:my-0">
-              <Text className="block text-base font-bold font-sans">
-                Support
-              </Text>
-              <Text className="block text-base my-1 text-[#1A45B5] font-semibold font-sans">
-                FAQs
-              </Text>
-              <Text className="block text-base my-1 text-[#1A45B5] font-semibold font-sans">
-                Cookie Policy
-              </Text>
-              <Text className="block text-base my-1 text-[#1A45B5] font-semibold font-sans">
-                Terms of use
-              </Text>
-            </Space>
-          </Space>
-        </Space>
-        <Space className="flex justify-between my-4">
-          <span className="flex gap-2">
-            <span>&copy;{`${date}`}</span>
-            <span>All right reserved.</span>
+          <div className="lg:col-span-2 space-y-6">
+            <div className="bg-white p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                Get updates on new items, sales and more
+              </h3>
+              <Space.Compact className="w-full">
+                <Input
+                  placeholder="Enter your email"
+                  className="py-2 rounded-l-lg"
+                />
+                <Button
+                  type="primary"
+                  className="bg-primary hover:bg-blue-700 transition-colors rounded-r-lg"
+                >
+                  Subscribe
+                </Button>
+              </Space.Compact>
+              <p className="text-xs text-gray-500 mt-2">
+                By subscribing, you agree to our terms and conditions, privacy
+                and cookies policy
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
+              <div className="space-y-3">
+                <h4 className="text-sm font-semibold text-gray-900">Shop</h4>
+                <Link
+                  href="/collections"
+                  className="block text-sm text-primary hover:text-blue-800 transition-colors"
+                >
+                  Collections
+                </Link>
+                <Link
+                  href="/discounts"
+                  className="block text-sm text-primary hover:text-blue-800 transition-colors"
+                >
+                  Discount
+                </Link>
+                <Link
+                  href="/blogs"
+                  className="block text-sm text-primary hover:text-blue-800 transition-colors"
+                >
+                  Blogs
+                </Link>
+              </div>
+
+              <div className="space-y-3">
+                <h4 className="text-sm font-semibold text-gray-900">Company</h4>
+                <Link
+                  href="/about"
+                  className="block text-sm text-primary hover:text-blue-800 transition-colors"
+                >
+                  About Us
+                </Link>
+                <Link
+                  href="/contact"
+                  className="block text-sm text-primary hover:text-blue-800 transition-colors"
+                >
+                  Contact Us
+                </Link>
+                <Link
+                  href="/support"
+                  className="block text-sm text-primary hover:text-blue-800 transition-colors"
+                >
+                  Support
+                </Link>
+              </div>
+
+              <div className="space-y-3">
+                <h4 className="text-sm font-semibold text-gray-900">Support</h4>
+                <Link
+                  href="/faqs"
+                  className="block text-sm text-primary hover:text-blue-800 transition-colors"
+                >
+                  FAQs
+                </Link>
+                <Link
+                  href="/cookie-policy"
+                  className="block text-sm text-primary hover:text-blue-800 transition-colors"
+                >
+                  Cookie Policy
+                </Link>
+                <Link
+                  href="/terms"
+                  className="block text-sm text-primary hover:text-blue-800 transition-colors"
+                >
+                  Terms of use
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="border-t border-gray-200 mt-8 pt-6 text-center">
+          <span className="text-sm text-gray-600">
+            &copy; {date} All rights reserved. Vendify Marketplace
           </span>
-        </Space>
-      </Space>
-    </div>
+        </div>
+      </div>
+    </footer>
   );
 };
-
-// export const Footer = () => (
-//   <footer className="bg-gray-800 text-gray py-10">
-//     <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
-//       <div>
-//         <ApImage src={Logo} alt="logo" className="w-32" />
-//         <p className="mt-4 text-sm">Design amazing digital experiences.</p>
-//       </div>
-//       <div>
-//         <h4 className="text-lg font-bold mb-4">Shop</h4>
-//         <ul>
-//           <li>Collections</li>
-//           <li>Discounts</li>
-//           <li>Blogs</li>
-//         </ul>
-//       </div>
-//       <div>
-//         <h4 className="text-lg font-bold mb-4">Company</h4>
-//         <ul>
-//           <li>About Us</li>
-//           <li>Contact Us</li>
-//           <li>Support</li>
-//         </ul>
-//       </div>
-//       <div>
-//         <h4 className="text-lg font-bold mb-4">Support</h4>
-//         <ul>
-//           <li>FAQs</li>
-//           <li>Cookie Policy</li>
-//           <li>Terms of Use</li>
-//         </ul>
-//       </div>
-//     </div>
-//     <div className="mt-10 text-center text-sm">
-//       &copy; {new Date().getFullYear()} All rights reserved.
-//     </div>
-//   </footer>
-// );
