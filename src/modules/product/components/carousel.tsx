@@ -1,6 +1,4 @@
-import { Carousel } from "antd";
-import { useEffect, useRef, useState } from "react";
-import { CarouselRef } from "antd/es/carousel";
+import { useEffect, useState } from "react";
 import { ApImage } from "../../../components";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -35,7 +33,7 @@ export const ProductCarousel = ({
 
   return (
     <div className="relative w-full h-full">
-      <AnimatePresence exitBeforeEnter>
+      <AnimatePresence mode="wait">
         <motion.div
           key={currentIndex}
           className="w-full h-full"
